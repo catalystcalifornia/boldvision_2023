@@ -1,0 +1,196 @@
+---
+output:
+  html_document:
+    theme: journal
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message=FALSE)
+
+
+#loading libraries
+library(dplyr)  
+library(RPostgreSQL) 
+library(rpostgis) 
+library(leaflet)
+library(sf)
+library(formattable)
+library(tidyverse)
+library(htmltools)
+
+#Bold Vision Colors taken from: https://catalystcalifornia.sharepoint.com/sites/Portal/AP%20Projects/Communications/APCA%20-%20Communications/Brand%20Guide%20Materials%20and%20Guidance/Logos/APCA%20Coalition%20Logos/BOLD-VISION%20-%20Style%20Guide%202020.pdf
+blue <- "#2A12B2"
+pink <- "#EF4A66"
+grey <- "#1C2C40"
+lite_grey <- "#D3D3D3"
+yellow <- "#FFBF00"
+black <- "#222839"
+
+#Bold Vision Fonts
+
+windowsFonts(Manifold = windowsFont("manifoldcf-heavy"))
+windowsFonts(HelveticaNeueLTStdHvCn = windowsFont("HelveticaNeueLTStd-HvCn"))
+windowsFonts(HelveticaNeueLTStdMdCn = windowsFont("HelveticaNeueLTStd-MdCn"))
+
+
+# loads the PostgreSQL driver
+drv <- dbDriver("PostgreSQL")
+
+
+# create connection
+source("W:\\RDA Team\\R\\credentials_source.R")
+
+con <- connect_to_db("bold_vision")
+
+
+#load power-building-orgs data and assign x and y as lat and long
+
+orgs <- st_read(con, query = "select * from bv_2021.grassroots_organizers_and_base_builders_budget")
+orgs_data <- st_as_sf(orgs, coords = c("x", "y"),na.fail = FALSE, crs = 4326)
+
+  
+#load poverty data
+pov_data <- st_read(con, query = "select * from bv_2021.demographics_bipoc_youth_poverty_puma_2019_geom")
+
+pov_estimates <- st_read(con, query = "select * from bv_2021.acs_pums_youth_bipoc_pov200fpl_puma_2019_5yr
+                         where citizen::text = 'All'::text AND pov200fpl::text = '200 FPL'::text AND age::text = 'Age 0-24'::text AND geoid::text ~~ '037%'::text")
+
+#find out the range of income in the power-building organizations
+summary(orgs$income_amt)
+
+#based on the summary, we will use below 1 million as a small budget, between 1 and 5 million as medium budget and more than 5 million as a large budget. 
+orgs_data$budget_level <- ifelse(orgs_data$income_amt < 1000000, "Small", 
+                                 ifelse(orgs_data$income_amt >= 1000000 & orgs_data$income_amt < 5000000, "Midsize",
+                                        ifelse(orgs_data$income_amt >= 5000000, "Large", "data_na")))
+```
+
+
+# BIPOC Youth in Poverty and Power-Building Organizations in Los Angeles County  
+
+November 16, 2022. 
+Developed by Catalyst California. 
+
+The following is a brief analysis of the power-building organizations in Los Angeles County against the BIPOC Youth in poverty to identify opportunities and overlaps for the Bold Vision power building grant program. 
+
+The first interactive map visualizes 178 power-building organizations across the county by their budget size. Note that the organizations location is of their headquarters and does not indicate the entire range that they cover. Additionally, this map presents a choropleth basemap by Census PUMAs (Public Use Microdata Areas) to showcase the variation of BIPOC youth in poverty across Los Angeles. The darker areas represent a higher density of BIPOC youth living below the 200% Federal Poverty Line in that area. 
+
+The second interactive map calculates the rate of power-building organizations per 10,000 BIPOC Youth living below the 200% FPL in that area. Each map is interactive, to find out more about a specifics area, feel free to click on the object to learn more information. 
+
+## Map 1: Power-Building Organizations Against the % of BIPOC Youth in Poverty 
+KEY FINDINGS 
+- Only 1 organization is shown in the entire Antelope Valley region, in Palmdale, and it is a relatively small organization. This indicates a high percentage of BIPOC Youth living below the 200% Federal Poverty Line with unmet needs in Lancaster and Palmdale. The data shows a potential opportunity to increase access and resources here. 
+- Majority of power-building organizations are clustered in Central Los Angeles County. The area also has some of the highest percentages of BIPOC Youth Living in Poverty, this raises the question of how well equipped organizations in this area are to serve some of the most vulberable populations and the effectiveness of their work. 
+- South El Monte and Central San Fernando Valley (Van Nuys, North Sherman Oaks) are two areas that show a very high perecntage of BIPOC Youth Living in Poverty and only a sparse few power-building organizations in both regions. Additionally, the organizations present do not have a large budget to serve these potentially high demand areas. 
+
+```{r}
+#Map 1: Map of power-building orgs (by budget size) against % BIPOC youth in poverty
+
+# #using JESI color pallete for right now
+# pal_impact <- colorBin(palette = c( "#cbc9e2","#9391BF","#605DA2", "#54278f"), domain = pov_data$prc, bins = 4, reverse = FALSE, pretty = FALSE)
+
+#color update
+pal_impact <- colorQuantile("Purples", domain = pov_data$prc)
+
+leaflet(width = "100%", height = "495px") %>%
+  
+  # add cartodb tiles
+  addProviderTiles("CartoDB.Positron") %>% 
+  
+  #setView
+    setView(-118.281301, 33.921077, zoom = 8.25) %>%
+  
+    addPolygons(data = pov_data,
+              color = "#8C8C8C",
+              fillColor= ~pal_impact(prc),
+              smoothFactor = 0.5,
+              weight = 1,
+              opacity = .8,
+              fillOpacity = 0.75,
+              group = "Poverty Rate",
+              popup = ~paste0("<strong> Location: </strong>", name10,
+                            "</br><strong> BIPOC Youth Living Below <br> 200% Federal Poverty Line: </strong>", round(prc*100, 1), "%" )) %>%
+
+  # add school points
+  addCircleMarkers(
+    data = orgs_data, radius = 3, label = ~htmlEscape(organization), 
+    color = ~ifelse(budget_level == "Large", "blue",
+             ifelse(budget_level =="Midsize" , "pink", 
+                    ifelse(budget_level == "Small", "yellow", "lite_grey"))),
+    fillOpacity = 0.7, stroke = TRUE, weight =1, opacity = 0.9,
+    popup = ~paste0("<strong>Organization: </strong>", organization, 
+                    "</br><strong>Organization Income Level: </strong>", budget_level,
+                    "</br><strong>Organizational Budget:</strong>$", comma(income_amt))
+  ) %>% 
+  
+  # legend for orgs
+  addLegend("bottomleft", title="Power Building Organizations",
+           colors = c(blue, pink, yellow, lite_grey),
+            labels= c("Large (Over 5M)", "Midsize (1 to 5M)", "Small (Less than 1M)", "Data Not Available"),
+             opacity = 0.7, labFormat = labelFormat(digits = 0)) %>%
+  #legend for Poverty Indicator
+  addLegend(position = "bottomleft", pal = pal_impact, values = pov_data$prc, opacity = .8, title = "BIPOC Youth Living Below <br> 200% Federal Poverty Line")
+
+```
+
+## Map 2: Spatial Analysis on Number of Power Building Organizations per Number of Youth in Poverty  
+KEY FINDINGS 
++ 
++ 
++ 
+```{r}
+
+#Map 2: Spatial Analysis on Number of Power Building Organizations per Number of Youth in Poverty 
+
+#point to polygon join
+#adding counts of power building organization per puma
+pov_data <- pov_data %>%
+  mutate(pbo_counts = lengths(st_intersects(., orgs_data)))
+
+#taking just the estimates from pov_estimates dataset and the id to join with 
+pov_select <- select(pov_estimates, c('geoid', 'estimate'))
+
+#adding estimates to polygon
+pov_data <- pov_data %>% left_join(pov_select, by = "geoid")
+# pov_data <- merge(x = pov_data, y = pov_select, by = )
+
+pov_data <- pov_data %>%
+  mutate(ratio_100 = round((pbo_counts/estimate * 100), 2))
+
+pov_data <- pov_data %>%
+  mutate(ratio_1000 = round((pbo_counts/estimate * 1000), 2))
+
+pov_data <- pov_data %>%
+  mutate(ratio_10000 = round((pbo_counts/estimate * 10000), 2))
+
+#map
+
+bins <- c(0,.26,.36,1.47,11)
+
+pal_impact_a <- colorBin(palette = c("#f2f0f7", "#cbc9e2", "#9391BF", "#605DA2"), domain = pov_data$ratio_10000, bins = bins, reverse = FALSE, pretty = FALSE)
+# pal_impact_a <- colorQuantile("Purples", domain = pov_data$ratio_10000)
+
+
+leaflet(width = "100%", height = "495px") %>%
+  
+  # add cartodb tiles
+  addProviderTiles("CartoDB.Positron") %>% 
+  
+  #setView
+    setView(-118.281301, 33.921077, zoom = 8.25) %>%
+  
+    addPolygons(data = pov_data,
+              color = "#8C8C8C",
+              fillColor= ~pal_impact_a(ratio_10000),
+              smoothFactor = 0.5,
+              weight = 1,
+              opacity = .8,
+              fillOpacity = 0.75,
+              group = "Poverty Rate",
+              popup = ~paste0("<strong> Location: </strong>", name10,
+                            "</br><strong> Number of Power Building Organization per 10,000 BIPOC Youth living in Poverty: </strong>", ratio_10000,
+                            "</br><strong> BIPOC Youth Living Below <br> 200% Federal Poverty Line: </strong>", round(prc*100, 1), "%"))  %>%
+  #legend for Rate 
+  addLegend(position = "bottomleft", pal = pal_impact_a, values = pov_data$ratio_10000, opacity = .8, title = "Number of Power Building Organization per 10,000 BIPOC Youth living in Poverty")
+
+```
