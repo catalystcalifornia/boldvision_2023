@@ -1,0 +1,174 @@
+####User-Defined R Functions to create Visuals for the Bold vision Project
+#Author: Maria Khan
+
+# The following file aims to serve as a visuals template for the 2023 Bold Vision Indicators. Report is set to realease by end of Q1 of 2024. 
+
+
+#### Loading Libraries ####
+library(extrafont)
+library(tidyverse)
+library(here)
+library(dplyr)
+library(data.table)
+library(sf)
+library(ggplot2)
+library(RPostgreSQL)
+library(formattable)
+library(svglite)
+library(stringr)
+library(tidyr)
+library(showtext)
+library(scales)
+library(kableExtra)
+library(flextable)
+
+# remotes::install_github("tidyverse/ggplot2") to get latest ggplot version
+
+#### Bold Vision Style Guide ####
+
+##Colors
+
+gray <- "#D6D7D6"
+pink <- "#F75EC1"
+dark_pink <- "#EF4A66"
+orange <- "#F57E20"
+yellow <- "#FFBF00"
+light_green <- "#00A75A"
+dark_green <- "#00864A"
+blue  <- "#2A12B2"
+
+##Fonts
+
+windowsFonts(Manifold = windowsFont("manifoldcf-heavy"))
+# windowsFonts(HelveticaNeueLTStdMdCnO = windowsFont("HelveticaNeueLTStd-MdCnO"))
+windowsFonts(HelveticaNeueLTStdHvCn = windowsFont("HelveticaNeueLTStd-HvCn"))
+windowsFonts(HelveticaNeueLTStdMdCn = windowsFont("HelveticaNeueLTStd-MdCn"))
+
+
+# define fonts in chart
+font_title <- "Manifold"
+font_subtitle <- "Manifold"
+font_caption <- "HelveticaNeueLTStdMdCn"
+font_bar_label <- "HelveticaNeueLTStdHvCn"
+font_axis_label <- "HelveticaNeueLTStdMdCn"
+
+
+#### Function: Vertical Bar Chart by Subgroup (RACE/ETHNICITY) ####
+fx_barchart_subgroup <- function(
+    df,
+    domain, #you must input the domain exactly a the folders are named so "Systems Impact" or "Positive Youth Development" for example
+    indicator, 
+    title,  #we are looking for a title that is systems-focused
+    subtitle, #explanation of what the we are looking at
+    caption_datasource,
+    caption_racenote, #only input the full names for the groups that are in acronyms
+    caption_indicator_def #define the indicator
+) {
+  
+  
+  subgroup_visual <- ggplot(
+    data = df,
+    aes(x=reorder(race, rate), y=rate)) +
+    geom_chicklet(radius = grid:: unit(3, "mm"), width = 0.85, fill = ifelse(domain == 'Positive Youth Development', yellow, 
+                                                                             ifelse(domain == 'Healthy Built Environment', dark_green,
+                                                                                    ifelse(domain == 'Youth Power', pink,
+                                                                                           ifelse(domain == 'Systems Impact', orange, gray))))) +
+    # bar style
+    expand_limits(y = max(df_subgroup$rate) + .09) +
+    scale_x_discrete(labels  = function(race_label_short) str_wrap(df$race_label_short, width = 15))+
+    scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+    
+    # vertical line for Total %
+    geom_hline(yintercept =subset(df_subgroup, race == "total")$rate,
+               linetype = "dotted", color = "black",  size = 1) +
+    # size = 0.75) +
+    
+    # label for vertical Total % line
+    annotate(geom = "text",
+             x = 0.75,
+             y = subset(df_subgroup, race == "total")$rate,
+             label = paste0("Total Youth: ", round(subset(df_subgroup, race == "total")$rate*100,
+                                                   digits = 1),"%"),
+             hjust =0, vjust = -1, fontface = "bold",
+             color = "black", size = 4) +
+    #axis labels
+    xlab("") +
+    ylab("") +
+    # bar labels
+    geom_text(data = df,
+              aes(label = paste0(round(rate*100, digits = 1),"%")),
+              size = 4,
+              stat="identity", colour = "white",
+              position = position_dodge(width = 1), 
+              vjust = 3.25 , 
+              # hjust= 1.15,
+              fontface = "bold") +
+    labs(
+      title = str_wrap(title,55),
+      subtitle = subtitle,
+      caption =  str_wrap(paste0("Indicator: ",caption_indicator_def, 
+                                 " Race Note: ", caption_racenote, 
+                                 " Data Source: ", caption_datasource), 115)) +
+    #theme/aesthetics
+    theme_minimal() +
+    theme(legend.title = element_blank(), # no legend--modify if necessary
+          # define style for axis text
+          axis.text.y = element_blank(), 
+          axis.text.x = element_text(size = 9, 
+                                     colour = "black", family= font_axis_label,
+                                     face = "bold"),
+          axis.title.y = element_text(size = 9, margin = margin(10, 5, 0, 0),
+                                      colour = "black", family = font_axis_label),
+          
+          # define style for title and caption (for now no title bc that might be done by the designer?)
+          plot.caption = 
+            element_text(hjust = 0.0, size = 9, colour = "black", family = font_caption),
+          plot.title = 
+            element_text(hjust = 0.0, size = 21, colour = "black", family = font_title,
+                         face = "bold"), 
+          plot.subtitle = 
+            element_text(hjust = 0.0, size = 12, colour = "black", family = font_title), 
+          axis.ticks = element_blank(),
+          # grid line style
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank()) 
+  
+  
+  subgroup_visual
+  
+  ##Saving Visual ##
+  ggsave(plot=subgroup_visual, 
+         file=paste0("W:/Project/OSI/Bold Vision/BV 2023/Deliverables/", domain, "/",
+                     indicator,"_subgroup", ".jpg"),
+         units = c("in"),  width = 8, height = 5.5)
+  
+  ggsave(plot=subgroup_visual, 
+         file=paste0("W:/Project/OSI/Bold Vision/BV 2023/Deliverables/", domain, "/",
+                     indicator,"_subgroup", ".svg"),
+         units = c("in"),  width = 8, height = 5.5)
+  
+  ggsave(plot=subgroup_visual,
+         file=paste0("W:/Project/OSI/Bold Vision/BV 2023/Deliverables/", domain, "/",
+                     indicator,"_subgroup", ".pdf"),
+         units = c("in"),  width = 8, height = 5.5, device = cairo_pdf)
+  
+}
+
+
+####NOTE: For this function to work, set up your dataset according to the workflow- Follow Connected Youth for Examples ####
+#you need to have your dataset set up so that race is labeled as “race” and your main value is labeled as “rate” and in decimal format. 
+#Here's an example of how you may need to edit your data in addition to following those labels
+
+# #pull data you're using by subgroup
+# df_subgroup <- st_read(con, query = "select * from bv_2023.pyd_connectedyouth_subgroup")
+# 
+# #pull race labels
+# race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels") 
+# 
+# #join to your table
+# df_subgroup <- left_join(df_subgroup, race_label_df, by=c("race" = "race_base"))  %>%
+#   select(-"id")
+# 
+# #defining vectors AND re-ordering if you have total and bipoc, take out
+# df <- subset(df_subgroup, race != "total" & race != "bipoc") %>%
+#   arrange(rate)
