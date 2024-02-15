@@ -260,12 +260,12 @@ vote_pres_mid_county <-
       #### add a filter by year for this section
       # Calc SE for 2013 CE Supplement
       ifelse(race %in% c("aian", "nh_asian", "pacisl","nh_twoormor"),  
-              sqrt((asian_pacisl_aian_parameter_a * (voteSAMP^2)) + (asian_pacisl_aian_parameter_b*voteSAMP)),  # cps says let two or more races use the same as aian etc
-              ifelse(race == "Total", sqrt((total_parameter_a * (voteSAMP^2)) + (total_parameter_b*voteSAMP)),
-                      ifelse(race =="nh_white", sqrt((white_parameter_a * (voteSAMP^2)) + (white_parameter_b*voteSAMP)),
-                              ifelse( race =="bipoc", sqrt((bipoc_parameter_a * (voteSAMP^2)) + (bipoc_parameter_b*voteSAMP)),
-                      ifelse(race == "nh_black", sqrt((black_parameter_a * (voteSAMP^2)) + (black_parameter_b*voteSAMP)),
-                              ifelse( race == "latino", sqrt((latino_parameter_a * (voteSAMP^2)) + (latino_parameter_b*voteSAMP)), NA)))))),
+             sqrt((asian_pacisl_aian_parameter_a * (voteSAMP^2)) + (asian_pacisl_aian_parameter_b*voteSAMP)),  # cps says let two or more races use the same as aian etc
+             ifelse(race == "Total", sqrt((total_parameter_a * (voteSAMP^2)) + (total_parameter_b*voteSAMP)),
+                    ifelse(race =="nh_white", sqrt((white_parameter_a * (voteSAMP^2)) + (white_parameter_b*voteSAMP)),
+                           ifelse( race =="bipoc", sqrt((bipoc_parameter_a * (voteSAMP^2)) + (bipoc_parameter_b*voteSAMP)),
+                                   ifelse(race == "nh_black", sqrt((black_parameter_a * (voteSAMP^2)) + (black_parameter_b*voteSAMP)),
+                                          ifelse( race == "latino", sqrt((latino_parameter_a * (voteSAMP^2)) + (latino_parameter_b*voteSAMP)), NA)))))),
     
     
     # Calc CV and final voteSAMP count
@@ -347,9 +347,9 @@ votingeligible_county <-
               ifelse( race =="Total", sqrt((total_parameter_a * (veSAMP^2)) + (total_parameter_b*veSAMP)),
                       ifelse( race =="nh_white", sqrt((white_parameter_a  * (veSAMP^2)) + (white_parameter_b*veSAMP)),
                               ifelse( race =="bipoc", sqrt((bipoc_parameter_a * (veSAMP^2)) + (bipoc_parameter_b*veSAMP)),
-                      ifelse( race == "nh_black", sqrt((black_parameter_a * (veSAMP^2)) + (black_parameter_b*veSAMP)),
-                              ifelse( race == "latino", sqrt((latino_parameter_a * (veSAMP^2)) + (latino_parameter_b*veSAMP)), NA)))))),
-
+                                      ifelse( race == "nh_black", sqrt((black_parameter_a * (veSAMP^2)) + (black_parameter_b*veSAMP)),
+                                              ifelse( race == "latino", sqrt((latino_parameter_a * (veSAMP^2)) + (latino_parameter_b*veSAMP)), NA)))))),
+    
     # Calc CV and final veSAMP count
     ve_cv = veSAMP_se/veSAMP,
     ve = veSAMP/4) 
@@ -371,13 +371,13 @@ evt_county<-
              ifelse( race =="Total",  sqrt((total_parameter_b/veSAMP) * rate * (100-rate)), 
                      ifelse( race =="nh_white",  sqrt((white_parameter_b/veSAMP) * rate * (100-rate)), 
                              ifelse( race =="bipoc",  sqrt((bipoc_parameter_b/veSAMP) * rate * (100-rate)), 
-                     ifelse(race =="nh_black", sqrt((black_parameter_b/veSAMP) * rate * (100-rate)),
-                            ifelse( race=="latino",sqrt((latino_parameter_b/veSAMP) * rate * (100-rate)), NA)))))),
+                                     ifelse(race =="nh_black", sqrt((black_parameter_b/veSAMP) * rate * (100-rate)),
+                                            ifelse( race=="latino",sqrt((latino_parameter_b/veSAMP) * rate * (100-rate)), NA)))))),
     rate_cv = rate_se/rate*100,
     
     # # reliability threshold
     # rate = ifelse(rate_cv > 0.4 | ve < 60, NA, rate)
-    ) 
+  ) 
 
 View(evt_county)
 table(evt_county$race)
@@ -410,31 +410,31 @@ head(evt_county)
 diff_county <-
   
   evt_county%>% 
-    
-    filter(race !="Total") %>%
-    group_by(geoid, geolevel) %>% 
-    summarize(max = max(rate, na.rm=T),
-              values_count = sum(!is.na(rate))) %>% 
-    
-    # join max and values count to the original df
-    right_join(evt_county, 
-               by=c("geoid", "geolevel")) %>% 
-    
-    # get differences from max rate
-    mutate(diff = ifelse(race =="Total" | race == "bipoc", NA, abs(max - rate)))
+  
+  filter(race !="Total") %>%
+  group_by(geoid, geolevel) %>% 
+  summarize(max = max(rate, na.rm=T),
+            values_count = sum(!is.na(rate))) %>% 
+  
+  # join max and values count to the original df
+  right_join(evt_county, 
+             by=c("geoid", "geolevel")) %>% 
+  
+  # get differences from max rate
+  mutate(diff = ifelse(race =="Total" | race == "bipoc", NA, abs(max - rate)))
 head(diff_county)
 
 # get the avg and variance of differences, and the index of disparity
 id_table_county <- diff_county %>% 
-    filter(race !="Total") %>% 
-    dplyr::group_by(geoid, geolevel) %>% 
-    summarize(
-      
-      # ID: if there are fewer than 2 values count, NULL, otherwise...
-      index_of_disparity = ifelse(max(values_count) < 2, NA, 
-                                  
-                                  # divide the sum of differences by the maximum value, divided by the values count - 1
-                                  ((sum(diff, na.rm=T)/max(max))/(max(values_count) - 1))*100))
+  filter(race !="Total") %>% 
+  dplyr::group_by(geoid, geolevel) %>% 
+  summarize(
+    
+    # ID: if there are fewer than 2 values count, NULL, otherwise...
+    index_of_disparity = ifelse(max(values_count) < 2, NA, 
+                                
+                                # divide the sum of differences by the maximum value, divided by the values count - 1
+                                ((sum(diff, na.rm=T)/max(max))/(max(values_count) - 1))*100))
 
 head(id_table_county)
 ### finalize table format in a way that will work well for visualization
@@ -497,8 +497,8 @@ evt_City  <-
   left_join(vote_pres_mid_city) %>%
   
   mutate(rate = (vote/ve)*100,
-    rate_se = sqrt((total_parameter_b/veSAMP) * rate * (100-rate)),
-    rate_cv = rate_se/rate*100)
+         rate_se = sqrt((total_parameter_b/veSAMP) * rate * (100-rate)),
+         rate_cv = rate_se/rate*100)
 
 evt_City  <- evt_City %>% 
   
@@ -636,13 +636,13 @@ dbWriteTable(conBV, c("bv_2023", "yp_youth_voter_turnout_subgroup"), final_count
 
 # send table comments to database
 dbGetQuery(conBV,
-           "COMMENT ON TABLE bv_2023.yp_youth_voter_turnout_region IS 'Table for youth (18-29 years) eligible voter turnout during presidential and midterm elections. 
+           "COMMENT ON TABLE bv_2023.yp_youth_voter_turnout_subgroup IS 'Table for youth (18-29 years) eligible voter turnout during presidential and midterm elections. 
 # eligible voters are defined as adult citizens. Data Source: IPUMS CPS Voting Supplement. Samples from 2014, 2016, 2018, 2020 were pooled to calculated turnout by race-ethnicity. 
 # Race groups are exclusive of latino except aian and pacisl. Race codes for aian and pacisl are All aian and All pacisl (nh_twoormor + latino inclusive).
 # Included Geographies are major cities (within the Los Angeles MSA (Prinicipal Cities, see here: https://cps.ipums.org/cps/codes/individcc_2004onward_codes.shtml) and LA County. 
 # Connectedness Estimates have been supressed when the universe (pop) is less than 60 or the CV (rate_cv) is greater than 40%.
 # Performance and disparity ranks calculated according to the RACE COUNTS method.
-This table was prepared in the R script W:\\Project\\OSI\\Bold Vision\\BV 2023\\R\\boldvision_22_23\\Youth_Voter_Turnout.R';
+This table was prepared in the R script W:\\Project\\OSI\\Bold Vision\\BV 2023\\R\\boldvision_22_23\\yp_youth_voter_turnout.R';
 
 COMMENT ON COLUMN bv_2023.yp_youth_voter_turnout_subgroup.geoid IS 'Geographic ID.';
 COMMENT ON COLUMN bv_2023.yp_youth_voter_turnout_subgroup.name IS 'Geography name.';
@@ -686,7 +686,7 @@ dbGetQuery(conBV,
 # Included Geographies are major cities (within the Los Angeles MSA (Prinicipal Cities, see here: https://cps.ipums.org/cps/codes/individcc_2004onward_codes.shtml) and LA County. 
 # Connectedness Estimates have been supressed when the universe (pop) is less than 60 or the CV (rate_cv) is greater than 40%.
 # Performance and disparity ranks calculated according to the RACE COUNTS method.
-This table was prepared in the R script W:\\Project\\OSI\\Bold Vision\\BV 2023\\R\\boldvision_22_23\\Youth_Voter_Turnout.R';
+This table was prepared in the R script W:\\Project\\OSI\\Bold Vision\\BV 2023\\R\\boldvision_22_23\\yp_youth_voter_turnout.R';
 
 COMMENT ON COLUMN bv_2023.yp_youth_voter_turnout_region.geoid IS 'Geographic ID.';
 COMMENT ON COLUMN bv_2023.yp_youth_voter_turnout_region.name IS 'Geography name.';
