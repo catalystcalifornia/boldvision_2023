@@ -136,6 +136,7 @@ county_table <- county_table %>% select(-county, -asbest, -n, -best, -values_cou
   left_join(county_table %>% select(geoid, best, index_of_disparity, values_count, asbest), by = "geoid") %>%
   mutate(diff = rate - best)
 
+county_table$diff[which(county_table$subgroup == "total" | county_table$subgroup == "bipoc")] = NA
 
 ###Send to Postgres###
 con3 <- connect_to_db("bold_vision")
