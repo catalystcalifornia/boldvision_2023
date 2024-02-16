@@ -153,22 +153,3 @@ fx_barchart_subgroup <- function(
          units = c("in"),  width = 8, height = 5.5, device = cairo_pdf)
   
 }
-
-
-####NOTE: For this function to work, set up your dataset according to the workflow- Follow Connected Youth for Examples ####
-#you need to have your dataset set up so that race is labeled as “race” and your main value is labeled as “rate” and in decimal format. 
-#Here's an example of how you may need to edit your data in addition to following those labels
-
-# #pull data you're using by subgroup
-# df_subgroup <- st_read(con, query = "select * from bv_2023.pyd_connectedyouth_subgroup")
-# 
-# #pull race labels
-# race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels") 
-# 
-# #join to your table
-# df_subgroup <- left_join(df_subgroup, race_label_df, by=c("race" = "race_base"))  %>%
-#   select(-"id")
-# 
-# #defining vectors AND re-ordering if you have total and bipoc, take out
-# df <- subset(df_subgroup, race != "total" & race != "bipoc") %>%
-#   arrange(rate)
