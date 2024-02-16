@@ -32,8 +32,8 @@ fx_barchart_subgroup(
   indicator = "Connected Youth",
   # insert a findings based systems led title
   title = "Educational Institutions and Employers are less likely to engage with Black, NHPI, and Latine Youth",
-  #explanation of what the we are looking at // don't 
-  subtitle = "Percent of Connected Youth by Race in Los Angeles County",
+  #explanation of what the we are looking at // use sentence case 
+  subtitle = "Percent of connected youth by race in Los Angeles county",
   #please follow the format of the datasource below
   caption_datasource = "American Community Survey Public Use Microdata, 2017-2021 5-Year Estimates.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their inidicator

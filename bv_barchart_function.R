@@ -1,7 +1,7 @@
 ####User-Defined R Functions to create Visuals for the Bold vision Project
 #Author: Maria Khan
 
-# The following file aims to serve as a visuals template for the 2023 Bold Vision Indicators. Report is set to realease by end of Q1 of 2024. 
+# The following file aims to serve as a visuals template for the 2023 Bold Vision Indicators. Report is set to release by end of Q1 of 2024. 
 
 
 #### Loading Libraries ####
@@ -21,8 +21,7 @@ library(showtext)
 library(scales)
 library(kableExtra)
 library(flextable)
-
-# remotes::install_github("tidyverse/ggplot2") to get latest ggplot version
+library(ggchicklet)
 
 #### Bold Vision Style Guide ####
 
@@ -62,7 +61,8 @@ fx_barchart_subgroup <- function(
     subtitle, #explanation of what the we are looking at
     caption_datasource,
     caption_racenote, #only input the full names for the groups that are in acronyms
-    caption_indicator_def #define the indicator
+    caption_indicator_def, #define the indicator
+    data_unit #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k")
 ) {
   
   
@@ -76,19 +76,19 @@ fx_barchart_subgroup <- function(
     # bar style
     expand_limits(y = max(df_subgroup$rate) + .09) +
     scale_x_discrete(labels  = function(race_label_short) str_wrap(df$race_label_short, width = 15))+
-    scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+    # scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
     
-    # vertical line for Total %
+    # vertical line for Total 
     geom_hline(yintercept =subset(df_subgroup, race == "total")$rate,
                linetype = "dotted", color = "black",  size = 1) +
     # size = 0.75) +
     
-    # label for vertical Total % line
+    # label for vertical Total line
     annotate(geom = "text",
              x = 0.75,
              y = subset(df_subgroup, race == "total")$rate,
-             label = paste0("Total Youth: ", round(subset(df_subgroup, race == "total")$rate*100,
-                                                   digits = 1),"%"),
+             label = paste0("Average for All Youth: ", round(subset(df_subgroup, race == "total")$rate,
+                                                             digits = 1),data_unit),
              hjust =0, vjust = -1, fontface = "bold",
              color = "black", size = 4) +
     #axis labels
@@ -96,18 +96,18 @@ fx_barchart_subgroup <- function(
     ylab("") +
     # bar labels
     geom_text(data = df,
-              aes(label = paste0(round(rate*100, digits = 1),"%")),
+              aes(label = paste0(round(rate, digits = 1),data_unit)),
               size = 4,
               stat="identity", colour = "white",
               position = position_dodge(width = 1), 
-              vjust = 3.25 , 
+              vjust = 2.25 , 
               # hjust= 1.15,
               fontface = "bold") +
     labs(
       title = str_wrap(title,55),
       subtitle = subtitle,
       caption =  str_wrap(paste0("Indicator: ",caption_indicator_def, 
-                                 " Race Note: ", caption_racenote, 
+                                 " Race Note: ", caption_racenote, ".",
                                  " Data Source: ", caption_datasource), 115)) +
     #theme/aesthetics
     theme_minimal() +
