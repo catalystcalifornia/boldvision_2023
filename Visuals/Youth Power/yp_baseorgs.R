@@ -37,7 +37,7 @@ fx_barchart_subgroup(
   subtitle = "Average percentile access to base-building organizations by youth race in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations based on the IRS Business Master File Extract (2023), CauseIQ (2022), and U.S. Census Bureau, Detailed Housing and Demographic Characteristics (2020).",
-  #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their inidicator
+  #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify with a racial group not presented",
   #define the indicator
   caption_indicator_def = "Average percentile (%ile) rate is based on census tract characteristics and indicates the average access each youth racial group (ages 0-24) has to social advocacy or base-building organizations serving youth in their area. A higher percentile indicates higher access.",

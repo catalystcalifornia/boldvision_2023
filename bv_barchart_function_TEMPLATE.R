@@ -38,7 +38,7 @@ fx_barchart_subgroup(
   subtitle = "Percent of connected youth by race in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations based on American Community Survey Public Use Microdata, 2017-2021 5-Year Estimates.",
-  #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their inidicator
+  #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; SWANA=Southwest Asian or North African/Middle Eastern or North African; Another Race=Persons who identify with a racial group not presented",
   #define the indicator
   caption_indicator_def = "Connected youth are defined as youth (ages 14-24) who are enrolled in school or are employed.",
