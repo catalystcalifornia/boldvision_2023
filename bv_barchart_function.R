@@ -108,7 +108,7 @@ fx_barchart_subgroup <- function(
       subtitle = subtitle,
       caption =  str_wrap(paste0("Indicator: ",caption_indicator_def, 
                                  " Race Note: ", caption_racenote, ".",
-                                 " Data Source: ", caption_datasource), 115)) +
+                                 " Data Source: ", caption_datasource), 130)) +
     #theme/aesthetics
     theme_minimal() +
     theme(legend.title = element_blank(), # no legend--modify if necessary
