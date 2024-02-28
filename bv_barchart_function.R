@@ -104,8 +104,8 @@ fx_barchart_subgroup <- function(
               # hjust= 1.15,
               fontface = "bold") +
     labs(
-      title = str_wrap(title,55),
-      subtitle = subtitle,
+      title = paste(str_wrap(title, whitespace_only = TRUE, width = 50), collapse = "\n"),
+      subtitle = paste(str_wrap(subtitle,whitespace_only = TRUE, width = 75), collapse = "\n"),
       caption =  str_wrap(paste0("Indicator: ",caption_indicator_def, 
                                  " Race Note: ", caption_racenote, ".",
                                  " Data Source: ", caption_datasource), 130)) +
