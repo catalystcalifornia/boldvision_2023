@@ -36,15 +36,6 @@ race_0_24 <- dbGetQuery(bv_conn, race_0_24_sql) %>%
   rename(sub_id = geoid,
          total_sub_pop = pop)
 
-#make wide
-# race_0_24_wide <- race_0_24 %>% 
-#   pivot_wider(names_from = race, values_from = pop) %>% 
-#   select(geoid, total) %>%
-#   # rename 
-#   rename(sub_id = geoid,
-#          total_sub_pop = total)
-
-
 race_0_24 <- race_0_24 %>%
   # add spa id for join later
   left_join(ind_df, by="sub_id") %>%
@@ -81,27 +72,24 @@ pop_df$sub_id <- paste0(pop_df$sub_id, pop_df$target_id)
 
 
 ########### 7. Run weighted average ################
-#set source for WA Functions script
+# set source for WA Functions script
 source("W:/RDA Team/R/Functions/Cnty_St_Wt_Avg_Functions.R")
 
-#run pct_df
+# run pct_df
 pop_threshold = 0
 pct_df <- pop_pct(pop_df) 
 
-
-#run wa
-wa <- wt_avg(pct_df)        # calc weighted average and apply reliability screens
+# run wa
+wa <- wt_avg(pct_df)        
 wa <- wa %>% 
   select(target_id, everything()) %>% 
   rename(geoid = target_id)
-
 
 
 ############# 8. Calculate RC calcs ##############
 d <- wa %>% 
   rename(rate = total_rate, pop = total_pop) %>% 
   select(-n)
-
 
 ##### calculate RACE COUNTS Index of Disparity (calc_id function)
 # Set "max" or "min" depending on indicator

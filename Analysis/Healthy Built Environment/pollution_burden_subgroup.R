@@ -24,13 +24,12 @@ tract_spa_xwalk <- dbGetQuery(bv_conn, tract_spa_xwalk_sql)
 race_0_24_sql <- "SELECT * FROM bv_2023.dhc_tract_2020_youth_0_24_race;"
 race_0_24 <- dbGetQuery(bv_conn, race_0_24_sql) 
 
-#make wide
+# make wide
 race_0_24_wide <- race_0_24 %>% 
   pivot_wider(names_from = race, values_from = pop)
 
-#rename race groups with "_sub_pop" suffix
+# rename race groups with "_sub_pop" suffix
 names(race_0_24_wide)[2:11] <- paste(names(race_0_24_wide)[2:11], "sub_pop", sep="_")
-
 
 # add county id by joining with just LA County census tracts
 race_0_24_wide <- race_0_24_wide %>%
@@ -38,14 +37,13 @@ race_0_24_wide <- race_0_24_wide %>%
   rename(sub_id=geoid)
 race_0_24_wide$target_id <- "06037"
 
-#remove tracts with no population
+# remove tracts with no population
 race_0_24_wide <- race_0_24_wide %>% 
   filter(total_sub_pop != "NA") %>% 
   filter(total_sub_pop > 0)
 
 
 ##### 5. Make county data from tract data ####
-
 race_0_24_wide_county <- race_0_24_wide %>% 
   group_by(target_id) %>% 
   summarize(
@@ -62,8 +60,7 @@ race_0_24_wide_county <- race_0_24_wide %>%
     n=n()
   )
 
-
-#join tract data to county data and format
+# join tract data to county data and format
 pop_df <- left_join(race_0_24_wide, race_0_24_wide_county, by="target_id")
 pop_df$geolevel = "tract"
 pop_df <- pop_df %>% select(sub_id, target_id, geolevel, everything())
@@ -73,7 +70,7 @@ pop_df <- pop_df %>% select(sub_id, target_id, geolevel, everything())
 #set source for WA Functions script
 source("W:/RDA Team/R/Functions/Cnty_St_Wt_Avg_Functions.R")
 
-#run pct_df
+# run pct_df
 pop_threshold = 0
 pct_df <- pop_pct(pop_df) 
 
@@ -99,10 +96,10 @@ missing2 <- anti_join(race_tracts, poll_tracts) %>% nrow()
 ############# 7. Calculate RC calcs ##############
 d <- wa
 
-#remove bipoc from ID calcs
+# remove bipoc from ID calcs
 d <- d %>% select(-bipoc_rate, -bipoc_pop)
 
-#set source for RC Functions script
+# set source for RC Functions script
 source("W:/Project/RACE COUNTS/Functions/RC_Functions.R")
 
 d$asbest = 'min'    #YOU MUST UPDATE THIS FIELD AS NECESSARY: assign 'min' or 'max'
@@ -110,14 +107,12 @@ d$asbest = 'min'    #YOU MUST UPDATE THIS FIELD AS NECESSARY: assign 'min' or 'm
 d <- count_values(d) #calculate number of "_rate" values
 d <- calc_best(d) #calculate best rates -- be sure to update previous line of code accordingly before running this function.
 d <- calc_diff(d) #calculate difference from best
-#d <- calc_avg_diff(d) #calculate (row wise) mean difference from best
-#d <- calc_s_var(d) #calculate (row wise) population or sample variance. be sure to use calc_s_var for sample data or calc_p_var for population data.
 d <- calc_id(d) #calculate index of disparity
 
-#add bipoc data back
+# add bipoc data back
 county_table <- left_join(d, wa %>% select(geoid, bipoc_rate, bipoc_pop), by="geoid")
 
-#pivot to Elycia's desired format
+# pivot to Elycia's desired format
 county_table <- county_table %>% 
   select(-county, -asbest, -n, -best, -values_count, -index_of_disparity) %>% 
   pivot_longer(!geoid, names_to = "subgroup", values_to = "metric") %>% 
@@ -144,7 +139,7 @@ source <- "GreenInfo Network California Protected Areas Database (2023a), Califo
 dbWriteTable(con3, c(schema, table_name), county_table,
              overwrite = FALSE, row.names = FALSE)
 
-#comment on table and columns
+# comment on table and columns
 comment <- paste0("COMMENT ON TABLE ", schema, ".", table_name,  " IS '", indicator, " from ", source, ".';
                                          COMMENT ON COLUMN ", schema, ".", table_name, ".geoid IS 'County fips';
                                          COMMENT ON COLUMN ", schema, ".", table_name, ".name IS 'county name';

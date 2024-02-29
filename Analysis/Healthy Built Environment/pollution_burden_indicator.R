@@ -55,15 +55,6 @@ zips <- zips %>%
   group_by(zipcode) %>%
   summarize()
 
-# # LA County zip to spa xwalk
-# lacounty_zips_sql <- "SELECT DISTINCT zipcode FROM bv_2023.crosswalk_zip_spas_2023;"
-# lacounty_zips <- dbGetQuery(bv_conn, lacounty_zips_sql)
-
-# # Filter for LA County zips and their geoms
-# zctas <- zcta_geoms %>%
-#   rename(zipcode=zcta5ce20) %>%
-#   filter(zipcode %in% lacounty_zips$zipcode)
-
 # LA county 2020 (2020 vintage) tracts 
 tracts_sql <- "SELECT ct_geoid, geom_3310 FROM	bv_2023.cb_2020_06_tract_500k WHERE countyfp='037';"
 tracts <- st_read(bv_conn, query=tracts_sql) %>%
@@ -140,14 +131,12 @@ tracts_childcare_counts <- tracts %>%
 
 ### familyhome counts - 
 # get zip count of familyhomes, join in matched tracts and allocate by prc_zip_area
-
 ccld_familyhomes <- licensed_familyhomes %>%
   group_by(facility_zip) %>%
   summarize(across(everything(), ~n())) %>%
   rename(familyhome_count=gid)
 
 # add in zips that have no familyhomes (not tracked in ccld database) and set count to 0
-
 zips_familyhomes <- zips %>%
   left_join(ccld_familyhomes, by=c("zipcode"="facility_zip"))
 zips_familyhomes$familyhome_count <- replace_na(zips_familyhomes$familyhome_count, 0)
@@ -326,14 +315,6 @@ pollution_burden_tract <- counts_tract %>%
 # 
 # length(unique(check_tracts_no_ces$census_tract)) # 0!
 
-# Total census tracts in LA county with positive SLU sites and CES score: 2495
-
-# calc percentile across all tract-level pollution burden scores
-# pollution_burden_tract_percentile <- pollution_burden_tract %>%
-#   select(census_tract, pollution_burden)
-# 
-# pollution_burden_tract_percentile$percentile <- percent_rank(pollution_burden_tract_percentile$pollution_burden)
-
 
 ##### Step 3: EXPORT TO PG #####
 
@@ -382,6 +363,5 @@ for (i in seq_along(colname_charvar)){
   # send sql comment to database
   dbSendQuery(conn, sqlcolcomment)
 }
-
 
 dbDisconnect(conn)
