@@ -8,7 +8,7 @@ source("bv_barchart_function.R")
 source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
-df_subgroup <- st_read(con, query = "select * from bv_2023.yp_baseorgs_subgroup")
+df_subgroup <- st_read(con, query = "select * from bv_2023.si_mixedstatus_subgroup")
 
 #pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")
@@ -29,20 +29,20 @@ df <- subset(df_subgroup, race != "total" & race != "bipoc") %>%
 fx_barchart_subgroup(
   df = df,
   #be sure to write in the domain this way so it reflects the correct folders that the function will insert the visual deliverables in. 
-  domain = "Youth Power",
-  indicator = "Access to Base-Building Organizations",
+  domain = "Systems Impact",
+  indicator = "Youth in Mixed Status Families",
   # insert a findings based systems led title
-  title = "Advocacy and base-building organizations are less available where Asian and NHPI youth live",
+  title = "Latine youth are more likely to be undocumented or live with family members who are undocumented",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Average percentile(%ile) access to base-building organizations by race in Los Angeles County",
+  subtitle = "Percent of youth who live in mixed status families by race in Los Angeles County",
   #please follow the format of the datasource below
-  caption_datasource = "Catalyst California's calculations of the USC Equity Research Institute, California Health and Justice for All Power-Building Landscape: Defining the Ecosystem (2019); IRS Business Master File Extract (2023); and Cause IQ Nonprofit Directory (2022).",
+  caption_datasource = "USC Equity Research Institute's calculations of American Community Survey Public Use Microdata, 2017-2021 5-Year Estimates, from IPUMS USA and the Survey of Income and Program Participation, 2014.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify with a racial group not presented",
+  caption_racenote = "Another Race=Persons who identify as American Indian or Alaska Native, Native Hawaiian or Pacific Islander, Multiracial, or with another racial group",
   #define the ind
-  caption_indicator_def = "Access to advocacy and base-building organizations is defined as the average percentile (%ile) access each racial group (ages 0-24) has to organizations that are focused on youth advocacy and base-building based on youth population and organizational density in their area. A higher percentile indicates higher access.",
+  caption_indicator_def = "Youth in mixed status families is defined as youth (ages 0-24) who are predicted to be undocumented themselves or live with undocumented family members.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
-  data_unit = "%ile"
+  data_unit = "%"
 )
 
 dbDisconnect(conn = con)
