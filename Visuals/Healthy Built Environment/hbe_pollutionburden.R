@@ -40,15 +40,15 @@ fx_barchart_subgroup(
   domain = "Healthy Built Environment",
   indicator = "Pollution Burden",
   # insert a findings based systems led title
-  title = "Pollution Burden impacts Latine Youth more than any other group",
+  title = "Pollution burden around sensitive land uses is higher in areas where Latine youth live",
   # explanation of what the we are looking at // use sentence case 
-  subtitle = "Average Percentile of Pollution Burden by race in Los Angeles County",
+  subtitle = "Average pollution burden percentile (%ile) around sensitive land uses in Los Angeles County by race",
   # please follow the format of the datasource below
   caption_datasource = data_source,
   # only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; SWANA=Southwest Asian or North African/Middle Eastern or North African; Another Race=Persons who identify with a racial group not presented",
+  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify with a racial group not presented",
   # define the indicator
-  caption_indicator_def = "Pollution Burden is the average percentile of pollution weighted for the proportion of sensitive land uses (e.g., early childcare facilities, schools, and parks).",
+  caption_indicator_def = "Pollution burden around sensitive land uses is the average percentile (%ile) of pollution weighted for the proportion of sensitive land uses (e.g., early childcare facilities, schools, and parks).",
   # define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
-  data_unit = "" # percentile?
+  data_unit = "%ile" # 
 )
