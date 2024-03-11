@@ -636,29 +636,29 @@ drv <- dbDriver("PostgreSQL")
 
 con_bv <- connect_to_db("bold_vision")
 
-dbWriteTable(con_bv, c("bv_2023", "acs_pums_multigeo_2021_youth_0_24_race_long_v2"),long, 
+dbWriteTable(con_bv, c("bv_2023", "acs_pums_multigeo_2021_youth_0_24_race_long"),long, 
              overwrite = FALSE, row.names = FALSE)
 
 ###NEED TO RUN ThE BOTTOM###
 #comment on table and columns
-table_comment <- paste0("COMMENT ON TABLE  bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2  IS 'Non-Latinx and Latinx race counts by PUMA, County, and only for those Ages 0-24, including counts for all-AIAN, all-NHPI, all-SWANA, and all-SWANA/SA (SSWANA).
+table_comment <- paste0("COMMENT ON TABLE  bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long  IS 'Non-Latinx and Latinx race counts by PUMA, County, and only for those Ages 0-24, including counts for all-AIAN, all-NHPI, all-SWANA, and all-SWANA/SA (SSWANA).
   Latinx, non-Latinx, AIAN, NHPI counts are based on race ethnicity fields in the census. SWANA is estimated based on reported ancestry fields. SWANA/SA is estimated based on reported ancestry fields and detailed race/ethnicity for south asian groups.
   See script and QA doc for details.
 See W:/Project/OSI/Bold Vision/BV 2022-2023/R/boldvision_22_23/PUMS_calculations_2017_2021_age024.R W:/Project/OSI/Bold Vision/BV 2022-2023/Documentation/QA_PUMS_race_popcalc.docx'; 
 
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.geoid IS 'GEOID for PUMA, County, or state';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.geolevel IS 'Level of geography for which data are for - puma, county or state';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.geoname IS 'Census name for geography';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.raceeth IS 'Race/ethnicity category nh_ means non-hispanic grouping. AIAN, NHPI, SWANA, and SWANA/SA (SSWANA) are alone or in combo with another race or Latinx.Includes row for total';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.count IS 'Count estimate for race/ethnicity category';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.count_moe IS 'Margin of error at 90% for count estimates';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.count_cv IS 'Coefficient of variation for count estimate';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.rate IS 'Estimated percent for race/ethnicity category out of total population in geography';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.rate_moe IS 'Margin of error at 90% for percent estimate';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.rate_cv IS 'Coefficient of variation for percent estimate';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.pop IS 'Total population estimate for geography';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.pop_moe IS 'Margin of error for total population estimate';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long_v2.pop_cv IS 'Coefficient of variation for population estimate';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.geoid IS 'GEOID for PUMA, County, or state';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.geolevel IS 'Level of geography for which data are for - puma, county or state';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.geoname IS 'Census name for geography';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.raceeth IS 'Race/ethnicity category nh_ means non-hispanic grouping. AIAN, NHPI, SWANA, and SWANA/SA (SSWANA) are alone or in combo with another race or Latinx.Includes row for total';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.count IS 'Count estimate for race/ethnicity category';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.count_moe IS 'Margin of error at 90% for count estimates';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.count_cv IS 'Coefficient of variation for count estimate';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.rate IS 'Estimated percent for race/ethnicity category out of total population in geography';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.rate_moe IS 'Margin of error at 90% for percent estimate';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.rate_cv IS 'Coefficient of variation for percent estimate';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.pop IS 'Total population estimate for geography';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.pop_moe IS 'Margin of error for total population estimate';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_long.pop_cv IS 'Coefficient of variation for population estimate';
                             ")
 
 # send table comment + column metadata
@@ -666,92 +666,92 @@ dbSendQuery(conn = con_bv, table_comment)
 
 
 
-dbWriteTable(con_bv, c("bv_2023", "acs_pums_multigeo_2021_youth_0_24_race_wide_v2"),wide, 
+dbWriteTable(con_bv, c("bv_2023", "acs_pums_multigeo_2021_youth_0_24_race_wide"),wide, 
              overwrite = FALSE, row.names = FALSE)
 
-table_comment_wide <- paste0("COMMENT ON TABLE bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2  IS 'Non-Latinx and Latinx race counts by PUMA, County, and only for those Ages 0-24, including counts for all-AIAN, all-NHPI, all-SWANA, and all-SWANA/SA (SSWANA).
+table_comment_wide <- paste0("COMMENT ON TABLE bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide  IS 'Non-Latinx and Latinx race counts by PUMA, County, and only for those Ages 0-24, including counts for all-AIAN, all-NHPI, all-SWANA, and all-SWANA/SA (SSWANA).
   Latinx, non-Latinx, AIAN, NHPI counts are based on race ethnicity fields in the census. SWANA is estimated based on reported ancestry fields. SWANA/SA is estimated based on reported ancestry fields and detailed race/ethnicity for south asian groups.
   See script and QA doc for details.
 See W:/Project/OSI/Bold Vision/BV 2022-2023/R/boldvision_22_23/PUMS_calculations_2017_2021_age024.R W:/Project/OSI/Bold Vision/BV 2022-2023/Documentation/QA_PUMS_race_popcalc.docx';
                                
-  COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.geoid IS 'GEOID for PUMA, County, or state';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.geolevel IS 'Level of geography for which data are for - puma, county or state';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.geoname IS 'Census name for geography';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_aian_count IS 'Count estimate for NH AIAN';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_asian_count IS 'Count estimate for NH Asian';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_black_count IS 'Count estimate for NH Black';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_other_count IS 'Count estimate for NH Other';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_pacisl_count IS 'Count estimate for NH NHPI';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_twoormor_count IS 'Count estimate for NH Two or More';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_white_count IS 'Count estimate for NH White';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.latino_count IS 'Count estimate for Latino';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.aian_count IS 'Count estimate for AIAN alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.pacisl_count IS 'Count estimate for NHPI alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.swana_count IS 'Count estimate for SWANA alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_aian_count_moe IS 'Margin of error at 90% for count estimate for NH AIAN';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_asian_count_moe IS 'Margin of error at 90% for count estimate for NH Asian';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_black_count_moe IS 'Margin of error at 90% for count estimate for NH Black';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_other_count_moe IS 'Margin of error at 90% for count estimate for NH Other';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_pacisl_count_moe IS 'Margin of error at 90% for count estimate for NH NHPI';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_twoormor_count_moe IS 'Margin of error at 90% for count estimate for NH Two or More';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_white_count_moe IS 'Margin of error at 90% for count estimate for NH White';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.latino_count_moe IS 'Margin of error at 90% for count estimate for Latino';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.aian_count_moe IS 'Margin of error at 90% for count estimate for AIAN alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.pacisl_count_moe IS 'Margin of error at 90% for count estimate for NHPI alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.swana_count_moe IS 'Margin of error at 90% for count estimate for SWANA alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_aian_count_cv IS 'Coefficient of variation for count estimate for NH AIAN';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_asian_count_cv IS 'Coefficient of variation for count estimate for NH Asian';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_black_count_cv IS 'Coefficient of variation for count estimate for NH Black';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_other_count_cv IS 'Coefficient of variation for count estimate for NH Other';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_pacisl_count_cv IS 'Coefficient of variation for count estimate for NH NHPI';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_twoormor_count_cv IS 'Coefficient of variation for count estimate for NH Two or More';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_white_count_cv IS 'Coefficient of variation for count estimate for NH White';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.latino_count_cv IS 'Coefficient of variation for count estimate for Latino';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.aian_count_cv IS 'Coefficient of variation for count estimate for AIAN alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.pacisl_count_cv IS 'Coefficient of variation for count estimate for NHPI alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.swana_count_cv IS 'Coefficient of variation for count estimate for SWANA alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_aian_rate IS 'Estimated percent for NH AIAN out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_asian_rate IS 'Estimated percent for NH Asian out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_black_rate IS 'Estimated percent for NH Black out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_other_rate IS 'Estimated percent for NH Other out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_pacisl_rate IS 'Estimated percent for NH NHPI out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_twoormor_rate IS 'Estimated percent for NH Two or More out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_white_rate IS 'Estimated percent for NH White out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.latino_rate IS 'Estimated percent for Latino out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.aian_rate IS 'Estimated percent for AIAN alone or in combo out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.pacisl_rate IS 'Estimated percent for NHPI alone or in combo out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.swana_rate IS 'Estimated percent for SWANA alone or in combo out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_aian_rate_moe IS 'Margin of error at 90% for percent estimate for NH AIAN';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_asian_rate_moe IS 'Margin of error at 90% for percent estimate for NH Asian';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_black_rate_moe IS 'Margin of error at 90% for percent estimate for NH Black';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_other_rate_moe IS 'Margin of error at 90% for percent estimate for NH Other';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_pacisl_rate_moe IS 'Margin of error at 90% for percent estimate for NH NHPI';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_twoormor_rate_moe IS 'Margin of error at 90% for percent estimate for NH Two or More';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_white_rate_moe IS 'Margin of error at 90% for percent estimate for NH White';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.latino_rate_moe IS 'Margin of error at 90% for percent estimate for Latino';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.aian_rate_moe IS 'Margin of error at 90% for percent estimate for AIAN alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.pacisl_rate_moe IS 'Margin of error at 90% for percent estimate for NHPI alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.swana_rate_moe IS 'Margin of error at 90% for percent estimate for SWANA alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_aian_rate_cv IS 'Coefficient of variation for percent estimate for NH AIAN';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_asian_rate_cv IS 'Coefficient of variation for percent estimate for NH Asian';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_black_rate_cv IS 'Coefficient of variation for percent estimate for NH Black';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_other_rate_cv IS 'Coefficient of variation for percent estimate for NH Other';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_pacisl_rate_cv IS 'Coefficient of variation for percent estimate for NH NHPI';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_twoormor_rate_cv IS 'Coefficient of variation for percent estimate for NH Two or More';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.nh_white_rate_cv IS 'Coefficient of variation for percent estimate for NH White';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.latino_rate_cv IS 'Coefficient of variation for percent estimate for Latino';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.aian_rate_cv IS 'Coefficient of variation for percent estimate for AIAN alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.pacisl_rate_cv IS 'Coefficient of variation for percent estimate for NHPI alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.swana_rate_cv IS 'Coefficient of variation for percent estimate for SWANA alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.pop IS 'Population count';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.pop_moe IS 'Margin of error for population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.pop_cv IS 'Coefficient of variation for population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.sswana_count IS 'Count estimate for SWANA/SA alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.sswana_rate IS 'Estimated percent for SWANA/SA alone or in combo out of total population';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.sswana_rate_moe IS 'Margin of error at 90% for percent estimate for SWANA/SA alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.sswana_rate_cv IS 'Coefficient of variation for percent estimate for SWANA/SA alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.sswana_count_cv IS 'Coefficient of variation for count estimate for SWANA/SA alone or in combo';
-COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide_v2.sswana_count_moe IS 'Margin of error at 90% for count estimate for SWANA/SA alone or in combo';
+  COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.geoid IS 'GEOID for PUMA, County, or state';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.geolevel IS 'Level of geography for which data are for - puma, county or state';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.geoname IS 'Census name for geography';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_aian_count IS 'Count estimate for NH AIAN';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_asian_count IS 'Count estimate for NH Asian';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_black_count IS 'Count estimate for NH Black';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_other_count IS 'Count estimate for NH Other';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_pacisl_count IS 'Count estimate for NH NHPI';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_twoormor_count IS 'Count estimate for NH Two or More';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_white_count IS 'Count estimate for NH White';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.latino_count IS 'Count estimate for Latino';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.aian_count IS 'Count estimate for AIAN alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.pacisl_count IS 'Count estimate for NHPI alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.swana_count IS 'Count estimate for SWANA alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_aian_count_moe IS 'Margin of error at 90% for count estimate for NH AIAN';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_asian_count_moe IS 'Margin of error at 90% for count estimate for NH Asian';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_black_count_moe IS 'Margin of error at 90% for count estimate for NH Black';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_other_count_moe IS 'Margin of error at 90% for count estimate for NH Other';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_pacisl_count_moe IS 'Margin of error at 90% for count estimate for NH NHPI';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_twoormor_count_moe IS 'Margin of error at 90% for count estimate for NH Two or More';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_white_count_moe IS 'Margin of error at 90% for count estimate for NH White';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.latino_count_moe IS 'Margin of error at 90% for count estimate for Latino';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.aian_count_moe IS 'Margin of error at 90% for count estimate for AIAN alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.pacisl_count_moe IS 'Margin of error at 90% for count estimate for NHPI alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.swana_count_moe IS 'Margin of error at 90% for count estimate for SWANA alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_aian_count_cv IS 'Coefficient of variation for count estimate for NH AIAN';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_asian_count_cv IS 'Coefficient of variation for count estimate for NH Asian';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_black_count_cv IS 'Coefficient of variation for count estimate for NH Black';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_other_count_cv IS 'Coefficient of variation for count estimate for NH Other';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_pacisl_count_cv IS 'Coefficient of variation for count estimate for NH NHPI';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_twoormor_count_cv IS 'Coefficient of variation for count estimate for NH Two or More';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_white_count_cv IS 'Coefficient of variation for count estimate for NH White';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.latino_count_cv IS 'Coefficient of variation for count estimate for Latino';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.aian_count_cv IS 'Coefficient of variation for count estimate for AIAN alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.pacisl_count_cv IS 'Coefficient of variation for count estimate for NHPI alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.swana_count_cv IS 'Coefficient of variation for count estimate for SWANA alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_aian_rate IS 'Estimated percent for NH AIAN out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_asian_rate IS 'Estimated percent for NH Asian out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_black_rate IS 'Estimated percent for NH Black out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_other_rate IS 'Estimated percent for NH Other out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_pacisl_rate IS 'Estimated percent for NH NHPI out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_twoormor_rate IS 'Estimated percent for NH Two or More out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_white_rate IS 'Estimated percent for NH White out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.latino_rate IS 'Estimated percent for Latino out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.aian_rate IS 'Estimated percent for AIAN alone or in combo out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.pacisl_rate IS 'Estimated percent for NHPI alone or in combo out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.swana_rate IS 'Estimated percent for SWANA alone or in combo out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_aian_rate_moe IS 'Margin of error at 90% for percent estimate for NH AIAN';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_asian_rate_moe IS 'Margin of error at 90% for percent estimate for NH Asian';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_black_rate_moe IS 'Margin of error at 90% for percent estimate for NH Black';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_other_rate_moe IS 'Margin of error at 90% for percent estimate for NH Other';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_pacisl_rate_moe IS 'Margin of error at 90% for percent estimate for NH NHPI';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_twoormor_rate_moe IS 'Margin of error at 90% for percent estimate for NH Two or More';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_white_rate_moe IS 'Margin of error at 90% for percent estimate for NH White';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.latino_rate_moe IS 'Margin of error at 90% for percent estimate for Latino';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.aian_rate_moe IS 'Margin of error at 90% for percent estimate for AIAN alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.pacisl_rate_moe IS 'Margin of error at 90% for percent estimate for NHPI alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.swana_rate_moe IS 'Margin of error at 90% for percent estimate for SWANA alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_aian_rate_cv IS 'Coefficient of variation for percent estimate for NH AIAN';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_asian_rate_cv IS 'Coefficient of variation for percent estimate for NH Asian';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_black_rate_cv IS 'Coefficient of variation for percent estimate for NH Black';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_other_rate_cv IS 'Coefficient of variation for percent estimate for NH Other';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_pacisl_rate_cv IS 'Coefficient of variation for percent estimate for NH NHPI';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_twoormor_rate_cv IS 'Coefficient of variation for percent estimate for NH Two or More';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.nh_white_rate_cv IS 'Coefficient of variation for percent estimate for NH White';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.latino_rate_cv IS 'Coefficient of variation for percent estimate for Latino';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.aian_rate_cv IS 'Coefficient of variation for percent estimate for AIAN alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.pacisl_rate_cv IS 'Coefficient of variation for percent estimate for NHPI alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.swana_rate_cv IS 'Coefficient of variation for percent estimate for SWANA alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.pop IS 'Population count';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.pop_moe IS 'Margin of error for population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.pop_cv IS 'Coefficient of variation for population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.sswana_count IS 'Count estimate for SWANA/SA alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.sswana_rate IS 'Estimated percent for SWANA/SA alone or in combo out of total population';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.sswana_rate_moe IS 'Margin of error at 90% for percent estimate for SWANA/SA alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.sswana_rate_cv IS 'Coefficient of variation for percent estimate for SWANA/SA alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.sswana_count_cv IS 'Coefficient of variation for count estimate for SWANA/SA alone or in combo';
+COMMENT ON COLUMN bv_2023.acs_pums_multigeo_2021_youth_0_24_race_wide.sswana_count_moe IS 'Margin of error at 90% for count estimate for SWANA/SA alone or in combo';
                                
                                ")
 
