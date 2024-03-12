@@ -644,9 +644,9 @@ final_city_sp <- left_join(final_city, citysp, by=c("NAME","geoid")) %>%
 # Reorder the columns and make sure the ID fields match
 #county
 final_county_sp <- final_county_sp %>% select(-c(geolevel, category)) %>% mutate(asbest = "max") %>% 
-  rename("name"="NAME", "best"="max") 
+  rename("name"="NAME", "best"="max", "subgroup"="race") 
 
-col_order <- c("geoid", "name", "race", "asbest", "best", "values_count", "pop", "count", "rate", "rate_se", "rate_cv", 
+col_order <- c("geoid", "name", "subgroup", "asbest", "best", "values_count", "pop", "count", "rate", "rate_se", "rate_cv", 
                "diff", "index_of_disparity","geometry")
 
 final_county_sp <- final_county_sp[, col_order]
@@ -679,7 +679,7 @@ dbWriteTable(conBV, c("bv_2023", "yp_civic_engage_youth_subgroup"), final_county
              field.types = c(
                geoid= "varchar",
                name = "varchar",
-               race = "varchar",
+               subgroup = "varchar",
                asbest = "varchar",
                best = "numeric",
                values_count = "integer",
@@ -707,7 +707,7 @@ This table was prepared in the R script W:\\Project\\OSI\\Bold Vision\\BV 2023\\
 
 COMMENT ON COLUMN bv_2023.yp_civic_engage_youth_subgroup.geoid IS 'Geographic ID.';
 COMMENT ON COLUMN bv_2023.yp_civic_engage_youth_subgroup.name IS 'Geography name.';
-COMMENT ON COLUMN bv_2023.yp_civic_engage_youth_subgroup.race IS 'Race/ethnicity category. Race groups are exclusive of latino, except aian and pacisl. Race codes for aian and pacisl are All aian and All pacisl.';
+COMMENT ON COLUMN bv_2023.yp_civic_engage_youth_subgroup.subgroup IS 'Race/ethnicity category. Race groups are exclusive of latino, except aian and pacisl. Race codes for aian and pacisl are All aian and All pacisl.';
 COMMENT ON COLUMN bv_2023.yp_civic_engage_youth_subgroup.count IS 'Estimated count of youth (18-29) who report having participated in their community/been civically engaged.';
 COMMENT ON COLUMN bv_2023.yp_civic_engage_youth_subgroup.pop IS 'Youth (18-29) population';
 COMMENT ON COLUMN bv_2023.yp_civic_engage_youth_subgroup.rate IS 'Percent of youth (18-29) who report having participated in their community/been civically engaged.';
