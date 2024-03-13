@@ -48,7 +48,7 @@ fx_barchart_subgroup(
   # only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify with a racial group not presented",
   # define the indicator
-  caption_indicator_def = "Pollution burden around sensitive land uses is the average pollution burden percentile (%ile) for youth (ages 0-24 years old). A higher percentile indicates higher exposure to pollution.",
+  caption_indicator_def = "Pollution burden around sensitive land uses (defined as parks, family childcare homes, early childcare centers, and schools) is the average pollution burden percentile (%ile) for youth (ages 0-24 years old). A higher percentile indicates higher exposure to pollution.",
   # define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%ile" # 
 )
