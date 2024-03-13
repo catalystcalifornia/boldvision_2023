@@ -31,7 +31,7 @@ df_subgroup <- left_join(df_subgroup, race_label_df, by=c("race" = "race_base"))
 #### Step 4: Arrange by rate and take away the total and bipoc data if you have it
 df <- subset(df_subgroup, race != "total" & race != "bipoc") %>%
   arrange(rate) 
-data_source <- "Catalyst California's calculations of GreenInfo Network's California Protected Areas Database (2023a) & School Campus Database (2021), California Community Care Licensing Division (2023), and California OEHHA CalEnviroScreen 4.0 (2021)."
+data_source <- "Catalyst California's calculations of GreenInfo Network's California Protected Areas (2023a) & School Campus (2021) Databases, California Community Care Licensing Division (2023), and California OEHHA CalEnviroScreen 4.0 (2021)."
 
 ####Step 4: Run the function ####
 fx_barchart_subgroup(
