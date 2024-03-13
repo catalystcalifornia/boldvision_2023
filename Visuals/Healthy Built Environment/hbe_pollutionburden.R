@@ -31,7 +31,7 @@ df_subgroup <- left_join(df_subgroup, race_label_df, by=c("race" = "race_base"))
 #### Step 4: Arrange by rate and take away the total and bipoc data if you have it
 df <- subset(df_subgroup, race != "total" & race != "bipoc") %>%
   arrange(rate) 
-data_source <- "Catalyst California's calculations based on GreenInfo Network California Protected Areas Database (2023a), California Community Care Licensing Division (2023), GreenInfo California School Campus Database (2021), California Office of Environmental Health Hazard Assessment CalEnviroScreen 4.0 (2021), Census DHC (2020)."
+data_source <- "Catalyst California's calculations of GreenInfo Network's California Protected Areas Database (2023a) & School Campus Database (2021), California Community Care Licensing Division (2023), and California OEHHA CalEnviroScreen 4.0 (2021)."
 
 ####Step 4: Run the function ####
 fx_barchart_subgroup(
@@ -42,13 +42,13 @@ fx_barchart_subgroup(
   # insert a findings based systems led title
   title = "Pollution burden around sensitive land uses is higher in areas where Latine youth live",
   # explanation of what the we are looking at // use sentence case 
-  subtitle = "Average pollution burden percentile (%ile) around sensitive land uses in Los Angeles County by race",
+  subtitle = "Average pollution burden percentile (%ile) around sensitive land uses for youth in LA County by race",
   # please follow the format of the datasource below
   caption_datasource = data_source,
   # only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify with a racial group not presented",
   # define the indicator
-  caption_indicator_def = "Pollution burden around sensitive land uses is the average percentile (%ile) of pollution weighted for the proportion of sensitive land uses (e.g., early childcare facilities, schools, and parks).",
+  caption_indicator_def = "Pollution burden around sensitive land uses is the average pollution burden percentile (%ile) around sensitive land uses for youth (ages 0-24 years old). A higher percentile indicates higher exposure to pollution.",
   # define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%ile" # 
 )
