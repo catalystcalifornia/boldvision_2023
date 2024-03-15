@@ -36,13 +36,13 @@ fx_barchart_subgroup(
   # insert a findings based systems led title
   title = "Voting in elections is least likely among Asian and Latine youth",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percentage of youth eligible voter turnout in Los Angeles County",
+  subtitle = "Percent of eligible youth voter turnout by race in Los Angeles County",
   #please follow the format of the data source below
   caption_datasource = "Catalyst California's calculations of IPUMS CPS Voting Supplements, pooled estimates from 2014, 2016, 2018, 2020.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander. NHPI estimates are unstable",
   #define the indicator
-  caption_indicator_def = "Eligible youth voters are defined as adult citizens, age range 18-29 years who voted during presidential and midterm elections.",
+  caption_indicator_def = "Eligible youth voter turnout is defined as youth citizens, age range 18-29 years who voted during presidential and midterm elections.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )
