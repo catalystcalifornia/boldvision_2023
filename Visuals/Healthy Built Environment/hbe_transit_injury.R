@@ -35,15 +35,15 @@ fx_barchart_subgroup(
   domain = "Healthy Built Environment",
   indicator = "Transit Injuries",
   # insert a findings based systems led title
-  title = "Black youth are killed or severely injured by traffic collisions at a higher rate than any other group",
+  title = "Black youth are killed or severely injured by traffic collisions more than any other group",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Youth Transit Injuries/Fatalities in Los Angeles County",
+  subtitle = "Youth pedestrian and bicyclist fatalities/severe injuries per 100k youth of same race in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations of Transportation Injury Mapping System data, 2018-2022",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify with a racial group not presented",
   #define the indicator
-  caption_indicator_def = "Transit Injuries defined as youth (0-24) who are pedestrians or bicyclists and killed or severely injured by a traffic collision. Rates by race are extrapolated based on census tract demographics.",
+  caption_indicator_def = "Transit injuries defined as youth (0-24) who are pedestrians or bicyclists and killed or severely injured by a traffic collision. Rates by race are extrapolated based on census tract demographics.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = " per 
 100k"
