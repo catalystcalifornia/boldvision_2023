@@ -54,9 +54,9 @@ fx_barchart_subgroup(
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations of Los Angeles County Sheriff Department (LASD), Los Angeles Police Department (LAPD), California Department of Justice (DOJ) Racial and Identity Profiling Act (RIPA), and Los Angeles County Department of Youth Development data, 2022.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; API = Asian and Pacific Islander;SWANA/SA=Southwest Asian (Middle Eastern) or North African, or South Asian; Multiracial = Persons identified as two or more races or another race",
+  caption_racenote = "AIAN=American Indian or Alaska Native; API = Asian and Pacific Islander; SWANA/SA=Southwest Asian (Middle Eastern) or North African, or South Asian; Multiracial = Persons identified as two or more races or another race. Estimates for multiracial may be unreliable due to data reporting differences.",
   #define the indicator
-  caption_indicator_def = "Youth diversion defined as youth (ages 0-20) who are enrolled and substantially completed diversion program in Los Angeles County.",
+  caption_indicator_def = "Youth diversion defined as youth (ages 0-20) who are enrolled in and substantially completed a diversion program in Los Angeles County per one thousand youth arrests.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = " per 1k"
 )
