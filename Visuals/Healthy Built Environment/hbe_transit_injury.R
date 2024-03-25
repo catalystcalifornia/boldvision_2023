@@ -8,7 +8,7 @@ source("bv_barchart_function.R")
 source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
-# academic attainment
+# transit
 df_subgroup <- st_read(con, query = "select * from bv_2023.hbe_transit_injury_subgroup") %>% rename(race = subgroup)
 
 #pull race labels
@@ -35,15 +35,15 @@ fx_barchart_subgroup(
   domain = "Healthy Built Environment",
   indicator = "Transit Injuries",
   # insert a findings based systems led title
-  title = "Black youth are killed or severely injured by a motor vehicle at a higher rate than any other race group",
+  title = "Black youth are killed or severely injured by traffic collisions at a higher rate than any other group",
   #explanation of what the we are looking at // use sentence case 
   subtitle = "Youth Transit Injuries/Fatalities in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations of Transportation Injury Mapping System data, 2018-2022",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; SWANA=Southwest Asian or North African/Middle Eastern or North African; Another Race=Persons who identify with a racial group not presented",
+  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify with a racial group not presented",
   #define the indicator
-  caption_indicator_def = "Transit Injuries defined as youth (0-24) who are pedestrians or bicyclists and killed or severely injured by a motor vehicle",
+  caption_indicator_def = "Transit Injuries defined as youth (0-24) who are pedestrians or bicyclists and killed or severely injured by a traffic collision. Rates by race are extrapolated based on census tract demographics.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = " per 
 100k"

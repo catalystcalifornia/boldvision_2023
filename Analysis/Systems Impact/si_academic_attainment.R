@@ -100,7 +100,7 @@ subgroup_diff <- df_county  %>% pivot_longer(
 subgroup <- subgroup_count %>% left_join(subgroup_pop) %>% left_join(subgroup_diff)  %>% left_join(subgroup_rate)
 
 # bipoc calcs
-bipoc <- subgroup %>% filter(!subgroup %in% c("total", "foster", "nh_white")) %>% select(-diff) %>% mutate(count = sum(count), pop = sum(pop), diff = NA, rate = (count/pop), subgroup = "bipoc") %>% distinct(geoid, name, subgroup, count, pop, diff, rate)
+bipoc <- subgroup %>% filter(!subgroup %in% c("total", "foster", "nh_white")) %>% select(-diff) %>% mutate(count = sum(count), pop = sum(pop), diff = NA, rate = (count/pop)*100, subgroup = "bipoc") %>% distinct(geoid, name, subgroup, count, pop, diff, rate)
 
 # add bipoc to table
 subgroup <- rbind(subgroup, bipoc)
@@ -178,8 +178,8 @@ schema <- 'bv_2023'
 
 indicator <- "Academic Attainment"
 source <- "California Department of Education Four-Year Adjusted Cohort Graduation Rate 2021-22: https://www.cde.ca.gov/ds/ad/filesacgr.asp. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\System Impact\\QA_Academic_Attainment.docx"
-# dbWriteTable(con3, c(schema, table_name), subgroup,
-#             overwrite = FALSE, row.names = FALSE)
+dbWriteTable(con3, c(schema, table_name), subgroup,
+             overwrite = FALSE, row.names = FALSE)
 
 #comment on table and columns
 
@@ -196,7 +196,7 @@ comment <- paste0("COMMENT ON TABLE ", schema, ".", table_name,  " IS '", indica
                   COMMENT ON COLUMN ", schema, ".", table_name, ".index_of_disparity IS 'index of disparity(note: this excludes foster group)';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".values_count IS 'number of values';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".asbest IS 'minimum or maximum as best';")
-# dbSendQuery(con3, comment)
+ dbSendQuery(con3, comment)
 
 
 # SPA ---------------------------------------------------------------------
@@ -208,8 +208,8 @@ schema <- 'bv_2023'
 
 indicator <- "Academic Attainment"
 source <- "California Department of Education Four-Year Adjusted Cohort Graduation Rate 2021-22: https://www.cde.ca.gov/ds/ad/filesacgr.asp. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\System Impact\\QA_Academic_Attainment.docx"
-#dbWriteTable(con3, c(schema, table_name), df_region,
-#             overwrite = FALSE, row.names = FALSE)
+dbWriteTable(con3, c(schema, table_name), df_region,
+             overwrite = FALSE, row.names = FALSE)
 
 #comment on table and columns
 
@@ -227,7 +227,7 @@ comment <- paste0("
                   COMMENT ON COLUMN ", schema, ".", table_name, ".values_count IS 'number of values';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".index_of_disparity IS 'index of disparity';
                   ")
-#dbSendQuery(con3, comment)
+dbSendQuery(con3, comment)
 
 
 #disconnect
