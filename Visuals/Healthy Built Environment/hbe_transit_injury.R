@@ -8,7 +8,7 @@ source("bv_barchart_function.R")
 source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
-# academic attainment
+# transit
 df_subgroup <- st_read(con, query = "select * from bv_2023.hbe_transit_injury_subgroup") %>% rename(race = subgroup)
 
 #pull race labels

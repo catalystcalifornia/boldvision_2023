@@ -62,15 +62,15 @@ fx_barchart_subgroup(
   domain = "Systems Impact",
   indicator = "Academic Attainment",
   # insert a findings based systems led title
-  title = "Educational Institutions are less likely to graduate AIAN and Black Youth",
+  title = "Educational institutions are less likely to graduate systems-impacted AIAN and Black youth",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Four-year Cohort Graduation rate by race in Los Angeles County",
+  subtitle = "Four-year graduation rates among systems-impacted youth by race in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations of California Department of Education (CDE) Four-year Cohort Graduation rate data, 2021-2022",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; SWANA=Southwest Asian or North African/Middle Eastern or North African; Another Race=Persons who identify with a racial group not presented",
+  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander",
   #define the indicator
-  caption_indicator_def = "Academic Attainment for youth who are enrolled in Dashboard Alternative School Status (DASS), Charter schools",
+  caption_indicator_def = "Graduation rates among systems-impacted youth are defined as the percentage of foster youth and youth enrolled in Dashboard Alternative School Status (DASS) schools who graduate within four-years.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )
