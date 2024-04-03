@@ -33,7 +33,7 @@ fx_barchart_subgroup(
   domain = "Youth Power",
   indicator = "Living Wage",
   # insert a findings based systems led title
-  title = "Black and Latinx Youth on average are less likely to receive a living wage",
+  title = "Black and Latine youth on average are less likely to receive a living wage",
   #explanation of what the we are looking at // use sentence case 
   subtitle = "Percent of youth receiving a living wage",
   #please follow the format of the datasource below
