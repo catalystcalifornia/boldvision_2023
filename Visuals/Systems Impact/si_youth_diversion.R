@@ -7,8 +7,7 @@ source("bv_barchart_function.R")
 
 source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
-
-# academic attainment
+# youth diversion
 df_subgroup <- st_read(con, query = "select * from bv_2023.si_youth_diversion_subgroup") %>% rename(race = subgroup)
 
 
@@ -49,17 +48,17 @@ fx_barchart_subgroup(
   domain = "Systems Impact",
   indicator = "Youth Diversion",
   # insert a findings based systems led title
-  title = "Black youth have a lower enrollment and completion rate in diversion programs compared to other racial groups",
+  title = "Black youth who are arrested experience the lowest diversion rates compared to other groups",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Youth diversion rate by race in Los Angeles County",
+  subtitle = "Youth diversion rate per 1k youth arrests by race in Los Angeles County.",
   #please follow the format of the datasource below
-  caption_datasource = "Catalyst California's calculations of Los Angeles County Sheriff Department (LASD), Los Angeles Police Department (LAPD), California Department of Justice (DOJ) Racial and Identity Profiling Act (RIPA), and Los Angeles County Department of Youth Development data, 2022",
+  caption_datasource = "Catalyst California's calculations of Los Angeles County Sheriff Department (LASD), Los Angeles Police Department (LAPD), California Department of Justice (DOJ) Racial and Identity Profiling Act (RIPA), and Los Angeles County Department of Youth Development data, 2022.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; API = Asian and Pacific Islander; SWANA=Southwest Asian or North African/Middle Eastern or North African; Another Race=Persons who identify with a racial group not presented",
+  caption_racenote = "AIAN=American Indian or Alaska Native; API = Asian and Pacific Islander; SWANA/SA=Southwest Asian (Middle Eastern) or North African, or South Asian; Multiracial = Persons identified as two or more races or another race. Estimates for multiracial may be unreliable due to data reporting differences.",
   #define the indicator
-  caption_indicator_def = "Youth diversion defined as youth (ages 0-20) who are enrolled and substantially completed diversion program in Los Angeles County",
+  caption_indicator_def = "Youth diversion defined as youth (ages 0-20) who are enrolled in and substantially completed a diversion program in Los Angeles County per one thousand youth arrests.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
-  data_unit = "per 1k"
+  data_unit = " per 1k"
 )
 
 dbDisconnect(conn = con)
