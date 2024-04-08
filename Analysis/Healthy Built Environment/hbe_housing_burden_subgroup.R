@@ -49,7 +49,7 @@ la_cnty_youth<-la_cnty_youth%>%
 ###### Set up codes for SWANA ######
 # First use ancestry codes to help identify estimated swana pop
 ## Create list of swana codes for PUMS
-pums_swana_list<-list("Algerian","Arab","Assyrian","Bahraini","Berber","Chaldean","Egyptian","Emirati","Iranian","Iraqi","Israeli","Jordanian","Kurdish","Kuwaiti","Lebanese","Libyan","Middle Eastern","Moroccan","North African","Omani","Palestinian","Qatari","Saudi","Syriac","Syrian","Tunisian","Yazidi","Yemeni","Mideast","Saudi Arabian","Arabic","Other Arab","Libyan (2017 or later)","Kuwaiti (2017 or later)","Turkish","Sudanese","Afghan") # 2017 or later needed based on reviewing data dictionary and saw fields for Arabic and Other Arab
+pums_swana_list<-list("Armenian","Algerian","Arab","Assyrian","Bahraini","Berber","Chaldean","Egyptian","Emirati","Iranian","Iraqi","Israeli","Jordanian","Kurdish","Kuwaiti","Lebanese","Libyan","Middle Eastern","Moroccan","North African","Omani","Palestinian","Qatari","Saudi","Syriac","Syrian","Tunisian","Yazidi","Yemeni","Mideast","Saudi Arabian","Arabic","Other Arab","Libyan (2017 or later)","Kuwaiti (2017 or later)","Turkish","Sudanese","Afghan") # 2017 or later needed based on reviewing data dictionary and saw fields for Arabic and Other Arab
 
 ## import PUMS codes
 pums_codes <- read_excel("W:/Data/Demographics/PUMS/CA_2017_2021/PUMS_Data_Dictionary_2017-2021_ANC1P.xlsx")%>%
@@ -351,7 +351,7 @@ county_table$subgroup[which(county_table$subgroup == "nhpi")] = "pacisl"
 
 ###Send to Postgres###
 con3 <- connect_to_db("bold_vision")
-table_name <- "hbe_housing_burden_subgroup"
+table_name <- "hbe_housing_burden_subgroup_test"
 schema <- 'bv_2023'
 
 indicator <- "Housing Burden (%) is the percent of youth 0-24 in renter households paying 30% or more of income for rent."
