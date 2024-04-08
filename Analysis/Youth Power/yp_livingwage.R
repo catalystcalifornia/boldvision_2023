@@ -24,8 +24,6 @@ library(ggchicklet)
 
 options(scipen = 100) # disable scientific notation
 
-#For Visual Functions in Steps D
-source("W:\\Project\\OSI\\Bold Vision\\BV 2023\\R\\boldvision_22_23\\bv_visuals_functions.R")
 
 # create connection for bv database
 source("W:\\RDA Team\\R\\credentials_source.R")
@@ -56,7 +54,7 @@ ppl <-
 ###### Set up codes for SWANA ##
 # First use ancestry codes to help identify estimated swana pop
 ## Create list of swana codes for PUMS
-pums_swana_list<-list("Algerian","Arab","Assyrian","Bahraini","Berber","Chaldean","Egyptian","Emirati","Iranian","Iraqi","Israeli","Jordanian","Kurdish","Kuwaiti","Lebanese","Libyan","Middle Eastern","Moroccan","North African","Omani","Palestinian","Qatari","Saudi","Syriac","Syrian","Tunisian","Yazidi","Yemeni","Mideast","Saudi Arabian","Arabic","Other Arab","Libyan (2017 or later)","Kuwaiti (2017 or later)","Turkish","Sudanese","Afghan") # 2017 or later needed based on reviewing data dictionary and saw fields for Arabic and Other Arab
+pums_swana_list<-list("Armenian","Algerian","Arab","Assyrian","Bahraini","Berber","Chaldean","Egyptian","Emirati","Iranian","Iraqi","Israeli","Jordanian","Kurdish","Kuwaiti","Lebanese","Libyan","Middle Eastern","Moroccan","North African","Omani","Palestinian","Qatari","Saudi","Syriac","Syrian","Tunisian","Yazidi","Yemeni","Mideast","Saudi Arabian","Arabic","Other Arab","Libyan (2017 or later)","Kuwaiti (2017 or later)","Turkish","Sudanese","Afghan") # 2017 or later needed based on reviewing data dictionary and saw fields for Arabic and Other Arab
 
 ## import PUMS codes
 pums_codes <- read_excel("W:/Data/Demographics/PUMS/CA_2017_2021/PUMS_Data_Dictionary_2017-2021_ANC1P.xlsx")%>%
@@ -191,216 +189,216 @@ ppl$living_wage <- case_when(ppl$hrly_wage >= 16.90 ~ "livable", ppl$hrly_wage <
 
 
 
-#### STEP 1A: Calculate the rate of living wage by puma (just for QA purposes, not exporting this table)####
-##Create survey design youth earning a living wage by PUMA by race/ethnicity 
-survey_design <- ppl %>%      # Use the filtered data (only 14-24 years)
-  as_survey_rep(
-    variables = c(puma, race, latino, aian, pacisl, swana, bipoc, living_wage),   # select grouping variables
-    weights = weight,                        # person weight
-    repweights = all_of(repwlist),          # list of replicate weights
-    combined_weights = TRUE,                # tells the function that replicate weights are included in the data
-    mse =TRUE,                              # tells the function to calc mse
-    type="other",                           # statistical method
-    scale=4/80,                             # scaling set by ACS
-    rscale=rep(1,80)                        # setting specific to ACS-scaling
-  )
-
-survey_design
-
-##### Summarize count of youth earning a living wage by PUMA by race/ethnicity ##
-
-### Summarize by race
-lw_race <- 
-  
-  # Calculate numerator
-  survey_design %>%
-  group_by(puma, race, living_wage) %>%   
-  summarise(
-    count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
-    rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
-  ) %>%       
-  
-  # join in denominator
-  left_join(survey_design %>%                                # left join in the denominators
-              group_by(puma, race) %>%                       # group by race/eth and puma
-              summarise(pop = survey_total(na.rm = T))) %>%           # get the weighted total
-  mutate(
-    rate = rate*100,                                                # calc the % 
-    rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
-    rate_cv = ((rate_moe/1.645)/rate)*100,
-    count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
-    count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation 
-  ) %>%                             # calculate the coefficient of variation 
-  
-  # remove NAs--these are groups coded other ways (latino, all aian, all pacisl)
-  filter(!is.na(race))
-
-# review
-head(lw_race)
-
-
-### Summarize by latino
-lw_lat <- 
-  survey_design %>%
-  group_by(puma, latino, living_wage) %>%   
-  summarise(
-    count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
-    rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
-  ) %>%          
-  
-  left_join(survey_design %>%                                           
-              group_by(puma, latino) %>%                    
-              summarise(pop = survey_total(na.rm = T))) %>%        
-  mutate(
-    rate = rate*100,                                                # calc the % 
-    rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
-    rate_cv = ((rate_moe/1.645)/rate)*100,
-    count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
-    count_cv = ((count_moe/1.645)/count) * 100) %>%    # calculate cv for numerator count                           # calculate the coefficient of variation 
-  filter(latino !="not latino") %>% 
-  rename("race"=latino)
-
-# review
-head(lw_lat)
-
-
-### Summarize by All AIAN
-lw_aian <- 
-  survey_design %>%
-  group_by(puma, aian, living_wage) %>%   
-  summarise(
-    count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
-    rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
-  ) %>%          
-  
-  left_join(survey_design %>%                                         
-              group_by(puma, aian) %>%                     
-              summarise(pop = survey_total(na.rm = T))) %>%            
-  mutate(
-    rate = rate*100,                                                # calc the % 
-    rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
-    rate_cv = ((rate_moe/1.645)/rate)*100,
-    count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
-    count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation
-  ) %>%                            
-  filter(aian !="not aian") %>% 
-  rename("race"=aian)
-
-# review
-head(lw_aian)
-
-
-### Summarize by All pacisl
-lw_pacisl <- 
-  survey_design %>%
-  group_by(puma, pacisl, living_wage) %>%   
-  summarise(
-    count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
-    rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
-  ) %>%            
-  
-  left_join(survey_design %>%                                         
-              group_by(puma, pacisl) %>%                     
-              summarise(pop = survey_total(na.rm = T))) %>%            
-  mutate(
-    rate = rate*100,                                                # calc the % 
-    rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
-    rate_cv = ((rate_moe/1.645)/rate)*100,
-    count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
-    count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation 
-  ) %>%                             
-  filter(pacisl !="not pacisl") %>% 
-  rename("race"=pacisl)
-
-# review
-head(lw_pacisl)
-
-### Summarize by All SWANA
-lw_swana <- 
-  survey_design %>%
-  group_by(puma, swana, living_wage) %>%   
-  summarise(
-    count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
-    rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
-  ) %>%             
-  
-  left_join(survey_design %>%                                         
-              group_by(puma, swana) %>%                     
-              summarise(pop = survey_total(na.rm = T))) %>%            
-  mutate(
-    rate = rate*100,                                                # calc the % 
-    rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
-    rate_cv = ((rate_moe/1.645)/rate)*100,
-    count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
-    count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation 
-  ) %>%                             
-  filter(swana !="not swana") %>% 
-  rename("race"=swana)
-
-# review
-head(lw_swana)
-
-### Summarize by BIPOC
-lw_bipoc <- 
-  survey_design %>%
-  group_by(puma, bipoc, living_wage) %>%   
-  summarise(
-    count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
-    rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
-  ) %>%             
-  
-  left_join(survey_design %>%                                         
-              group_by(puma, bipoc) %>%                     
-              summarise(pop = survey_total(na.rm = T))) %>%            
-  mutate(
-    rate = rate*100,                                                # calc the % 
-    rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
-    rate_cv = ((rate_moe/1.645)/rate)*100,
-    count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
-    count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation 
-  ) %>%                             # calculate the coefficient of variation 
-  filter(bipoc !="not bipoc") %>% 
-  rename("race"=bipoc)
-
-# review
-head(lw_bipoc)
-
-### Summarize data for total pop (raceeth = total)
-lw_pop <- 
-  survey_design %>%
-  group_by(puma, living_wage) %>% 
-  summarise(
-    count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
-    rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
-  ) %>%         
-  
-  left_join(survey_design %>%               
-              group_by(puma) %>%                   
-              summarise(pop = survey_total(na.rm = T))) %>% 
-  mutate(
-    race = "total",
-    rate = rate*100,                                                # calc the % 
-    rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
-    rate_cv = ((rate_moe/1.645)/rate)*100,
-    count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
-    count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation 
-  )                          # calculate the coefficient of variation                
-
-# review
-head(lw_pop)
-
-## combine race/eth estimates with total
-lw_puma <-  
-  bind_rows(lw_race, lw_lat, lw_aian, lw_pacisl, lw_swana, lw_bipoc, lw_pop) %>%
-  filter(living_wage =="livable") %>%  # we're going with asset-based
-  mutate(
-    geolevel = "puma",
-    county = "06037"  
-  )
-
-# review
-table(lw_puma$race, lw_puma$living_wage, useNA = "always")
-head(lw_puma)
+# #### STEP 1A: Calculate the rate of living wage by puma (just for QA purposes, not exporting this table)####
+# ##Create survey design youth earning a living wage by PUMA by race/ethnicity 
+# survey_design <- ppl %>%      # Use the filtered data (only 14-24 years)
+#   as_survey_rep(
+#     variables = c(puma, race, latino, aian, pacisl, swana, bipoc, living_wage),   # select grouping variables
+#     weights = weight,                        # person weight
+#     repweights = all_of(repwlist),          # list of replicate weights
+#     combined_weights = TRUE,                # tells the function that replicate weights are included in the data
+#     mse =TRUE,                              # tells the function to calc mse
+#     type="other",                           # statistical method
+#     scale=4/80,                             # scaling set by ACS
+#     rscale=rep(1,80)                        # setting specific to ACS-scaling
+#   )
+# 
+# survey_design
+# 
+# ##### Summarize count of youth earning a living wage by PUMA by race/ethnicity ##
+# 
+# ### Summarize by race
+# lw_race <- 
+#   
+#   # Calculate numerator
+#   survey_design %>%
+#   group_by(puma, race, living_wage) %>%   
+#   summarise(
+#     count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
+#     rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
+#   ) %>%       
+#   
+#   # join in denominator
+#   left_join(survey_design %>%                                # left join in the denominators
+#               group_by(puma, race) %>%                       # group by race/eth and puma
+#               summarise(pop = survey_total(na.rm = T))) %>%           # get the weighted total
+#   mutate(
+#     rate = rate*100,                                                # calc the % 
+#     rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
+#     rate_cv = ((rate_moe/1.645)/rate)*100,
+#     count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
+#     count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation 
+#   ) %>%                             # calculate the coefficient of variation 
+#   
+#   # remove NAs--these are groups coded other ways (latino, all aian, all pacisl)
+#   filter(!is.na(race))
+# 
+# # review
+# head(lw_race)
+# 
+# 
+# ### Summarize by latino
+# lw_lat <- 
+#   survey_design %>%
+#   group_by(puma, latino, living_wage) %>%   
+#   summarise(
+#     count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
+#     rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
+#   ) %>%          
+#   
+#   left_join(survey_design %>%                                           
+#               group_by(puma, latino) %>%                    
+#               summarise(pop = survey_total(na.rm = T))) %>%        
+#   mutate(
+#     rate = rate*100,                                                # calc the % 
+#     rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
+#     rate_cv = ((rate_moe/1.645)/rate)*100,
+#     count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
+#     count_cv = ((count_moe/1.645)/count) * 100) %>%    # calculate cv for numerator count                           # calculate the coefficient of variation 
+#   filter(latino !="not latino") %>% 
+#   rename("race"=latino)
+# 
+# # review
+# head(lw_lat)
+# 
+# 
+# ### Summarize by All AIAN
+# lw_aian <- 
+#   survey_design %>%
+#   group_by(puma, aian, living_wage) %>%   
+#   summarise(
+#     count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
+#     rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
+#   ) %>%          
+#   
+#   left_join(survey_design %>%                                         
+#               group_by(puma, aian) %>%                     
+#               summarise(pop = survey_total(na.rm = T))) %>%            
+#   mutate(
+#     rate = rate*100,                                                # calc the % 
+#     rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
+#     rate_cv = ((rate_moe/1.645)/rate)*100,
+#     count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
+#     count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation
+#   ) %>%                            
+#   filter(aian !="not aian") %>% 
+#   rename("race"=aian)
+# 
+# # review
+# head(lw_aian)
+# 
+# 
+# ### Summarize by All pacisl
+# lw_pacisl <- 
+#   survey_design %>%
+#   group_by(puma, pacisl, living_wage) %>%   
+#   summarise(
+#     count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
+#     rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
+#   ) %>%            
+#   
+#   left_join(survey_design %>%                                         
+#               group_by(puma, pacisl) %>%                     
+#               summarise(pop = survey_total(na.rm = T))) %>%            
+#   mutate(
+#     rate = rate*100,                                                # calc the % 
+#     rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
+#     rate_cv = ((rate_moe/1.645)/rate)*100,
+#     count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
+#     count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation 
+#   ) %>%                             
+#   filter(pacisl !="not pacisl") %>% 
+#   rename("race"=pacisl)
+# 
+# # review
+# head(lw_pacisl)
+# 
+# ### Summarize by All SWANA
+# lw_swana <- 
+#   survey_design %>%
+#   group_by(puma, swana, living_wage) %>%   
+#   summarise(
+#     count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
+#     rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
+#   ) %>%             
+#   
+#   left_join(survey_design %>%                                         
+#               group_by(puma, swana) %>%                     
+#               summarise(pop = survey_total(na.rm = T))) %>%            
+#   mutate(
+#     rate = rate*100,                                                # calc the % 
+#     rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
+#     rate_cv = ((rate_moe/1.645)/rate)*100,
+#     count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
+#     count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation 
+#   ) %>%                             
+#   filter(swana !="not swana") %>% 
+#   rename("race"=swana)
+# 
+# # review
+# head(lw_swana)
+# 
+# ### Summarize by BIPOC
+# lw_bipoc <- 
+#   survey_design %>%
+#   group_by(puma, bipoc, living_wage) %>%   
+#   summarise(
+#     count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
+#     rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
+#   ) %>%             
+#   
+#   left_join(survey_design %>%                                         
+#               group_by(puma, bipoc) %>%                     
+#               summarise(pop = survey_total(na.rm = T))) %>%            
+#   mutate(
+#     rate = rate*100,                                                # calc the % 
+#     rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
+#     rate_cv = ((rate_moe/1.645)/rate)*100,
+#     count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
+#     count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation 
+#   ) %>%                             # calculate the coefficient of variation 
+#   filter(bipoc !="not bipoc") %>% 
+#   rename("race"=bipoc)
+# 
+# # review
+# head(lw_bipoc)
+# 
+# ### Summarize data for total pop (raceeth = total)
+# lw_pop <- 
+#   survey_design %>%
+#   group_by(puma, living_wage) %>% 
+#   summarise(
+#     count = survey_total(na.rm = T), # get the (survey weighted) count for the numerators
+#     rate = survey_mean() # calc the % / get the (survey weighted) proportion for the numerator
+#   ) %>%         
+#   
+#   left_join(survey_design %>%               
+#               group_by(puma) %>%                   
+#               summarise(pop = survey_total(na.rm = T))) %>% 
+#   mutate(
+#     race = "total",
+#     rate = rate*100,                                                # calc the % 
+#     rate_moe = rate_se*1.645*100,   # calculate the derived margin of error for the percentage
+#     rate_cv = ((rate_moe/1.645)/rate)*100,
+#     count_moe = count_se*1.645, # calculate moe for numerator count based on se provided by the output
+#     count_cv = ((count_moe/1.645)/count) * 100 # calculate the coefficient of variation 
+#   )                          # calculate the coefficient of variation                
+# 
+# # review
+# head(lw_pop)
+# 
+# ## combine race/eth estimates with total
+# lw_puma <-  
+#   bind_rows(lw_race, lw_lat, lw_aian, lw_pacisl, lw_swana, lw_bipoc, lw_pop) %>%
+#   filter(living_wage =="livable") %>%  # we're going with asset-based
+#   mutate(
+#     geolevel = "puma",
+#     county = "06037"  
+#   )
+# 
+# # review
+# table(lw_puma$race, lw_puma$living_wage, useNA = "always")
+# head(lw_puma)
 
 #### STEP 2A: Calculate  the rate of living wage by race for LA COUNTY ####
 survey_design_county <- ppl %>%      # Use the filtered data (only 14-24 years)
@@ -611,7 +609,7 @@ lw_county_id <-
 #### STEP 2C: Upload yp_livingwage_race to postgres ####
 
 # Write living wage table to bold vision database
-dbWriteTable(con, c("bv_2023", "yp_livingwage_subgroup"), lw_county_id,
+dbWriteTable(con, c("bv_2023", "yp_livingwage_subgroup_test"), lw_county_id,
              overwrite = TRUE, row.names = FALSE,
              field.types = c(
                county = "varchar",
@@ -653,9 +651,9 @@ COMMENT ON COLUMN bv_2023.yp_livingwage_subgroup.county is 'County FIPS';"
 #### STEP 3A: Calculate the rate of living wage by SPA ####
 
 #use crosswalk to get data by spa
-crosswalk <- st_read(con, query = "select * from bv_2023.crosswalk_puma_spas_2023")
+crosswalk <- st_read(con, query = "select * from bv_2023.crosswalk_puma_spas_2023_v2")
 
-ppl$puma_id <- as.factor(paste0("06", ppl$puma))
+ppl$puma_id <- as.factor(ppl$puma)
 
 ppl_spa <- right_join(ppl, crosswalk, by=c("puma_id" = "puma_id"))    # specify the field join
 
@@ -709,7 +707,7 @@ lw_spa_id <-
 #### STEP 3C: Upload yp_livingwage_region to postgres ####
 
 # Write living_wage youth table to bold vision database
-dbWriteTable(con, c("bv_2023", "yp_livingwage_region"), lw_spa_id,
+dbWriteTable(con, c("bv_2023", "yp_livingwage_region_test"), lw_spa_id,
              overwrite = TRUE, row.names = FALSE,
              field.types = c(
                spa_id = "numeric",
