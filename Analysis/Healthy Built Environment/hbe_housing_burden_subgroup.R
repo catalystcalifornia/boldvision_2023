@@ -351,7 +351,7 @@ county_table$subgroup[which(county_table$subgroup == "nhpi")] = "pacisl"
 
 ###Send to Postgres###
 con3 <- connect_to_db("bold_vision")
-table_name <- "hbe_housing_burden_subgroup_test"
+table_name <- "hbe_housing_burden_subgroup"
 schema <- 'bv_2023'
 
 indicator <- "Housing Burden (%) is the percent of youth 0-24 in renter households paying 30% or more of income for rent."
