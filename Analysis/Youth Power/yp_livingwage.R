@@ -609,22 +609,22 @@ lw_county_id <-
 #### STEP 2C: Upload yp_livingwage_race to postgres ####
 
 # Write living wage table to bold vision database
-dbWriteTable(con, c("bv_2023", "yp_livingwage_subgroup_test"), lw_county_id,
-             overwrite = TRUE, row.names = FALSE,
-             field.types = c(
-               county = "varchar",
-               race = "varchar",
-               count ="integer",
-               pop = "integer",
-               rate = "numeric",
-               rate_cv = "numeric",
-               count_cv = "numeric",
-               asbest = "varchar",
-               values_count = "numeric",
-               best = "varchar",
-               diff= "numeric",
-               index_of_disparity= "numeric"
-             ))
+# dbWriteTable(con, c("bv_2023", "yp_livingwage_subgroup"), lw_county_id,
+#              overwrite = TRUE, row.names = FALSE,
+#              field.types = c(
+#                county = "varchar",
+#                race = "varchar",
+#                count ="integer",
+#                pop = "integer",
+#                rate = "numeric",
+#                rate_cv = "numeric",
+#                count_cv = "numeric",
+#                asbest = "varchar",
+#                values_count = "numeric",
+#                best = "varchar",
+#                diff= "numeric",
+#                index_of_disparity= "numeric"
+#              ))
 
 
 # write comment to table
@@ -707,22 +707,22 @@ lw_spa_id <-
 #### STEP 3C: Upload yp_livingwage_region to postgres ####
 
 # Write living_wage youth table to bold vision database
-dbWriteTable(con, c("bv_2023", "yp_livingwage_region_test"), lw_spa_id,
-             overwrite = TRUE, row.names = FALSE,
-             field.types = c(
-               spa_id = "numeric",
-               spa_name = "varchar",
-               count ="integer",
-               pop = "integer",
-               rate = "numeric",
-               rate_cv = "numeric",
-               count_cv = "numeric",
-               asbest = "varchar",
-               values_count = "numeric",
-               best = "varchar",
-               diff= "numeric",
-               index_of_disparity= "numeric"
-             ))
+# dbWriteTable(con, c("bv_2023", "yp_livingwage_region"), lw_spa_id,
+#              overwrite = TRUE, row.names = FALSE,
+#              field.types = c(
+#                spa_id = "numeric",
+#                spa_name = "varchar",
+#                count ="integer",
+#                pop = "integer",
+#                rate = "numeric",
+#                rate_cv = "numeric",
+#                count_cv = "numeric",
+#                asbest = "varchar",
+#                values_count = "numeric",
+#                best = "varchar",
+#                diff= "numeric",
+#                index_of_disparity= "numeric"
+#              ))
 
 
 # write comment to table
