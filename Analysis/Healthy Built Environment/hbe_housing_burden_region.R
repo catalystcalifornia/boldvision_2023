@@ -163,7 +163,7 @@ d <- d %>% mutate(name = case_when(geoid == 1 ~ "Antelope Valley",
 ####  Step 6: Send to Postgres  ####
 
 con3 <- connect_to_db("bold_vision")
-table_name <- "hbe_housing_burden_region_test"
+table_name <- "hbe_housing_burden_region"
 schema <- 'bv_2023'
 
 indicator <- "Housing Burden (%) is the percent of youth 0-24 in renter households paying 30% or more of income for rent."
