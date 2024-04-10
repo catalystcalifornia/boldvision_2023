@@ -658,21 +658,21 @@ discon_spa_id <-
 #### STEP 3C: Upload pyd_connectedyouth_region to postgres ####
 
 # Write connected youth table to bold vision database
-dbWriteTable(con, c("bv_2023", "pyd_connectedyouth_region"), discon_spa_id,
-             overwrite = TRUE, row.names = FALSE,
-             field.types = c(
-               spa_id = "numeric",
-               spa_name = "varchar",
-               count ="integer",
-               count_cv = "numeric",
-               rate = "numeric",
-               rate_cv = "numeric",
-               asbest = "varchar",
-               values_count = "numeric",
-               best = "varchar",
-               diff= "numeric",
-               index_of_disparity= "numeric"
-             ))
+# dbWriteTable(con, c("bv_2023", "pyd_connectedyouth_region"), discon_spa_id,
+#              overwrite = TRUE, row.names = FALSE,
+#              field.types = c(
+#                spa_id = "numeric",
+#                spa_name = "varchar",
+#                count ="integer",
+#                count_cv = "numeric",
+#                rate = "numeric",
+#                rate_cv = "numeric",
+#                asbest = "varchar",
+#                values_count = "numeric",
+#                best = "varchar",
+#                diff= "numeric",
+#                index_of_disparity= "numeric"
+#              ))
 
 
 # write comment to table
