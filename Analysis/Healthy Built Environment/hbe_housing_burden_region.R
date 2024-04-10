@@ -59,12 +59,12 @@ eligible_youth <- la_cnty_youth %>% left_join(la_cnty_renter_hhs, by = "SERIALNO
 # GET PUMA-SPA crosswalk
 con_bv <- connect_to_db("bold_vision")
 
-puma_xwalk <- st_read(con_bv, query = "SELECT * FROM bv_2023.crosswalk_puma_spas_2023")
+puma_xwalk <- st_read(con_bv, query = "SELECT * FROM bv_2023.crosswalk_puma_spas_2023_v2")
 
 dbDisconnect(con_bv)
 
 # join indicator to PUMA SPA xwalk
-eligible_youth <- eligible_youth %>% mutate(geoid = paste0("06", PUMA.x))
+eligible_youth <- eligible_youth %>% mutate(geoid = PUMA.x)
 eligible_youth_spa <- eligible_youth %>% left_join(puma_xwalk, by = c("geoid"="puma_id"))
 
 
