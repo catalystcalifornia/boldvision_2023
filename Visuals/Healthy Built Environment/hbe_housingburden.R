@@ -7,7 +7,7 @@ source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
 #this TEMPLATE example will use the connected youth df
-df_subgroup <- st_read(con, query = "select * from bv_2023.hbe_housingburden_subgroup")
+df_subgroup <- st_read(con, query = "select * from bv_2023.hbe_housing_burden_subgroup")
 
 #pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")
@@ -46,3 +46,4 @@ African/Middle Eastern or North African; Another Race=Persons who identify with 
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )
+
