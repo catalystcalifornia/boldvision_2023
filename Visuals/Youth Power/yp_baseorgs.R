@@ -34,7 +34,7 @@ fx_barchart_subgroup(
   # insert a findings based systems led title
   title = "Advocacy and base-building organizations are less available where Asian and NHPI youth live",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Average percentile(%ile) access to base-building organizations by race in Los Angeles County",
+  subtitle = "Average percentile(%ile) access to base-building organizations in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations of the USC Equity Research Institute, California Health and Justice for All Power-Building Landscape: Defining the Ecosystem (2019); IRS Business Master File Extract (2023); and Cause IQ Nonprofit Directory (2022).",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator

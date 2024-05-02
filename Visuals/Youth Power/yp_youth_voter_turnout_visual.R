@@ -36,7 +36,7 @@ fx_barchart_subgroup(
   # insert a findings based systems led title
   title = "Voting in elections is least likely among Asian and Latine youth",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of eligible youth voter turnout by race in Los Angeles County",
+  subtitle = "Percent of eligible youth voter turnout in Los Angeles County",
   #please follow the format of the data source below
   caption_datasource = "Catalyst California's calculations of IPUMS CPS Voting Supplements, pooled estimates from 2014, 2016, 2018, 2020.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator

@@ -33,9 +33,9 @@ fx_barchart_subgroup(
   domain = "Positive Youth Development",
   indicator = "Medical Care",
   # insert a findings based systems led title
-  title = "The majority of youth in LA County report easy access to medical care, but Latine, Asian, and Multiracial youth on average experience less ease in access",
+  title = "The majority of youth report easy access to medical care, but Latine, Asian, and Multiracial youth on average experience less ease in access",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of youth reporting ease in accessing medical care",
+  subtitle = "Percent of youth reporting ease in accessing medical care in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations based on Los Angeles County Health Survey, 2023.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
