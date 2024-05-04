@@ -33,15 +33,16 @@ fx_barchart_subgroup(
   domain = "Healthy Built Environment",
   indicator = "Access to Fruits and Vegetables",
   # insert a findings based systems led title
-  title = "On average Black, Latine, and NHPI youth in LA County experience less access to fresh fruits and vegetables",
+  title = "On average Black, Latine, and NHPI youth experience less access to fresh fruits and vegetables",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of youth who have access to fresh fruits and vegetables",
+  subtitle = "Percent of youth who have access to fresh fruits and vegetables in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations based on Los Angeles County Health Survey, 2023.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander",
   #define the indicator
-  caption_indicator_def = "Access to Fruits and Vegetables is defined as youth whose parents/guardians/decision makers rated their community's access to fresh fruits/vegetables as good or excellent. Youth are defined as those betweeen the ages of 0 to 17 years.",
+  caption_indicator_def = "Access to fruits and vegetables is defined as youth whose parents/guardians/decision makers rated their community's access to fresh fruits/vegetables as good or excellent. Youth are defined as those betweeen the ages of 0 to 17 years.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )
+

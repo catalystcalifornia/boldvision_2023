@@ -34,7 +34,7 @@ fx_barchart_subgroup(
   # insert a findings based systems led title
   title = "Latine youth are more likely to be undocumented or live with family members who are undocumented",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of youth who live in mixed status families by race in Los Angeles County",
+  subtitle = "Percent of youth who live in mixed status families in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "USC Equity Research Institute's calculations of American Community Survey Public Use Microdata, 2017-2021 5-Year Estimates, from IPUMS USA and the Survey of Income and Program Participation, 2014.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator

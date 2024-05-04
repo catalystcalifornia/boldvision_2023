@@ -33,9 +33,9 @@ fx_barchart_subgroup(
   domain = "Positive Youth Development",
   indicator = "Asthma",
   # insert a findings based systems led title
-  title = "In LA County, more NHPI, AIAN, and Multiracial youth on average have asthma",
+  title = "More NHPI, AIAN, and Multiracial youth on average have asthma",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of youth who have asthma",
+  subtitle = "Percent of youth who have asthma in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations based on Los Angeles County Health Survey, 2023.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator

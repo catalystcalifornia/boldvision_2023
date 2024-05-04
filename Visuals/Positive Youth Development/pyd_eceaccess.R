@@ -7,7 +7,7 @@ source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
 #this TEMPLATE example will use the connected youth df
-df_subgroup <- st_read(con, query = "select * from bv_2023.pyd_healthstatus_subgroup")
+df_subgroup <- st_read(con, query = "select * from bv_2023.pyd_medicalcare_subgroup")
 
 #pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")
@@ -31,17 +31,21 @@ fx_barchart_subgroup(
   df = df,
   #be sure to write in the domain this way so it reflects the correct folders that the function will insert the visual deliverables in. 
   domain = "Positive Youth Development",
-  indicator = "Health Status",
+  indicator = "ECE Access",
   # insert a findings based systems led title
-  title = "The majority of youth are healthy, Latine and AIAN youth on average experience poorer health status",
+  title = "Latine and AIAN youth are least likely to be enrolled in Early Childhood Education",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of youth reporting an excellent/very good/good health status in Los Angeles County",
+  subtitle = "Percent of children under 5 enrolled in ECE in Los Angeles County",
   #please follow the format of the datasource below
-  caption_datasource = "Catalyst California's calculations based on Los Angeles County Health Survey, 2023.",
+  caption_datasource = "Catalyst California's calculations of 2020 American Institutes for Research Early
+Learning Needs Assessment Tool estimates, 2021 California Child Care Resource & Referral Network data, and 2020 Census DHC data.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander",
+  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify
+with a racial group not presented.",
   #define the indicator
-  caption_indicator_def = "Health status is defined as youth who reported to have excellent/very good/good health. Youth are ages 0-24 years.",
+  caption_indicator_def = "Youth under 5 enrolled in licensed family child care, child centers, pre-kindergarten, and transitional-kindergarten.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )
+
+

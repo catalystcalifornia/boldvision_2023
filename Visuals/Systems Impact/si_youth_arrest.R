@@ -35,7 +35,7 @@ fx_barchart_subgroup(
   # insert a findings based systems led title
   title = "Black youth experience a markedly higher arrest rate compared to other racial groups",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Youth arrest rate by race in Los Angeles County.",
+  subtitle = "Youth arrest rate in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations of Los Angeles County Sheriff Department (LASD), Los Angeles Police Department (LAPD), and California Department of Justice (DOJ) Racial and Identity Profiling Act (RIPA) data, 2022.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
