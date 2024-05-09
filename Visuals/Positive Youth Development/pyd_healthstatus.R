@@ -33,15 +33,15 @@ fx_barchart_subgroup(
   domain = "Positive Youth Development",
   indicator = "Health Status",
   # insert a findings based systems led title
-  title = "The majority of youth are healthy, Latine and AIAN youth on average experience poorer health status",
+  title = "Most youth feel healthy, but Latine and AIAN youth on average report poorer health status",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of youth reporting an excellent/very good/good health status in Los Angeles County",
+  subtitle = "Percent of youth reporting good to excellent health status in Los Angeles County",
   #please follow the format of the datasource below
-  caption_datasource = "Catalyst California's calculations based on Los Angeles County Health Survey, 2023.",
+  caption_datasource = "Catalyst California's calculations based on LA County Department of Public Health, Office of Health Assessment and Epidemiology, Los Angeles County Health Survey, 2023.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander",
   #define the indicator
-  caption_indicator_def = "Health status is defined as youth who reported to have excellent/very good/good health. Youth are ages 0-24 years.",
+  caption_indicator_def = "Health status is defined as youth who reported having excellent/very good/good health. Youth are ages 0-24 years.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )
