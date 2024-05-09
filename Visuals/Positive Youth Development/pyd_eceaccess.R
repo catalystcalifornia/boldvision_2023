@@ -1,3 +1,6 @@
+# Visualizing ECE Enrollment by race
+
+
 ####Step 1: Pull function from github script ####
 source("bv_barchart_function.R")
 
@@ -7,7 +10,7 @@ source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
 #this TEMPLATE example will use the connected youth df
-df_subgroup <- st_read(con, query = "select * from bv_2023.pyd_medicalcare_subgroup")
+df_subgroup <- st_read(con, query = "select * from bv_2023.pyd_ece_access_subgroup")
 
 #pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")
@@ -33,7 +36,7 @@ fx_barchart_subgroup(
   domain = "Positive Youth Development",
   indicator = "ECE Access",
   # insert a findings based systems led title
-  title = "Latine and AIAN youth are least likely to be enrolled in Early Childhood Education",
+  title = "Latine and AIAN youth are least likely to be enrolled in Early Childhood Education (ECE)",
   #explanation of what the we are looking at // use sentence case 
   subtitle = "Percent of children under 5 enrolled in ECE in Los Angeles County",
   #please follow the format of the datasource below
@@ -41,7 +44,7 @@ fx_barchart_subgroup(
 Learning Needs Assessment Tool estimates, 2021 California Child Care Resource & Referral Network data, and 2020 Census DHC data.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify
-with a racial group not presented.",
+with a racial group not presented",
   #define the indicator
   caption_indicator_def = "Youth under 5 enrolled in licensed family child care, child centers, pre-kindergarten, and transitional-kindergarten.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
