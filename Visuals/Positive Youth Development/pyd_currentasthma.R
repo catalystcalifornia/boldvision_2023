@@ -37,11 +37,11 @@ fx_barchart_subgroup(
   #explanation of what the we are looking at // use sentence case 
   subtitle = "Percent of youth who have asthma in Los Angeles County",
   #please follow the format of the datasource below
-  caption_datasource = "Catalyst California's calculations based on Los Angeles County Health Survey, 2023.",
+  caption_datasource = "Catalyst California's calculations based on LA County Department of Public Health, Office of Health Assessment and Epidemiology, Los Angeles County Health Survey, 2023.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "Rates for AIAN and NHPI youth are unstable. AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander",
   #define the indicator
-  caption_indicator_def = "Asthma is defined as youth whose caregivers or themselves reported them as having asthma. Youth are defined as ages 0-24 years.",
+  caption_indicator_def = "Asthma is defined as youth whose caregivers or themselves reported them as currently having asthma. Youth are defined as ages 0-24 years.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )
