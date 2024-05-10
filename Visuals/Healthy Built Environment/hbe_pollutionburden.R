@@ -40,9 +40,9 @@ fx_barchart_subgroup(
   domain = "Healthy Built Environment",
   indicator = "Pollution Burden",
   # insert a findings based systems led title
-  title = "Pollution burden around sensitive land uses is higher in areas where Latine youth live",
+  title = "Pollution exposure around sensitive land uses is higher in areas where Latine youth live",
   # explanation of what the we are looking at // use sentence case 
-  subtitle = "Average pollution burden percentile (%ile) around sensitive land uses for youth in Los Angeles County",
+  subtitle = "Average pollution burden percentile (%ile) around sensitive land uses in Los Angeles County",
   # please follow the format of the datasource below
   caption_datasource = data_source,
   # only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
