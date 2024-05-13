@@ -40,7 +40,7 @@ fx_barchart_subgroup(
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify with a racial group not presented",
   #define the ind
-  caption_indicator_def = "Access to advocacy and base-building organizations is defined as the average percentile (%ile) access each racial group (ages 0-24) has to organizations that are focused on youth advocacy and base-building based on youth population and organizational density in their area. A higher percentile indicates higher access.",
+  caption_indicator_def = "Access to advocacy and base-building organizations is defined as the average percentile (%ile) access each racial group (ages 0-24) has to organizations that are focused on youth advocacy and base-building. Access is calculated based on organizational density and census tract youth population. A higher percentile indicates higher access.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%ile"
 )

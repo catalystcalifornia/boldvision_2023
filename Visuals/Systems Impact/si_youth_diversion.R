@@ -48,19 +48,18 @@ fx_barchart_subgroup(
   domain = "Systems Impact",
   indicator = "Youth Diversion",
   # insert a findings based systems led title
-  title = "Black youth who are arrested experience the lowest diversion rates compared to other groups",
+  title = "Black, API, and SWANA/SA youth who are arrested experience the lowest diversion rates compared to other groups",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Youth diversion rate per 1k youth arrests in Los Angeles County",
+  subtitle = "Youth diversion rate per 1K youth arrests in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations of Los Angeles County Sheriff Department (LASD), Los Angeles Police Department (LAPD), California Department of Justice (DOJ) Racial and Identity Profiling Act (RIPA), and Los Angeles County Department of Youth Development data, 2022.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; API = Asian and Pacific Islander; SWANA/SA=Southwest Asian (Middle Eastern) or North African, or South Asian; Multiracial = Persons identified as two or more races or another race. Estimates for multiracial may be unreliable due to data reporting differences.",
+  caption_racenote = "AIAN=American Indian or Alaska Native; API = Asian and Pacific Islander; SWANA/SA=Southwest Asian (Middle Eastern) or North African, or South Asian; Multiracial = Persons identified as two or more races or another race. Estimates for multiracial may be unreliable due to data reporting differences",
   #define the indicator
-  caption_indicator_def = "Youth diversion defined as youth (ages 0-20) who are enrolled in and substantially completed a diversion program in Los Angeles County per one thousand youth arrests.",
+  caption_indicator_def = "Youth diversion defined as youth (ages 0-20) who are enrolled in and substantially completed a diversion program in Los Angeles County per 1000 youth arrests.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
-  data_unit = " per 1k"
+  data_unit = " per 1K"
 )
 
 dbDisconnect(conn = con)
-
 

@@ -96,7 +96,7 @@ fx_barchart_subgroup <- function(
              label = paste0("Average for All Youth: ", round(subset(df_subgroup, race == "total")$rate,
                                                              digits = 1),data_unit),
              hjust =0, vjust = -1, fontface = "bold",
-             color = "black", size = 4) +
+             color = "black", size = 4, family=font_bar_label) +
     #axis labels
     xlab("") +
     ylab("") +
@@ -108,9 +108,9 @@ fx_barchart_subgroup <- function(
               position = position_dodge(width = 1), 
               vjust = 2.25 , 
               # hjust= 1.15,
-              fontface = "bold") +
+              fontface = "bold", family=font_bar_label) +
     labs(
-      title = paste(str_wrap(title, whitespace_only = TRUE, width = 58), collapse = "\n"),
+      title = paste(str_wrap(title, whitespace_only = TRUE, width = 57), collapse = "\n"),
       subtitle = paste(str_wrap(subtitle,whitespace_only = TRUE, width = 85), collapse = "\n"),
       caption =  str_wrap(paste0("Indicator: ",caption_indicator_def, 
                                  " Race Note: ", caption_racenote, ".",
