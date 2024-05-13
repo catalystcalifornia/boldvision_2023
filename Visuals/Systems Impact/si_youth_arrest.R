@@ -43,7 +43,9 @@ fx_barchart_subgroup(
   #define the indicator
   caption_indicator_def = "Youth (ages 0-24) arrested by any law enforcement agency in Los Angeles County.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
-  data_unit = " per 1k"
+  data_unit = " per 1K"
 )
 
 dbDisconnect(conn = con)
+
+# labels manually adjusted in illustrator after export

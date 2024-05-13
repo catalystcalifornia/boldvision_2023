@@ -46,3 +46,6 @@ fx_barchart_subgroup(
 )
 
 dbDisconnect(conn = con)
+
+# labels manually adjusted in illustrator after export
+
