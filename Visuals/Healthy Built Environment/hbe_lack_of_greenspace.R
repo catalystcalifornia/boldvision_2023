@@ -9,8 +9,7 @@ source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
 # this TEMPLATE example will use the connected youth df
-df_subgroup <- st_read(con, query = "select * from bv_2023.hbe_lack_of_greenspace_subgroup") %>%
-  mutate(rate = rate * 100)
+df_subgroup <- st_read(con, query = "select * from bv_2023.hbe_lack_of_greenspace_subgroup") 
 
 # pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")

@@ -33,15 +33,15 @@ fx_barchart_subgroup(
   domain = "Positive Youth Development",
   indicator = "Medical Care",
   # insert a findings based systems led title
-  title = "The majority of youth report easy access to medical care, but Latine, Asian, and Multiracial youth on average experience less ease in access",
+  title = "Most youth report easy access to medical care, but Latine, Asian, and Multiracial youth experience less easy access",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of youth reporting ease in accessing medical care in Los Angeles County",
+  subtitle = "Percent of youth reporting easy access to needed medical care in Los Angeles County",
   #please follow the format of the datasource below
-  caption_datasource = "Catalyst California's calculations based on Los Angeles County Health Survey, 2023.",
+  caption_datasource = "Catalyst California's calculations based on LA County Department of Public Health, Office of Health Assessment and Epidemiology, Los Angeles County Health Survey, 2023.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander",
   #define the indicator
-  caption_indicator_def = "This indicator is defined as the percent of youths who reported ease in obtaining needed medical care. Youth are ages 0-24 years.",
+  caption_indicator_def = "This indicator is defined as the percent of youth who reported somewhat to very easy access in obtaining medical care when they needed it. Youth are ages 0-24 years.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )

@@ -40,7 +40,7 @@ fx_barchart_subgroup(
   caption_datasource = "Catalyst California's calculations of American Community Survey Public Use Microdata, 2017-2021 5-Year Estimates.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; SWANA=Southwest Asian or North
-African/Middle Eastern or North African; Another Race=Persons who identify with a racial group not presented.",
+African/Middle Eastern or North African; Another Race=Persons who identify with a racial group not presented",
   #define the indicator
   caption_indicator_def = "Rent burdened youth are youth (ages 0-24) who live in renter households paying 30% or more of income for rent.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 

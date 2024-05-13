@@ -36,17 +36,23 @@ light_green <- "#00A75A"
 dark_green <- "#00864A"
 blue  <- "#2A12B2"
 
-##Fonts
 
-windowsFonts(Manifold = windowsFont("manifoldcf-heavy"))
-# windowsFonts(HelveticaNeueLTStdMdCnO = windowsFont("HelveticaNeueLTStd-MdCnO"))
-windowsFonts(HelveticaNeueLTStdHvCn = windowsFont("HelveticaNeueLTStd-HvCn"))
-windowsFonts(HelveticaNeueLTStdMdCn = windowsFont("HelveticaNeueLTStd-MdCn"))
+## FONTS ## 
 
+font_add(family = "Manifold CF", regular = "W:/Project/OSI/Bold Vision/BV 2021/Deliverables/Bold Vision Fonts/Manifold/Fonts/manifoldcf-heavy.otf")
+font_add(family = "HelveticaNeueLTStdMdCn", regular = "W:/Project/OSI/Bold Vision/BV 2021/Deliverables/Bold Vision Fonts/Helvetica Neue LT Std/HelveticaNeueLTStd-MdCn.otf")
+font_add(family = "HelveticaNeueLTStdHvCn", regular = "W:/Project/OSI/Bold Vision/BV 2021/Deliverables/Bold Vision Fonts/Helvetica Neue LT Std/HelveticaNeueLTStd-HvCn.otf")
+font_add(family = "HelveticaNeueLTStdMdCnO", regular = "W:/Project/OSI/Bold Vision/BV 2021/Deliverables/Bold Vision Fonts/Helvetica Neue LT Std/HelveticaNeueLTStd-MdCnO.otf")
+
+
+# font_import()
+loadfonts(device = "win")
+windowsFonts()
+showtext_auto()
 
 # define fonts in chart
-font_title <- "Manifold"
-font_subtitle <- "Manifold"
+font_title <- "Manifold CF"
+font_subtitle <- "Manifold CF"
 font_caption <- "HelveticaNeueLTStdMdCn"
 font_bar_label <- "HelveticaNeueLTStdHvCn"
 font_axis_label <- "HelveticaNeueLTStdMdCn"
@@ -104,11 +110,11 @@ fx_barchart_subgroup <- function(
               # hjust= 1.15,
               fontface = "bold") +
     labs(
-      title = paste(str_wrap(title, whitespace_only = TRUE, width = 50), collapse = "\n"),
-      subtitle = paste(str_wrap(subtitle,whitespace_only = TRUE, width = 75), collapse = "\n"),
+      title = paste(str_wrap(title, whitespace_only = TRUE, width = 58), collapse = "\n"),
+      subtitle = paste(str_wrap(subtitle,whitespace_only = TRUE, width = 85), collapse = "\n"),
       caption =  str_wrap(paste0("Indicator: ",caption_indicator_def, 
                                  " Race Note: ", caption_racenote, ".",
-                                 " Data Source: ", caption_datasource), 130)) +
+                                 " Data Source: ", caption_datasource), 155)) +
     #theme/aesthetics
     theme_minimal() +
     theme(legend.title = element_blank(), # no legend--modify if necessary
