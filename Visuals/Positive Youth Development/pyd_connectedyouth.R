@@ -1,4 +1,4 @@
-#Living Wage 
+#Connected Youth 
 
 ####Step 1: Pull function from github script ####
 source("bv_barchart_function.R")
@@ -9,7 +9,7 @@ source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
 #this TEMPLATE example will use the connected youth df
-df_subgroup <- st_read(con, query = "select * from bv_2023.yp_livingwage_subgroup")
+df_subgroup <- st_read(con, query = "select * from bv_2023.pyd_connectedyouth_subgroup")
 
 #pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")
@@ -30,18 +30,18 @@ df <- subset(df_subgroup, race != "total" & race != "bipoc") %>%
 fx_barchart_subgroup(
   df = df,
   #be sure to write in the domain this way so it reflects the correct folders that the function will insert the visual deliverables in. 
-  domain = "Youth Power",
-  indicator = "Living Wage",
+  domain = "Positive Youth Development",
+  indicator = "Connected Youth",
   # insert a findings based systems led title
-  title = "Black and Latine youth on average are less likely to receive a living wage",
+  title = "Black and NHPI youth are least likely to be connected to school and labor systems",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of youth receiving a living wage",
+  subtitle = "Percent of connected youth in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations based on American Community Survey Public Use Microdata, 2017-2021 5-Year Estimates.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; SWANA=Southwest Asian or North African/Middle Eastern or North African; Another Race=Persons who identify with a racial group not presented",
   #define the indicator
-  caption_indicator_def = "Living Wage is defined as youth (15-24 years) who are in the labor force and who receive $16.90 (LA County Minimum Wage) or more per hour.",
+  caption_indicator_def = "Connected youth are defined as youth (ages 14-24) who are enrolled in school or are employed.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )

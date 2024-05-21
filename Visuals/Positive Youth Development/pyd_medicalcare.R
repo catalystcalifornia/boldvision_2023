@@ -1,5 +1,3 @@
-# Follow this template to use the bold vision function 
-
 ####Step 1: Pull function from github script ####
 source("bv_barchart_function.R")
 
@@ -9,10 +7,12 @@ source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
 #this TEMPLATE example will use the connected youth df
-df_subgroup <- st_read(con, query = "select * from bv_2023.yp_civic_engage_youth_subgroup")
+df_subgroup <- st_read(con, query = "select * from bv_2023.pyd_medicalcare_subgroup")
 
 #pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")
+
+dbDisconnect(conn = con)
 
 ####Step 2: join your table to the metadata table to get the correct labels ####
 #join to your table if needed rename subgroup to race
@@ -30,20 +30,20 @@ df <- subset(df_subgroup, race != "total" & race != "bipoc") %>%
 fx_barchart_subgroup(
   df = df,
   #be sure to write in the domain this way so it reflects the correct folders that the function will insert the visual deliverables in. 
-  domain = "Youth Power",
-  indicator = "Civic Engagement",
+  domain = "Positive Youth Development",
+  indicator = "Medical Care",
   # insert a findings based systems led title
-  title = "Engagement with politics in their community is least likely among Asian and Latine youth",
+  title = "Most youth report easy access to medical care, but Latine, Asian, and Multiracial youth experience less easy access",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of civically engaged youth in Los Angeles County",
+  subtitle = "Percent of youth reporting easy access to needed medical care in Los Angeles County",
   #please follow the format of the datasource below
-  caption_datasource = "Catalyst California's calculations of IPUMS CPS Civic Engagement Supplement, pooled from 2013, 2017, 2019, and 2021.",# Data for 2022 and 2023 did not include data by racial and ethnic group so was not included in the analysis.
+  caption_datasource = "Catalyst California's calculations based on LA County Department of Public Health, Office of Health Assessment and Epidemiology, Los Angeles County Health Survey, 2023.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander. NHPI estimates are unstable",
+  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander",
   #define the indicator
-  caption_indicator_def = "Civically engaged youth are defined as youth ages 18-29 who report engaging or participating in politics (e.g., participating in boycotts, serving on a committe of an organization, participating in a service or civic organization, etc.).",
+  caption_indicator_def = "This indicator is defined as the percent of youth who reported somewhat to very easy access in obtaining medical care when they needed it. Youth are ages 0-24 years.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )
 
-dbDisconnect(conn = con)
+

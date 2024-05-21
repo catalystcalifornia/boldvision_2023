@@ -34,13 +34,13 @@ fx_barchart_subgroup(
   # insert a findings based systems led title
   title = "Advocacy and base-building organizations are less available where Asian and NHPI youth live",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Average percentile(%ile) access to base-building organizations by race in Los Angeles County",
+  subtitle = "Average percentile(%ile) access to base-building organizations in Los Angeles County",
   #please follow the format of the datasource below
   caption_datasource = "Catalyst California's calculations of the USC Equity Research Institute, California Health and Justice for All Power-Building Landscape: Defining the Ecosystem (2019); IRS Business Master File Extract (2023); and Cause IQ Nonprofit Directory (2022).",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; Another Race=Persons who identify with a racial group not presented",
   #define the ind
-  caption_indicator_def = "Access to advocacy and base-building organizations is defined as the average percentile (%ile) access each racial group (ages 0-24) has to organizations that are focused on youth advocacy and base-building based on youth population and organizational density in their area. A higher percentile indicates higher access.",
+  caption_indicator_def = "Access to advocacy and base-building organizations is defined as the average percentile (%ile) access each racial group (ages 0-24) has to organizations that are focused on youth advocacy and base-building. Access is calculated based on organizational density and census tract youth population. A higher percentile indicates higher access.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%ile"
 )

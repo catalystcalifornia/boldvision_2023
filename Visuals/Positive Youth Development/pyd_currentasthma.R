@@ -1,5 +1,3 @@
-# Follow this template to use the bold vision function 
-
 ####Step 1: Pull function from github script ####
 source("bv_barchart_function.R")
 
@@ -9,10 +7,12 @@ source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
 #this TEMPLATE example will use the connected youth df
-df_subgroup <- st_read(con, query = "select * from bv_2023.si_childwelfare_subgroup") 
+df_subgroup <- st_read(con, query = "select * from bv_2023.pyd_asthma_subgroup")
 
 #pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")
+
+dbDisconnect(conn = con)
 
 ####Step 2: join your table to the metadata table to get the correct labels ####
 #join to your table if needed rename subgroup to race
@@ -30,20 +30,20 @@ df <- subset(df_subgroup, race != "total" & race != "bipoc") %>%
 fx_barchart_subgroup(
   df = df,
   #be sure to write in the domain this way so it reflects the correct folders that the function will insert the visual deliverables in. 
-  domain = "Systems Impact",
-  indicator = "Foster care and Probation",
+  domain = "Positive Youth Development",
+  indicator = "Asthma",
   # insert a findings based systems led title
-  title = "Foster care and probation systems are most likely to affect Black and AIAN youth",
+  title = "More NHPI, AIAN, and Multiracial youth on average have asthma",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Average rates per 1K youth in foster care / probation in Los Angeles County",
+  subtitle = "Percent of youth who have asthma in Los Angeles County",
   #please follow the format of the datasource below
-  caption_datasource = "Catalyst California's calculations of California Child Welfare Indicators Project, LA County Point in Time Counts for Foster Care and Probation, UC Berkeley, 2023.",
+  caption_datasource = "Catalyst California's calculations based on LA County Department of Public Health, Office of Health Assessment and Epidemiology, Los Angeles County Health Survey, 2023.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "API = Asian or Pacific Islander; AIAN=American Indian or Alaska Native",
+  caption_racenote = "Rates for AIAN and NHPI youth are unstable. AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander",
   #define the indicator
-  caption_indicator_def = "Children in foster care or probation are defined as the average rate per 1000 youth ages 0-20 in foster care or probation based on quarterly point-in-time counts.",
+  caption_indicator_def = "Asthma is defined as youth whose caregivers or themselves reported them as currently having asthma. Youth are defined as ages 0-24 years.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
-  data_unit = " per 1K"
+  data_unit = "%"
 )
 
-dbDisconnect(conn = con)
+

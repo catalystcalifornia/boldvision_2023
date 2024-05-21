@@ -9,8 +9,7 @@ source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
 #this TEMPLATE example will use the connected youth df
-df_subgroup <- st_read(con, query = "select * from bv_2023.yp_youth_voter_turnout_subgroup")
-df_subgroup$subgroup <- gsub("Total", "total", df_subgroup$subgroup)
+df_subgroup <- st_read(con, query = "select * from bv_2023.si_childwelfare_subgroup") 
 
 #pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")
@@ -31,20 +30,22 @@ df <- subset(df_subgroup, race != "total" & race != "bipoc") %>%
 fx_barchart_subgroup(
   df = df,
   #be sure to write in the domain this way so it reflects the correct folders that the function will insert the visual deliverables in. 
-  domain = "Youth Power",
-  indicator = "Voter Turnout",
+  domain = "Systems Impact",
+  indicator = "Foster care and Probation",
   # insert a findings based systems led title
-  title = "Voting in elections is least likely among Asian and Latine youth",
+  title = "Foster care and probation systems are most likely to affect Black and AIAN youth",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Percent of eligible youth voter turnout by race in Los Angeles County",
-  #please follow the format of the data source below
-  caption_datasource = "Catalyst California's calculations of IPUMS CPS Voting Supplements, pooled estimates from 2014, 2016, 2018, 2020.",
+  subtitle = "Average foster care / probation rates per 1K youth in Los Angeles County",
+  #please follow the format of the datasource below
+  caption_datasource = "Catalyst California's calculations of California Child Welfare Indicators Project, LA County Point in Time Counts for Foster Care and Probation, UC Berkeley, 2023.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander. NHPI estimates are unstable",
+  caption_racenote = "API = Asian or Pacific Islander; AIAN=American Indian or Alaska Native",
   #define the indicator
-  caption_indicator_def = "Eligible youth voter turnout is defined as youth citizens, age range 18-29 years who voted during presidential and midterm elections.",
+  caption_indicator_def = "Children in foster care or probation are defined as the average rate per 1000 youth ages 0-20 in foster care or probation based on quarterly point-in-time counts.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
-  data_unit = "%"
+  data_unit = " per 1K"
 )
 
 dbDisconnect(conn = con)
+
+# labels manually adjusted in illustrator after export 

@@ -1,5 +1,3 @@
-# Follow this template to use the bold vision function 
-
 ####Step 1: Pull function from github script ####
 source("bv_barchart_function.R")
 
@@ -8,15 +6,17 @@ source("bv_barchart_function.R")
 source("W:\\RDA Team\\R\\credentials_source.R")
 con <- connect_to_db("bold_vision")
 
-# youth arrest
-df_subgroup <- st_read(con, query = "select * from bv_2023.si_youth_arrest_subgroup") %>% rename(race = subgroup)
+#this TEMPLATE example will use the connected youth df
+df_subgroup <- st_read(con, query = "select * from bv_2023.hbe_frtsveg_subgroup")
 
 #pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")
 
+dbDisconnect(conn = con)
+
 ####Step 2: join your table to the metadata table to get the correct labels ####
 #join to your table if needed rename subgroup to race
-# df_subgroup<-df_subgroup%>%rename(race=subgroup) # comment out this line if not needed
+df_subgroup<-df_subgroup%>%rename(race=subgroup) # comment out this line if not needed
 
 #Please do NOT rename dataframe tables as the function will pull from them. 
 df_subgroup <- left_join(df_subgroup, race_label_df, by=c("race" = "race_base"))  %>%
@@ -30,22 +30,19 @@ df <- subset(df_subgroup, race != "total" & race != "bipoc") %>%
 fx_barchart_subgroup(
   df = df,
   #be sure to write in the domain this way so it reflects the correct folders that the function will insert the visual deliverables in. 
-  domain = "Systems Impact",
-  indicator = "Youth Arrests",
+  domain = "Healthy Built Environment",
+  indicator = "Access to Fruits and Vegetables",
   # insert a findings based systems led title
-  title = "Black youth experience a markedly higher arrest rate compared to other racial groups",
+  title = "On average, Black, Latine, and NHPI youth experience less access to fresh fruits and vegetables",
   #explanation of what the we are looking at // use sentence case 
-  subtitle = "Youth arrest rate in Los Angeles County",
+  subtitle = "Percent of youth who have access to fresh fruits and vegetables in Los Angeles County",
   #please follow the format of the datasource below
-  caption_datasource = "Catalyst California's calculations of Los Angeles County Sheriff Department (LASD), Los Angeles Police Department (LAPD), and California Department of Justice (DOJ) Racial and Identity Profiling Act (RIPA) data, 2022.",
+  caption_datasource = "Catalyst California's calculations based on LA County Department of Public Health, Office of Health Assessment and Epidemiology, Los Angeles County Health Survey, 2023.",
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
-  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander; SWANA/SA=Southwest Asian (Middle Eastern) or North African, or South Asian; Multiracial = Persons identified as two or more races or another race",
+  caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander",
   #define the indicator
-  caption_indicator_def = "Youth (ages 0-24) arrested by any law enforcement agency in Los Angeles County.",
+  caption_indicator_def = "Access to fruits and vegetables is defined as youth whose parents/guardians/decision makers rated their community's access to fresh fruits/vegetables as good or excellent. Youth are defined as those betweeen the ages of 0 to 17 years.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
-  data_unit = " per 1K"
+  data_unit = "%"
 )
 
-dbDisconnect(conn = con)
-
-# labels manually adjusted in illustrator after export
