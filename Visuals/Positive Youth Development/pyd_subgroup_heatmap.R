@@ -133,6 +133,8 @@ ggsave(plot=heatmap,
        file="W:/Project/OSI/Bold Vision/BV 2023/Deliverables/Positive Youth Development/pyd_subgroup_heatmap_r.pdf",
        units = c("in"),  width = 18, height=10, device = cairo_pdf)
 
+# edit legend and add pop-up in illustrator
+
 # BIPOC chart----
 df_bipoc <- pyd_domain %>% filter(subgroup=="BIPOC")
 
@@ -213,3 +215,5 @@ id_barchart
 ggsave(plot=id_barchart,
        file="W:/Project/OSI/Bold Vision/BV 2023/Deliverables/Positive Youth Development/pyd_subgroup_id_barchart_r.pdf",
        units = c("in"),  width = 12, height=8, device = cairo_pdf)
+
+# add pop-up in illustrator AND moved bar labels for shorter bars AND adjust y-axis labels for spacing between indicators
