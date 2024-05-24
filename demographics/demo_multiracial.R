@@ -3,7 +3,7 @@
 # Data Dictionary: https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMS_Data_Dictionary_2022.pdf
 
 # Install packages if not already installed
-packages <- c("tidyverse", "data.table","readxl","tidycensus", "srvyr","stringr", "openxlsx") 
+packages <- c("tidyverse", "data.table","readxl","tidycensus", "srvyr","stringr", "openxlsx", "dplyr") 
 
 install_packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(install_packages) > 0) {
@@ -38,7 +38,7 @@ people <- fread(paste0(root, "CA_2021/psam_p06.csv"), header = TRUE, data.table 
 eligible_hhs <- people %>% 
   
   #filtering for universe and LA county
-  filter(!is.na(RAC1P) & grepl('037', PUMA) & AGEP < 25 & RAC1P == 9)   %>% 
+  filter(!is.na(RAC1P) & grepl('037', PUMA) & AGEP < 25 & RAC1P == 9 & !is.na(RAC3P))   %>% 
   
   #remove records with no weights
   filter(!is.na(PWGTP)) %>%
@@ -52,110 +52,138 @@ eligible_hhs <- people %>%
 # add geoid and indicator
 eligible_hhs$geoid <- "037"
 
-table(eligible_hhs$RAC3P)
-
-eligible_hhs_test <- eligible_hhs %>% group_by(RAC3P, geoid) %>% summarize(indicator = n())
-  
-# eligible_hhs$indicator=(ifelse(eligible_hhs$DIS == 1, "multiracial", "no multiracial"))
-# https://usa.ipums.org/usa/resources/codebooks/DataDict1721.pdf
-  # import PUMS RAC3P codes ------
+#pull in pUMS data dictionary codes for RAC3P
 race_codes <- read_excel("W:/Data/Demographics/PUMS/CA_2017_2021/PUMS_Data_Dictionary_2017-2021_RAC3P.xlsx")%>% mutate_all(as.character) # created this excel document separate by opening PUMS Data Dictionary in excel and deleting everything but RAC2P
-# race_codes<-race_codes%>%dplyr::filter(grepl(paste(pums_sa_list,collapse="|"), Description, ignore.case = TRUE))
 race_codes$RAC3P<-str_pad(race_codes$Code_1, 3, pad = "0")
+race_codes <- race_codes %>% select(RAC3P, Description)
 
-hhs_test <- left_join(eligible_hhs_test, race_codes, by=("RAC3P"))
-# View(hhs_test)
+eligible_hhs <- left_join(eligible_hhs, race_codes, by=("RAC3P"))
 
 
+########### find out the top 10 ------
+# 
+# table(eligible_hhs$RAC3P)
+# eligible_hhs_test <- eligible_hhs %>% group_by(RAC3P, geoid) %>% summarize(indicator = n())
+# 
+# # eligible_hhs$indicator=(ifelse(eligible_hhs$DIS == 1, "multiracial", "no multiracial"))
+# # https://usa.ipums.org/usa/resources/codebooks/DataDict1721.pdf
+#   # import PUMS RAC3P codes ------
+# race_codes <- read_excel("W:/Data/Demographics/PUMS/CA_2017_2021/PUMS_Data_Dictionary_2017-2021_RAC3P.xlsx")%>% mutate_all(as.character) # created this excel document separate by opening PUMS Data Dictionary in excel and deleting everything but RAC2P
+# race_codes$RAC3P<-str_pad(race_codes$Code_1, 3, pad = "0")
+# 
+# hhs_test <- left_join(eligible_hhs_test, race_codes, by=("RAC3P"))
+# # View(hhs_test)
+# 
+# hhs_test2 <- hhs_test %>% select(RAC3P, geoid, indicator, Description) %>%
+#   ungroup()%>% as.data.frame() %>%
+#   arrange(desc(indicator)) %>%
+#   slice(1:10)
+# unique(hhs_test2$RAC3P) #"029" "016" "020" "019" "064" "021" "017" "038" "041" "024"
+# # View(hhs_test2)
+################ regularly scheduled programming ----
 
-# pums_run <- function(x){
-# weight <- 'PWGTP' # using WGTP b/c calculating percentage of rent-burdened households
-# repwlist = rep(paste0("PWGTP", 1:80))
-# 
-# # create survey design
-# 
-# hh_geo <- x %>%
-#   as_survey_rep(
-#     variables = c(geoid, indicator),   # dplyr::select grouping variables
-#     weights = weight,                       #  weight
-#     repweights = repwlist,                  # list of replicate weights
-#     combined_weights = TRUE,                # tells the function that replicate weights are included in the data
-#     mse = TRUE,                             # tells the function to calc mse
-#     type="other",                           # statistical method
-#     scale=4/80,                             # scaling set by ACS
-#     rscale=rep(1,80)                        # setting specific to ACS-scaling
-#   )
-# 
-# ###### TOTAL ######
-# total <- hh_geo  %>%
-#   group_by(geoid,indicator) %>%   # group by race cat
-#   summarise(
-#     num = survey_total(na.rm=T), # get the (survey weighted) count for the numerators
-#     rate = survey_mean()) %>%        # get the (survey weighted) proportion for the numerator
-#   left_join(hh_geo %>%                                        # left join in the denominators
-#               group_by(geoid) %>%                                     # group by geo
-#               summarise(pop = survey_total(na.rm=T))) %>%              # get the weighted total for overall geo
-#   mutate(rate=rate*100,
-#          rate_moe = rate_se*1.645*100,    # calculate the margin of error for the rate based on se
-#          rate_cv = ((rate_moe/1.645)/rate) * 100, # calculate cv for rate
-#          count_moe = num_se*1.645, # calculate moe for numerator count based on se
-#          count_cv = ((count_moe/1.645)/num) * 100)  # calculate cv for numerator count
-# 
-# 
-# # select burdened and not NA
-# d_long <- total %>% filter(indicator == "multiracial" & !is.na(geoid))
-# 
-# # make data frame
-# d_long <- as.data.frame(d_long)
-# 
-# return(d_long)
-# }
-# 
-# 
-# d_long <- pums_run(eligible_hhs)
-# 
-# eligible_hhs$indicator=(ifelse(eligible_hhs$DDRS == 1, "multiracial", "no multiracial"))
-# d_long2 <- pums_run(eligible_hhs) %>% mutate(indicator="self-care difficulty")
-# 
-# eligible_hhs$indicator=(ifelse(eligible_hhs$DEAR == 1, "multiracial", "no multiracial"))
-# d_long3 <- pums_run(eligible_hhs)%>% mutate(indicator="hearing difficulty")
-# 
-# eligible_hhs$indicator=(ifelse(eligible_hhs$DEYE == 1, "multiracial", "no multiracial"))
-# d_long4 <- pums_run(eligible_hhs)%>% mutate(indicator="vision difficulty")
-# 
-# eligible_hhs$indicator=(ifelse(eligible_hhs$DOUT == 1, "multiracial", "no multiracial"))
-# d_long5 <- pums_run(eligible_hhs)%>% mutate(indicator="independent living difficulty")
-# 
-# eligible_hhs$indicator=(ifelse(eligible_hhs$DPHY == 1, "multiracial", "no multiracial"))
-# d_long6 <- pums_run(eligible_hhs)%>% mutate(indicator="ambulatory difficulty")
-# 
-# # bind all data frames in final
-# d_final <- rbind(d_long, d_long2, d_long3, d_long4, d_long5, d_long6)
-# 
-# 
-# ####  Step 6: final format and upload to Postgres  ####
-# 
-# 
-# ###Send to Postgres###
-# con3 <- connect_to_db("bold_vision")
-# table_name <- "demo_multiracial"
-# schema <- 'bv_2023'
-# 
-# indicator <- "Youth with a multiracial"
-# source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\Healthy Built Environment\\QA_Housing_Burden.docx"
-# 
-# dbWriteTable(con3, c(schema, table_name), d_final,
-#              overwrite = TRUE, row.names = FALSE)
-# 
-# #comment on table and columns
-# comment <- paste0("COMMENT ON TABLE ", schema, ".", table_name,  " IS '", indicator, " from ", source, ".';
-#                   COMMENT ON COLUMN ", schema, ".", table_name, ".geoid IS 'County fips';
-#                   COMMENT ON COLUMN ", schema, ".", table_name, ".rate IS 'indicator rate';
-#                   COMMENT ON COLUMN ", schema, ".", table_name, ".pop IS 'total population';
-#                   COMMENT ON COLUMN ", schema, ".", table_name, ".num IS 'number of people at or below the federal poverty line';
-#                   COMMENT ON COLUMN ", schema, ".", table_name, ".rate_cv IS 'cv of indicator rate';")
-# print(comment)
-# dbSendQuery(con3, comment)
-# 
-# #disconnect
-# dbDisconnect(con3)
+pums_run <- function(x){
+weight <- 'PWGTP' # using WGTP b/c calculating percentage of rent-burdened households
+repwlist = rep(paste0("PWGTP", 1:80))
+
+# create survey design
+
+hh_geo <- x %>%
+  as_survey_rep(
+    variables = c(geoid, indicator),   # dplyr::select grouping variables
+    weights = weight,                       #  weight
+    repweights = repwlist,                  # list of replicate weights
+    combined_weights = TRUE,                # tells the function that replicate weights are included in the data
+    mse = TRUE,                             # tells the function to calc mse
+    type="other",                           # statistical method
+    scale=4/80,                             # scaling set by ACS
+    rscale=rep(1,80)                        # setting specific to ACS-scaling
+  )
+
+###### TOTAL ######
+total <- hh_geo  %>%
+  group_by(geoid,indicator) %>%   # group by race cat
+  summarise(
+    num = survey_total(na.rm=T), # get the (survey weighted) count for the numerators
+    rate = survey_mean()) %>%        # get the (survey weighted) proportion for the numerator
+  left_join(hh_geo %>%                                        # left join in the denominators
+              group_by(geoid) %>%                                     # group by geo
+              summarise(pop = survey_total(na.rm=T))) %>%              # get the weighted total for overall geo
+  mutate(rate=rate*100,
+         rate_moe = rate_se*1.645*100,    # calculate the margin of error for the rate based on se
+         rate_cv = ((rate_moe/1.645)/rate) * 100, # calculate cv for rate
+         count_moe = num_se*1.645, # calculate moe for numerator count based on se
+         count_cv = ((count_moe/1.645)/num) * 100)  # calculate cv for numerator count
+
+
+# select burdened and not NA
+d_long <- total %>% filter(indicator == "multiracial" & !is.na(geoid))
+
+# make data frame
+d_long <- as.data.frame(d_long)
+
+return(d_long)
+}
+
+
+#"029" "016" "020" "019" "064" "021" "017" "038" "041" "024"
+eligible_hhs$indicator=(ifelse(eligible_hhs$RAC3P == "029", "Multiracial", "other"))
+d_long <- pums_run(eligible_hhs) %>% mutate(indicator="White; Some Other Race")
+
+eligible_hhs$indicator=(ifelse(eligible_hhs$RAC3P == "016", "Multiracial", "other"))
+d_long2 <- pums_run(eligible_hhs) %>% mutate(indicator="White; Black or African American")
+
+eligible_hhs$indicator=(ifelse(eligible_hhs$RAC3P == "020", "Multiracial", "other"))
+d_long3 <- pums_run(eligible_hhs) %>% mutate(indicator="White; Filipino")
+
+eligible_hhs$indicator=(ifelse(eligible_hhs$RAC3P == "019", "Multiracial", "other"))
+d_long4 <- pums_run(eligible_hhs) %>% mutate(indicator="White; Chinese")
+
+eligible_hhs$indicator=(ifelse(eligible_hhs$RAC3P == "064", "Multiracial", "other"))
+d_long5 <- pums_run(eligible_hhs) %>% mutate(indicator="White; American Indian and Alaska Native; Some Other Race")
+
+eligible_hhs$indicator=(ifelse(eligible_hhs$RAC3P == "021", "Multiracial", "other"))
+d_long6 <- pums_run(eligible_hhs) %>% mutate(indicator="White; Japanese")
+
+eligible_hhs$indicator=(ifelse(eligible_hhs$RAC3P == "017", "Multiracial", "other"))
+d_long7 <- pums_run(eligible_hhs) %>% mutate(indicator="White; American Indian and Alaska Native")
+
+eligible_hhs$indicator=(ifelse(eligible_hhs$RAC3P == "038", "Multiracial", "other"))
+d_long8 <- pums_run(eligible_hhs) %>% mutate(indicator="Black or African American; Some Other Race")
+
+eligible_hhs$indicator=(ifelse(eligible_hhs$RAC3P == "041", "Multiracial", "other"))
+d_long9 <- pums_run(eligible_hhs) %>% mutate(indicator="American Indian and Alaska Native; Some Other Race")
+
+eligible_hhs$indicator=(ifelse(eligible_hhs$RAC3P == "024", "Multiracial", "other"))
+d_long10 <- pums_run(eligible_hhs) %>% mutate(indicator="White; Other Asian")
+
+# bind all data frames in final
+d_final <- rbind(d_long,d_long2, d_long3, d_long4, d_long5, d_long6, d_long7, d_long8, d_long9, d_long10)
+d_final <- d_final %>% arrange(desc(indicator)) 
+
+####  Step 6: final format and upload to Postgres  ####
+
+
+###Send to Postgres###
+con3 <- connect_to_db("bold_vision")
+table_name <- "demo_multiracial"
+schema <- 'bv_2023'
+
+indicator <- "Multiracial Youth"
+source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\Healthy Built Environment\\QA_Housing_Burden.docx"
+
+dbWriteTable(con3, c(schema, table_name), d_final,
+             overwrite = TRUE, row.names = FALSE)
+
+#comment on table and columns
+comment <- paste0("COMMENT ON TABLE ", schema, ".", table_name,  " IS '", indicator, " from ", source, ".';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".geoid IS 'County fips';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".rate IS 'indicator rate';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".pop IS 'total population';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".num IS 'number of people at or below the federal poverty line';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".rate_cv IS 'cv of indicator rate';")
+print(comment)
+dbSendQuery(con3, comment)
+
+#disconnect
+dbDisconnect(con3)
