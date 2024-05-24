@@ -117,7 +117,7 @@ total <- hh_geo  %>%
 
 
 # select burdened and not NA
-d_long <- total %>% filter(indicator == "multiracial" & !is.na(geoid))
+d_long <- total %>% filter(indicator == "Multiracial" & !is.na(geoid))
 
 # make data frame
 d_long <- as.data.frame(d_long)
@@ -159,7 +159,7 @@ d_long10 <- pums_run(eligible_hhs) %>% mutate(indicator="White; Other Asian")
 
 # bind all data frames in final
 d_final <- rbind(d_long,d_long2, d_long3, d_long4, d_long5, d_long6, d_long7, d_long8, d_long9, d_long10)
-d_final <- d_final %>% arrange(desc(indicator)) 
+d_final <- d_final %>% arrange(desc(num)) 
 
 ####  Step 6: final format and upload to Postgres  ####
 
