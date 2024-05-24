@@ -64,7 +64,7 @@ df_subgroup <- df_subgroup %>% mutate(rate_moe = (ci_95_hi - ci_95_low)/2,
 df_subgroup <-
   df_subgroup %>% 
   ungroup() %>%
-  mutate(best=max(rate[subgroup!='total' & subgroup!='bipoc'],na.rm=T),asbest="max",#create columns for best rate and as best treatment, ignoring total and bipoc
+  mutate(best=min(rate[subgroup!='total' & subgroup!='bipoc'],na.rm=T),asbest="min",#create columns for best rate and as best treatment, ignoring total and bipoc
          values_count = sum(!is.na(subgroup))-2) %>% # remove total and bipoc from values count
   mutate(diff = ifelse(subgroup == 'total' | subgroup =='bipoc', NA, abs(best-rate))) %>%
   mutate(index_of_disparity = ((sum(diff, na.rm=T)/best/(values_count - 1))*100)) 
@@ -146,7 +146,7 @@ df_region <- df_region %>% mutate(rate_moe = (ci_95_hi - ci_95_low)/2,
 df_region <-
   df_region %>% 
   ungroup() %>%
-  mutate(best=max(rate,na.rm=T), asbest="max",#create columns for best rate and as best treatment
+  mutate(best=min(rate,na.rm=T), asbest="min",#create columns for best rate and as best treatment
          values_count = sum(!is.na(spa_name))) %>% 
   mutate(diff = abs(best-rate)) %>%
   mutate(index_of_disparity = ((sum(diff, na.rm=T)/best/(values_count - 1))*100)) 
