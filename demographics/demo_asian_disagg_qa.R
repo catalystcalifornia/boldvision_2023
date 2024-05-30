@@ -275,7 +275,7 @@ asian_alone_subgroups_table <- asian_youth_svry %>%
          count_moe = num_se*1.645, # calculate moe for numerator count based on se
          count_cv = ((count_moe/1.645)/num) * 100)  # calculate cv for numerator count
 
-# recode CV greater than 40%
+# recode rates under 1% and create a list for recoding
 other_list<-asian_alone_subgroups_table%>%filter(rate<1)%>%ungroup()%>%select(asian_subgroup)
 other_list<-other_list$asian_subgroup
 
