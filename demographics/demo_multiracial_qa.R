@@ -227,4 +227,12 @@ multiracial_youth_table <- multiracial_youth_svry %>%
          count_moe = num_se*1.645, # calculate moe for numerator count based on se
          count_cv = ((count_moe/1.645)/num) * 100)  # calculate cv for numerator count
 
-# like asian recode anything under 1% as Another Multiracial Identity
+# like asian recode anything under 1% as Another Multiracial Identity and rerun model
+
+# recode rates under 1% and create a list for recoding
+other_list<-multiracial_youth_table%>%filter(rate<1)%>%ungroup()%>%select(Description)
+other_list<-other_list$Description
+
+
+nh_multiracial_youth_re<-nh_multiracial_youth%>%
+  mutate(Description=ifelse(Description %in% other_list, 'Another Multiracial Identity',Description)) 
