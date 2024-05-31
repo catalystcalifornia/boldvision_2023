@@ -38,13 +38,7 @@ people <- fread(paste0(root, "CA_2021/psam_p06.csv"), header = TRUE, data.table 
 eligible_hhs <- people %>% 
   
   #filtering for universe and LA county
-  filter(!is.na(RACASN) & grepl('037', PUMA) & AGEP < 25 & RACASN == 1 & !is.na(RAC2P))   %>% 
-  
-  #remove records with no weights
-  filter(!is.na(PWGTP)) %>%
-  
-  #filter for age 0-5 and select distinct households
-  distinct(SERIALNO, .keep_all = TRUE)
+  filter( grepl('037', PUMA) & AGEP < 25 & RAC1P == 6)
 
 
 ####  Step 3: set up and run survey and format  #### 
@@ -53,7 +47,8 @@ eligible_hhs <- people %>%
 eligible_hhs$geoid <- "037"
 
 #pull in pUMS data dictionary codes for RAC2P
-race_codes <- read_excel("W:/Data/Demographics/PUMS/CA_2017_2021/PUMS_Data_Dictionary_2017-2021_RAC2P.xlsx")%>% mutate_all(as.character) # created this excel document separate by opening PUMS Data Dictionary in excel and deleting everything but RAC2P
+race_codes <- read_excel("W:/Data/Demographics/PUMS/CA_2017_2021/PUMS_Data_Dictionary_2017-2021_RAC2P.xlsx")%>% 
+  mutate_all(as.character) # created this excel document separate by opening PUMS Data Dictionary in excel and deleting everything but RAC2P
 race_codes$RAC2P<-str_pad(race_codes$Code_1, 2, pad = "0")
 race_codes <- race_codes %>% select(RAC2P, Description)
 
