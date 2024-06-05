@@ -1,5 +1,5 @@
 # Youth (Under 25) with a disability in LA County
-# as percentage of all LA County households under 5
+# as percentage of all LA County households with a disability
 
 # Data Dictionary: https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMS_Data_Dictionary_2022.pdf
 
