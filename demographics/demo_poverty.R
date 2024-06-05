@@ -35,137 +35,83 @@ data_type <- "county" #race, spa, county
   
 # Load the people PUMS data
 people <- fread(paste0(root, "CA_2021/psam_p06.csv"), header = TRUE, data.table = FALSE,
-                colClasses = list(character = c("PUMA", "AGEP", "POVPIP")))
+                colClasses = list(character = c("PUMA", "POVPIP")))
 
   
 ####  Filter households eligible for calculation  #### 
 
 ## Select LA County people
-eligible_hhs <- people %>% 
+poverty <- people %>% 
   
   #filtering for universe and LA county
-  filter(!is.na(POVPIP) & grepl('037', PUMA) & AGEP < 25)   %>% 
+  filter(grepl('037', PUMA) & AGEP < 25) %>% 
 
+  # add geoid and indicator
+  mutate(geoid = "037")
+
+poverty$indicator <- (ifelse(poverty$POVPIP <= 100, "at or below 100% FPL", "above poverty"))
+
+
+pums_run <- function(x){
+  weight <- 'PWGTP' # using WGTP b/c calculating percentage of rent-burdened households
+  repwlist = rep(paste0("PWGTP", 1:80))
   
-  #remove records with no weights
-  filter(!is.na(PWGTP)) %>%
+  # create survey design
   
-  #filter for age 0-5 and select distinct households
-  distinct(SERIALNO, .keep_all = TRUE)
-
-
-####  Set up and run survey and format  #### 
-
-# add geoid and indicator
-eligible_hhs$geoid <- "037"
-eligible_hhs$indicator=(ifelse(eligible_hhs$POVPIP <= 100, "at or below 100% FPL", "above poverty"))
-
-weight <- 'PWGTP' # using PWGTP b/c calculating percentage of rent-burdened households
-
-
-repwlist = rep(paste0("PWGTP", 1:80))
-
-
-# create survey design
-
-hh_geo <- eligible_hhs %>%
-  as_survey_rep(
-    variables = c(geoid, indicator),   # dplyr::select grouping variables
-    weights = weight,                       #  weight
-    repweights = repwlist,                  # list of replicate weights
-    combined_weights = TRUE,                # tells the function that replicate weights are included in the data
-    mse = TRUE,                             # tells the function to calc mse
-    type="other",                           # statistical method
-    scale=4/80,                             # scaling set by ACS
-    rscale=rep(1,80)                        # setting specific to ACS-scaling
-  )
-
-###### TOTAL ######
-total <- hh_geo  %>%
-  group_by(geoid,indicator) %>%   # group by race cat
-  summarise(
-    num = survey_total(na.rm=T), # get the (survey weighted) count for the numerators
-    rate = survey_mean()) %>%        # get the (survey weighted) proportion for the numerator
-  left_join(hh_geo %>%                                        # left join in the denominators
-              group_by(geoid) %>%                                     # group by geo
-              summarise(pop = survey_total(na.rm=T))) %>%              # get the weighted total for overall geo
-  mutate(rate=rate*100,
-         rate_moe = rate_se*1.645*100,    # calculate the margin of error for the rate based on se
-         rate_cv = ((rate_moe/1.645)/rate) * 100, # calculate cv for rate
-         count_moe = num_se*1.645, # calculate moe for numerator count based on se
-         count_cv = ((count_moe/1.645)/num) * 100)  # calculate cv for numerator count
-
-
-# select burdened and not NA
-d_long <- total %>% filter(indicator == "at or below 100% FPL" & !is.na(geoid))
-
+  pums_survey <- x %>%
+    as_survey_rep(
+      variables = c(geoid, indicator),   # dplyr::select grouping variables
+      weights = weight,                       #  weight
+      repweights = repwlist,                  # list of replicate weights
+      combined_weights = TRUE,                # tells the function that replicate weights are included in the data
+      mse = TRUE,                             # tells the function to calc mse
+      type="other",                           # statistical method
+      scale=4/80,                             # scaling set by ACS
+      rscale=rep(1,80)                        # setting specific to ACS-scaling
+    )
+  
+  ###### TOTAL ######
+  pums_calcs <- pums_survey  %>%
+    group_by(geoid,indicator) %>%   # group by race cat
+    summarise(
+      num = survey_total(na.rm=T), # get the (survey weighted) count for the numerators
+      rate = survey_mean()) %>%        # get the (survey weighted) proportion for the numerator
+    left_join(pums_survey %>%                                        # left join in the denominators
+                group_by(geoid) %>%                                     # group by geo
+                summarise(pop = survey_total(na.rm=T))) %>%              # get the weighted total for overall geo
+    mutate(rate=rate*100,
+           rate_moe = rate_se*1.645*100,    # calculate the margin of error for the rate based on se
+           rate_cv = ((rate_moe/1.645)/rate) * 100, # calculate cv for rate
+           count_moe = num_se*1.645, # calculate moe for numerator count based on se
+           count_cv = ((count_moe/1.645)/num) * 100) %>%   # calculate cv for numerator count
+    as.data.frame()
+  
+  return(pums_calcs)
+}
 # make data frame
-d_long <- as.data.frame(d_long)
+pov_100 <- pums_run(poverty) %>% filter(indicator == "at or below 100% FPL") %>%  as.data.frame()
 #### Step 4: Repeat steps 2 and 3 above with 200% filter ####
 
 ## Select LA County people
-eligible_hhs2 <- people %>% 
+poverty2 <- people %>% 
   
   #filtering for universe and LA county
-  filter(!is.na(POVPIP) & grepl('037', PUMA) & AGEP < 25)   %>% 
-  
-  # join their housing info  
-  left_join(housing %>% filter(grepl('037', PUMA)), 
-            by = c("SERIALNO", "PUMA")) %>%
-  
-  #remove records with no weights
-  filter(!is.na(PWGTP)) %>%
-  
-  #filter for age 0-5 and select distinct households
-  distinct(SERIALNO, .keep_all = TRUE)
+  filter(grepl('037', PUMA) & AGEP < 25) %>% 
 
-# add geoid and indicator
-eligible_hhs2$geoid <- "037"
-eligible_hhs2$indicator=(ifelse(eligible_hhs2$POVPIP <= 200, "at or below 200% FPL", "above poverty"))
+  # add geoid and indicator
+  mutate(geoid = "037")
 
-weight <- 'PWGTP' # using PWGTP b/c calculating percentage of rent-burdened households
+poverty2$indicator <- (ifelse(poverty2$POVPIP <= 200, "at or below 200% FPL", "above poverty"))
 
-
-repwlist = rep(paste0("PWGTP", 1:80))
-
-
-# create survey design
-
-hh_geo <- eligible_hhs2 %>%
-  as_survey_rep(
-    variables = c(geoid, indicator),   # dplyr::select grouping variables
-    weights = weight,                       #  weight
-    repweights = repwlist,                  # list of replicate weights
-    combined_weights = TRUE,                # tells the function that replicate weights are included in the data
-    mse = TRUE,                             # tells the function to calc mse
-    type="other",                           # statistical method
-    scale=4/80,                             # scaling set by ACS
-    rscale=rep(1,80)                        # setting specific to ACS-scaling
-  )
-
-###### TOTAL ######
-total <- hh_geo  %>%
-  group_by(geoid,indicator) %>%   # group by race cat
-  summarise(
-    num = survey_total(na.rm=T), # get the (survey weighted) count for the numerators
-    rate = survey_mean()) %>%        # get the (survey weighted) proportion for the numerator
-  left_join(hh_geo %>%                                        # left join in the denominators
-              group_by(geoid) %>%                                     # group by geo
-              summarise(pop = survey_total(na.rm=T))) %>%              # get the weighted total for overall geo
-  mutate(rate=rate*100,
-         rate_moe = rate_se*1.645*100,    # calculate the margin of error for the rate based on se
-         rate_cv = ((rate_moe/1.645)/rate) * 100, # calculate cv for rate
-         count_moe = num_se*1.645, # calculate moe for numerator count based on se
-         count_cv = ((count_moe/1.645)/num) * 100)  # calculate cv for numerator count
-
-# select burdened and not NA
-d_long2 <- total %>% filter(indicator == "at or below 200% FPL" & !is.na(geoid))
-
-# make data frame
-d_long2 <- as.data.frame(d_long2)
+# calculate estimates
+pov_200 <- pums_run(poverty2) %>%
+  # select burdened
+  filter(indicator == "at or below 200% FPL") %>% 
+  #make sure it a dataframe
+  as.data.frame()
 
 # bind both data frames in final
-d_final <- rbind(d_long, d_long2)
+df_final <- rbind(pov_100, pov_200)
 
 ### Send to Postgres ###
 con3 <- connect_to_db("bold_vision")
@@ -175,7 +121,7 @@ schema <- 'bv_2023'
 indicator <- "Poverty at the 100 and 200 percent levels"
 source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\Healthy Built Environment\\QA_Housing_Burden.docx"
 
-dbWriteTable(con3, c(schema, table_name), d_final,
+dbWriteTable(con3, c(schema, table_name), df_final,
              overwrite = TRUE, row.names = FALSE)
 
 #comment on table and columns
