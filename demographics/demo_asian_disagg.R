@@ -29,10 +29,7 @@ indicator_name <- "Disaggregated Asian"
 # Load the people PUMS data
 people <- fread(paste0(root, "CA_2021/psam_p06.csv"), header = TRUE, data.table = FALSE,
                 colClasses = list(character = c("PUMA", "RAC1P", "RAC2P", "HISP")))
- 
-####  Step 2: filter households eligible for calculation  #### 
 
-#create functions
 
 ## Select LA County people
 pums_data <- people %>% 
@@ -41,9 +38,6 @@ pums_data <- people %>%
   filter( grepl('037', PUMA) & AGEP < 25 & RAC1P == 6 & HISP == "01") %>% 
   # add geoid and indicator
   mutate(geoid = "037")
-
-
-####  Step 3: set up and run survey and format  #### 
 
 #pull in PUMS data dictionary codes for RAC2P
 race_codes <- read_excel("W:/Data/Demographics/PUMS/CA_2017_2021/PUMS_Data_Dictionary_2017-2021_RAC2P.xlsx")%>% 
@@ -122,7 +116,7 @@ asian_alone_subgroups_table_re <- asian_youth_svry %>%
          count_cv = ((count_moe/1.645)/num) * 100)  # calculate cv for numerator count
 
 
-####  Step 6: final format and upload to Postgres  ####
+#Upload to Postgres  ####
 # set the connection to pgadmin
 con3 <- connect_to_db("bold_vision")
 table_name <- "demo_disaggregated_asian"

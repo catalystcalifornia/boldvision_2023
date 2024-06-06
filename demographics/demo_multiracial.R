@@ -19,8 +19,6 @@ for(pkg in packages){
 #SOURCE from the script that has: styling, packages, dbconnection, colors
 source("W:\\RDA Team\\R\\credentials_source.R")
 
-#### Step 1: load the data ####
-
 # PUMS Data
 root <- "W:/Data/Demographics/PUMS/"
 indicator_name <- "multiracial"
@@ -29,10 +27,7 @@ indicator_name <- "multiracial"
 # Load the people PUMS data
 people <- fread(paste0(root, "CA_2021/psam_p06.csv"), header = TRUE, data.table = FALSE,
                 colClasses = list(character = c("PUMA", "RAC1P", "RAC3P", "HISP")))
- 
-####  Step 2: filter households eligible for calculation  #### 
 
-#create functions
 
 ## Select LA County people
 nh_multiracial_youth <- people %>% 
@@ -42,10 +37,8 @@ nh_multiracial_youth <- people %>%
   # add geoid and indicator
   mutate(geoid = "037")
 
-####  Step 3: set up and run survey and format  #### 
 
-
-#pull in pUMS data dictionary codes for RAC3P
+#pull in PUMS data dictionary codes for RAC3P
 race_codes <- read_excel("W:/Data/Demographics/PUMS/CA_2017_2021/PUMS_Data_Dictionary_2017-2021_RAC3P.xlsx")%>% mutate_all(as.character) # created this excel document separate by opening PUMS Data Dictionary in excel and deleting everything but RAC2P
 race_codes$RAC3P<-str_pad(race_codes$Code_1, 3, pad = "0")
 race_codes <- race_codes %>% select(RAC3P, Description)
@@ -122,7 +115,8 @@ multiracial_subgroups_table_re <- nh_multiracial_youth_svry %>%
          count_cv = ((count_moe/1.645)/num) * 100) %>%   # calculate cv for numerator count
   arrange(desc(rate)) %>%
   slice(1:10)
-####  Step 6: final format and upload to Postgres  ####
+
+# Upload to Postgres 
 
 # connect to pgadmin
 con3 <- connect_to_db("bold_vision")

@@ -37,9 +37,6 @@ data_type <- "county" #race, spa, county
 people <- fread(paste0(root, "CA_2021/psam_p06.csv"), header = TRUE, data.table = FALSE,
                 colClasses = list(character = c("PUMA", "POVPIP")))
 
-  
-####  Filter households eligible for calculation  #### 
-
 ## Select LA County people
 poverty <- people %>% 
   
