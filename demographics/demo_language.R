@@ -29,74 +29,12 @@ data_type <- "county" #race, spa, county
   
 # Load the people PUMS data
 people <- fread(paste0(root, "CA_2021/psam_p06.csv"), header = TRUE, data.table = FALSE,
-                colClasses = list(character = c("PUMA", "AGEP", "LANX")))
+                colClasses = list(character = c("PUMA", "HHL")))
 
 
 # Load the housing PUMS data
 housing <- fread(paste0(root, "CA_2021/psam_h06.csv"), header = TRUE, data.table = FALSE, colClasses = list(character = c("PUMA", "HHL")))
 
-
-# ####  Step 2: filter Language other than English with the LANX Variable  #### 
-# 
-# ## Select LA County people
-# eligible_hhs <- people %>% 
-#   
-#   #filtering for universe and LA county
-#   filter(!is.na(LANX) & grepl('037', PUMA) & AGEP < 25)   %>% 
-# 
-#   
-#   #remove records with no weights
-#   filter(!is.na(PWGTP)) %>%
-#   
-#   #filter for age 0-5 and select distinct households
-#   distinct(SERIALNO, .keep_all = TRUE)
-# 
-# 
-# ####  Step 3: set up and run survey and format  #### 
-# 
-# # add geoid and indicator
-# eligible_hhs$geoid <- "037"
-# eligible_hhs$indicator=(ifelse(eligible_hhs$LANX == 1, "Language Other than English", "English"))
-# 
-# weight <- 'PWGTP' 
-# repwlist = rep(paste0("PWGTP", 1:80))
-# 
-# 
-# # create survey design
-# 
-# hh_geo <- eligible_hhs %>%
-#   as_survey_rep(
-#     variables = c(geoid, indicator),   # dplyr::select grouping variables
-#     weights = weight,                       #  weight
-#     repweights = repwlist,                  # list of replicate weights
-#     combined_weights = TRUE,                # tells the function that replicate weights are included in the data
-#     mse = TRUE,                             # tells the function to calc mse
-#     type="other",                           # statistical method
-#     scale=4/80,                             # scaling set by ACS
-#     rscale=rep(1,80)                        # setting specific to ACS-scaling
-#   )
-# 
-# ###### TOTAL ######
-# total <- hh_geo  %>%
-#   group_by(geoid,indicator) %>%   # group by race cat
-#   summarise(
-#     num = survey_total(na.rm=T), # get the (survey weighted) count for the numerators
-#     rate = survey_mean()) %>%        # get the (survey weighted) proportion for the numerator
-#   left_join(hh_geo %>%                                        # left join in the denominators
-#               group_by(geoid) %>%                                     # group by geo
-#               summarise(pop = survey_total(na.rm=T))) %>%              # get the weighted total for overall geo
-#   mutate(rate=rate*100,
-#          rate_moe = rate_se*1.645*100,    # calculate the margin of error for the rate based on se
-#          rate_cv = ((rate_moe/1.645)/rate) * 100, # calculate cv for rate
-#          count_moe = num_se*1.645, # calculate moe for numerator count based on se
-#          count_cv = ((count_moe/1.645)/num) * 100)  # calculate cv for numerator count
-# 
-# 
-# # select burdened and not NA
-# d_long <- total %>% filter(indicator == "Language Other than English" & !is.na(geoid))
-# 
-# # make data frame
-# d_long <- as.data.frame(d_long)
 
 ############ function that all the variables are going to use ---------
 pums_run <- function(x){
@@ -105,7 +43,7 @@ pums_run <- function(x){
   
   # create survey design
   
-  hh_geo <- x %>%
+  pums_survey <- x %>%
     as_survey_rep(
       variables = c(geoid, indicator),   # dplyr::select grouping variables
       weights = weight,                       #  weight
@@ -118,28 +56,22 @@ pums_run <- function(x){
     )
   
   ###### TOTAL ######
-  total <- hh_geo  %>%
+  pums_calcs <- pums_survey  %>%
     group_by(geoid,indicator) %>%   # group by race cat
     summarise(
       num = survey_total(na.rm=T), # get the (survey weighted) count for the numerators
       rate = survey_mean()) %>%        # get the (survey weighted) proportion for the numerator
-    left_join(hh_geo %>%                                        # left join in the denominators
+    left_join(pums_survey %>%                                        # left join in the denominators
                 group_by(geoid) %>%                                     # group by geo
                 summarise(pop = survey_total(na.rm=T))) %>%              # get the weighted total for overall geo
     mutate(rate=rate*100,
            rate_moe = rate_se*1.645*100,    # calculate the margin of error for the rate based on se
            rate_cv = ((rate_moe/1.645)/rate) * 100, # calculate cv for rate
            count_moe = num_se*1.645, # calculate moe for numerator count based on se
-           count_cv = ((count_moe/1.645)/num) * 100)  # calculate cv for numerator count
+           count_cv = ((count_moe/1.645)/num) * 100) %>%   # calculate cv for numerator count
+    as.data.frame()
   
-  
-  # select burdened and not NA
-  d_long <- total %>% filter(indicator == "Language Other than English" & !is.na(geoid))
-  
-  # make data frame
-  d_long <- as.data.frame(d_long)
-  
-  return(d_long)
+  return(pums_calcs)
 }
 
 ######## HHL Variable instead of LANX ######
@@ -149,7 +81,8 @@ pums_run <- function(x){
 # HHL == 4 # Asian and Pacific Island languages
 # HHL == 5 # Other language
 
-eligible_hhs <- people %>% 
+#filter
+household_language <- people %>% 
   
   #filtering for universe and LA county
   filter(grepl('037', PUMA) & AGEP < 25)   %>% 
@@ -158,35 +91,22 @@ eligible_hhs <- people %>%
   left_join(housing %>% filter(grepl('037', PUMA)), 
             by = c("SERIALNO", "PUMA")) %>%
   
-  #remove records with no weights
-  filter(!is.na(PWGTP) & !is.na(HHL) ) %>%
-  
-  #filter for age 0-5 and select distinct households
-  distinct(SERIALNO, .keep_all = TRUE)
+  #remove records with no language reported
+  filter(HHL!='') %>% 
 
-# add geoid and indicator
-eligible_hhs$geoid <- "037"
+  # add geoid and indicator
+  mutate(geoid = "037")
 
 # make data frame
 
-eligible_hhs$indicator=(ifelse(eligible_hhs$HHL == 2, "Language Other than English", "other"))
-d_long2 <- pums_run(eligible_hhs) %>% mutate(indicator="Spanish")
-
-eligible_hhs$indicator=(ifelse(eligible_hhs$HHL == 3, "Language Other than English", "other"))
-d_long3 <- pums_run(eligible_hhs)%>% mutate(indicator="Other Indo-European languages")
-
-eligible_hhs$indicator=(ifelse(eligible_hhs$HHL == 4, "Language Other than English", "other"))
-d_long4 <- pums_run(eligible_hhs)%>% mutate(indicator="Asian and Pacific Island languages")
-
-eligible_hhs$indicator=(ifelse(eligible_hhs$HHL == 5, "Language Other than English", "other"))
-d_long5 <- pums_run(eligible_hhs)%>% mutate(indicator="Other language")
-
-eligible_hhs$indicator=(ifelse(eligible_hhs$HHL %in% c(2,3,4,5), "Language Other than English", "other"))
-d_long6 <- pums_run(eligible_hhs)
-# bind all data frames in final
-d_final <- rbind(d_long2, d_long3, d_long4, d_long5, d_long6)
+household_language$indicator=(ifelse(household_language$HHL == 1, "English", 
+                                  ifelse(household_language$HHL == 2, "Spanish",
+                                         ifelse(household_language$HHL == 3, "Other Indo-European language",
+                                                ifelse(household_language$HHL == 4, "Asian and Pacific Island languages",
+                                                       ifelse(household_language$HHL == 5, "Other Language", "Other"))))))
 
 
+df <- pums_run(household_language)
 
 ###Send to Postgres###
 con3 <- connect_to_db("bold_vision")
@@ -196,7 +116,7 @@ schema <- 'bv_2023'
 indicator <- "Language spoken at home other than English"
 source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\Healthy Built Environment\\QA_Housing_Burden.docx"
 
-dbWriteTable(con3, c(schema, table_name), d_final,
+dbWriteTable(con3, c(schema, table_name), df,
              overwrite = TRUE, row.names = FALSE)
 
 #comment on table and columns
