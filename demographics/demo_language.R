@@ -1,4 +1,4 @@
-#Youth who live in a household that speak a language other than english ages 5-24
+#Youth who live in a household that speak a language other than english ages 0-24
 
 # Data Dictionary: https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMS_Data_Dictionary_2022.pdf
 
@@ -29,7 +29,7 @@ data_type <- "county" #race, spa, county
   
 # Load the people PUMS data
 people <- fread(paste0(root, "CA_2021/psam_p06.csv"), header = TRUE, data.table = FALSE,
-                colClasses = list(character = c("PUMA", "HHL")))
+                colClasses = list(character = c("PUMA")))
 
 
 # Load the housing PUMS data
@@ -38,7 +38,7 @@ housing <- fread(paste0(root, "CA_2021/psam_h06.csv"), header = TRUE, data.table
 
 ############ function that all the variables are going to use ---------
 pums_run <- function(x){
-  weight <- 'PWGTP' # using WGTP b/c calculating percentage of rent-burdened households
+  weight <- 'PWGTP' # using PWGTP b/c calculating people and not households
   repwlist = rep(paste0("PWGTP", 1:80))
   
   # create survey design
@@ -114,7 +114,7 @@ table_name <- "demo_language"
 schema <- 'bv_2023'
 
 indicator <- "Language spoken at home other than English"
-source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\Healthy Built Environment\\QA_Housing_Burden.docx"
+source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\QA_Demo_Language.docx"
 
 dbWriteTable(con3, c(schema, table_name), df,
              overwrite = TRUE, row.names = FALSE)
@@ -124,7 +124,7 @@ comment <- paste0("COMMENT ON TABLE ", schema, ".", table_name,  " IS '", indica
                   COMMENT ON COLUMN ", schema, ".", table_name, ".geoid IS 'County fips';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".rate IS 'indicator rate';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".pop IS 'total population';
-                  COMMENT ON COLUMN ", schema, ".", table_name, ".num IS 'number of people at or below the federal language line';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".num IS 'number of youth ages 0-24 who live in households that speak a language other than english';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".rate_cv IS 'cv of indicator rate';")
 print(comment)
 dbSendQuery(con3, comment)
