@@ -123,8 +123,8 @@ con3 <- connect_to_db("bold_vision")
 table_name <- "demo_multiracial"
 schema <- 'bv_2023'
 
-indicator <- "Multiracial Youth"
-source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\Healthy Built Environment\\QA_Housing_Burden.docx"
+indicator <- "The Top Ten Multiracial Youth Identities"
+source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\QA_Demo_Multiracial.docx"
 
 dbWriteTable(con3, c(schema, table_name), multiracial_subgroups_table_re,
              overwrite = TRUE, row.names = FALSE)
@@ -134,7 +134,7 @@ comment <- paste0("COMMENT ON TABLE ", schema, ".", table_name,  " IS '", indica
                   COMMENT ON COLUMN ", schema, ".", table_name, ".geoid IS 'County fips';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".rate IS 'indicator rate';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".pop IS 'total population';
-                  COMMENT ON COLUMN ", schema, ".", table_name, ".num IS 'number of people at or below the federal poverty line';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".num IS 'number of youth ages 0-24 who have a non-Hispanic Multiracial Identity';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".rate_cv IS 'cv of indicator rate';")
 print(comment)
 dbSendQuery(con3, comment)
