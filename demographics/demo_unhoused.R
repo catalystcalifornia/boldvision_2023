@@ -3,7 +3,7 @@
 # LAHSA 2023: https://www.lahsa.org/documents?id=7689-yc2023-la-coc-data-summary
 # Glendale 2023: https://www.glendaleca.gov/home/showpublisheddocument/71115/638205459970370000
 # Pasadena 2023: https://docs.google.com/spreadsheets/d/1ZEeF1KNOE7UFh493WRSreEI_O3WfSZ22CBJWkEXIgLk/edit?gid=1813887752#gid=1813887752
-# Long Beach
+# Long Beach 2023: https://www.longbeach.gov/globalassets/homelessness/media-library/documents/2023-city-of-long-beach-homeless-point-in-time-count-report
 
 # Environment Set Up ----
 library("readxl")
