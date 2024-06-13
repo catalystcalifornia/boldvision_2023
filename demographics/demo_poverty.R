@@ -1,4 +1,4 @@
-# Youth Poverty in LA County ages 05-24
+# Youth Poverty in LA County ages 0-24
 
 # Data Dictionary: https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMS_Data_Dictionary_2022.pdf
     # POVPIP Numeric 3
@@ -35,22 +35,22 @@ data_type <- "county" #race, spa, county
   
 # Load the people PUMS data
 people <- fread(paste0(root, "CA_2021/psam_p06.csv"), header = TRUE, data.table = FALSE,
-                colClasses = list(character = c("PUMA", "POVPIP")))
+                colClasses = list(character = c("PUMA")))
 
 ## Select LA County people
 poverty <- people %>% 
   
   #filtering for universe and LA county
-  filter(grepl('037', PUMA) & AGEP < 25) %>% 
+  filter(grepl('037', PUMA) & AGEP < 25 & !is.na(POVPIP)) %>% 
 
   # add geoid and indicator
   mutate(geoid = "037")
 
 poverty$indicator <- (ifelse(poverty$POVPIP <= 100, "at or below 100% FPL", "above poverty"))
-
+View(poverty %>% select(geoid, PUMA, AGEP, POVPIP, indicator)) #check that it filtered correctly
 
 pums_run <- function(x){
-  weight <- 'PWGTP' # using WGTP b/c calculating percentage of rent-burdened households
+  weight <- 'PWGTP' # using PWGTP b/c calculating person values and not households
   repwlist = rep(paste0("PWGTP", 1:80))
   
   # create survey design
@@ -87,21 +87,13 @@ pums_run <- function(x){
 }
 # make data frame
 pov_100 <- pums_run(poverty) %>% filter(indicator == "at or below 100% FPL") %>%  as.data.frame()
+
 #### Step 4: Repeat steps 2 and 3 above with 200% filter ####
 
-## Select LA County people
-poverty2 <- people %>% 
-  
-  #filtering for universe and LA county
-  filter(grepl('037', PUMA) & AGEP < 25) %>% 
-
-  # add geoid and indicator
-  mutate(geoid = "037")
-
-poverty2$indicator <- (ifelse(poverty2$POVPIP <= 200, "at or below 200% FPL", "above poverty"))
-
+poverty$indicator <- (ifelse(poverty$POVPIP <= 200, "at or below 200% FPL", "above poverty"))
+View(poverty %>% select(geoid, PUMA, AGEP, POVPIP, indicator)) #check that it filtered correctly
 # calculate estimates
-pov_200 <- pums_run(poverty2) %>%
+pov_200 <- pums_run(poverty) %>%
   # select burdened
   filter(indicator == "at or below 200% FPL") %>% 
   #make sure it a dataframe
@@ -116,7 +108,7 @@ table_name <- "demo_poverty"
 schema <- 'bv_2023'
 
 indicator <- "Poverty at the 100 and 200 percent levels"
-source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\Healthy Built Environment\\QA_Housing_Burden.docx"
+source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\QA_Demo_Poverty.docx"
 
 dbWriteTable(con3, c(schema, table_name), df_final,
              overwrite = TRUE, row.names = FALSE)
