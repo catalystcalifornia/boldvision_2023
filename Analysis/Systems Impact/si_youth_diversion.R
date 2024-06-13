@@ -1,3 +1,7 @@
+# Calculate youth diversion rates per 1K youth arrests in LA County
+# age range 10-17
+# Data sources: LAPD arrests, LASD Incident Data, CADOJ RIPA Data; DYD Diversion data by special request
+
 # packages
 library(tidyverse)
 library(readxl)
@@ -98,8 +102,8 @@ youth_diversion_count <- rbind(youth_diversion_total, youth_diversion_latino, yo
 ## LASD Arrest Data --------------------------------------------------------
 lasd_youth_arrests <- dbGetQuery(con2, "SELECT * FROM bv_2023.lasd_youth_arrests_2022")
 
-# filter ages 0-20
-lasd_youth_arrests <- lasd_youth_arrests %>% filter(age <= 20)
+# filter ages 10-17
+lasd_youth_arrests <- lasd_youth_arrests %>% filter(age >=10 & age <= 17)
 
 lasd_total <- lasd_youth_arrests %>% mutate(race = "total") %>% group_by(race) %>% summarize(count = n())
 
@@ -130,10 +134,17 @@ lasd_race <- rbind(lasd_total, lasd_latino, lasd_nh_white, lasd_nh_black, lasd_n
 
 ## LAPD Arrest Data --------------------------------------------------------
 
-lapd_youth_arrests <- dbGetQuery(con2, "SELECT * FROM bv_2023.lapd_youth_arrests_2022")
+lapd_youth_arrests_pg <- dbGetQuery(con2, "SELECT * FROM bv_2023.lapd_youth_arrests_2022")
 
-# filter for ages 0-20
-lapd_youth_arrests  <- lapd_youth_arrests  %>% filter(age <=20)
+# filter for ages 10-17
+lapd_youth_arrests  <- lapd_youth_arrests_pg  %>% filter(age >=10 & age <= 17)
+
+# filter out dependency arrests that wouldn't be included in diversion--arrests where minor is taken into care when guardian is arrested
+# get full arrest data
+lapd <- dbGetQuery(con, "SELECT * FROM crime_and_justice.lapd_arrests_2020_2023")
+lapd_youth_arrests  <- lapd_youth_arrests  %>% 
+  left_join(lapd%>%select(report_id,arrest_date,arrest_type_code,age), by=c("report_id"))%>%
+  filter(arrest_type_code!='D')
 
 lapd_total <-lapd_youth_arrests %>% mutate(race = "total") %>% group_by(race) %>% summarize(count = n())
 
@@ -156,9 +167,9 @@ lapd_race <- rbind(lapd_total, lapd_latino, lapd_nh_white, lapd_nh_black, lapd_n
 
 ripa_youth_arrests <- dbGetQuery(con2, "SELECT * FROM bv_2023.ripa_youth_arrests_2022")
 
-## filter for 0-20 (for youth diversion)
+## filter for 10-17 (for youth diversion)
 
-ripa_youth_arrests <- ripa_youth_arrests %>% filter(age<=20)
+ripa_youth_arrests <- ripa_youth_arrests %>% filter(age >=10 & age <= 17)
 
 ripa_total <- ripa_youth_arrests %>% mutate(race = "total") %>% group_by(race) %>% summarize(count = n())
 
@@ -187,14 +198,14 @@ df <- rbind(lasd_race, lapd_race, ripa_race) %>% rename(pop = count) %>% mutate(
 youth_arrest_count <- df %>% group_by(race) %>% summarise(pop = sum(pop))
 
 # combine arrest with diversion
-df_combined <- youth_arrest_count %>% left_join(youth_diversion_count) %>% mutate(rate = (count/pop)* 1000, geoid = "06037", county = "Los Angeles County")
+df_combined <- youth_arrest_count %>% left_join(youth_diversion_count) %>% mutate(rate = (count/pop)* 100, geoid = "06037", county = "Los Angeles County")
 
 # add bipoc
 
 bipoc <- df_combined %>% filter(race %in% c("total",  "nh_white")) %>% mutate(subgroup = "bipoc") %>% group_by(subgroup) %>% summarize(
   count = diff(range(count)),
   pop = diff(range(pop)),
-  rate = (count/pop * 1000)
+  rate = (count/pop * 100)
 ) %>% rename(race = subgroup) %>% mutate(geoid = "06037", county = "Los Angeles County")
 
 
@@ -386,9 +397,9 @@ spa_data <- rbind(lasd_spa_count, lasd_spa_count_geocoded,lapd_spa_count, ripa_s
 
 df_arrests_spa <- spa_data %>% group_by(spa, spa_name) %>% mutate(pop = sum(count)) %>% distinct(spa, spa_name,pop)
 
-# Calcs: Rate per 1000, Index of Disparity, 
+# Calcs: Rate per 100, Index of Disparity, 
 
-df_region <- df_diversion_spa %>% left_join(df_arrests_spa) %>% mutate(rate = (count/pop) * 1000) %>% rename(geoid = spa, name = spa_name)
+df_region <- df_diversion_spa %>% left_join(df_arrests_spa) %>% mutate(rate = (count/pop) * 100) %>% rename(geoid = spa, name = spa_name)
 
 df_region$asbest <- "max"
 
@@ -408,12 +419,12 @@ con3 <- connect_to_db("bold_vision")
 table_name <- "si_youth_diversion_subgroup"
 schema <- 'bv_2023'
 
-indicator <- "Youth Diversion for youth 0-20 per 1K youth arrested in 2022 by race"
+indicator <- "Youth Diversion for youth 10-17 per 100 youth arrested in 2022 by race. Excludes LAPD dependency arrests"
 source <- "Source: LA County Department of Youth Development, CADOJ Arrest Data, LASD Arrest data, LAPD arrest data. Nh two or more is excluded from ID calc due to discrepancy between data sources
 See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\System Impact\\QA_Youth_Diversion.docx"
 
 # dbWriteTable(con3, c(schema, table_name), subgroup,
-#            overwrite = TRUE, row.names = FALSE)
+#            overwrite = FALSE, row.names = FALSE)
 
 #comment on table and columns
 
@@ -424,7 +435,7 @@ comment <- paste0("COMMENT ON TABLE ", schema, ".", table_name,  " IS '", indica
                   COMMENT ON COLUMN ", schema, ".", table_name, ".count IS 'indicator numerator: youth diversion';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".pop IS 'indicator denominator: youth arrests';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".diff IS 'indicator difference from the best';
-                  COMMENT ON COLUMN ", schema, ".", table_name, ".rate IS 'indicator rate per 1K youth arrests';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".rate IS 'indicator rate per 100 youth arrests';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".best IS 'best rate among race groups';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".index_of_disparity IS 'index of disparity excludes bipoc, two or more, and total';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".values_count IS 'number of values';
@@ -438,13 +449,13 @@ con3 <- connect_to_db("bold_vision")
 table_name <- "si_youth_diversion_region"
 schema <- 'bv_2023'
 
-indicator <- "Youth Diversion for youth 0-20 per 1K youth arrested in 2022 by SPA"
+indicator <- "Youth Diversion for youth 10-17 per 100 youth arrested in 2022 by SPA"
 source <- "Source: LA County Department of Youth Development, CADOJ Arrest Data, LASD Arrest data, LAPD arrest data. Nh two or more is excluded from ID calc due to discrepancy between data sources
 See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\System Impact\\QA_Youth_Diversion.docx"
 
 
 # dbWriteTable(con3, c(schema, table_name), df_region,
-#        overwrite = TRUE, row.names = FALSE)
+#        overwrite = FALSE, row.names = FALSE)
 
 #comment on table and columns
 comment <- paste0("
@@ -453,7 +464,7 @@ comment <- paste0("
                   COMMENT ON COLUMN ", schema, ".", table_name, ".name IS 'SPA Name';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".pop IS 'indicator denominator: youth arrests';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".count IS 'indicator numerator: youth diversion';
-                  COMMENT ON COLUMN ", schema, ".", table_name, ".rate IS 'indicator rate per 1K youth arrests';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".rate IS 'indicator rate per 100 youth arrests';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".asbest IS 'minimum or maximum as best';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".best IS 'best rate among regions';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".diff IS 'indicator difference from the best';
