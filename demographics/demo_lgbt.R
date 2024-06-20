@@ -113,7 +113,7 @@ add_table_comments <- function(con, schema, table_name, indicator, source, colum
 table_name <- "demo_lgbt"
 schema <- 'bv_2023'
 
-indicator <- "Estimated percentage and count of youth who are LGB or transgender/gender non-conforming. Based on data from CHIS. LGB youth is just for ages 18-24, while transgender and gender non-conforming includes youth 12-24"
+indicator <- "Estimated percentage and count of youth who are LGB or transgender/gender non-conforming. Based on data from CHIS. LGB youth is just for ages 18-24, while transgender and gender non-conforming includes youth 12-24. LGB data not available for youth 12-17"
 source <- "CHIS 2019-2022 pooled estimates teen and adult samples
 See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\Demo_lgbt_unhoused.docx
 Script: W:/Project/OSI/Bold Vision/BV 2023/GitHub/EMG/boldvision_2023/demographics/demo_lgbt.R"
@@ -130,7 +130,7 @@ column_comments<-c(
   "Demographic indicator count and rates are for",
   "Rate or percentage of youth population",
   "Count of youth identifying with indicator",
-  "Total population of youth data are available for - Transgender is for 12-24 and LGB for 18-24",
+  "Total population of youth data are available for - Transgender is for 12-24 and LGB for 18-24, LGB data not available for youth 12-17",
   "Coefficient of variation, not calculated for transgender",
   "lower bound of 95% CI not calculated for transgender",
   "higher bound of 95% CI not calculated for transgender"
