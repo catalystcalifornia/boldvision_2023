@@ -1,4 +1,4 @@
-# Follow this template to use the bold vision function 
+# Academic attainment among systems impacted youth by subgroup
 
 ####Step 1: Pull function from github script ####
 source("bv_barchart_function.R")
@@ -70,7 +70,7 @@ fx_barchart_subgroup(
   #only input the full names for the groups that are in acronyms and do NOT modify this racenote unless necessary for their indicator
   caption_racenote = "AIAN=American Indian or Alaska Native; NHPI=Native Hawaiian or Pacific Islander",
   #define the indicator
-  caption_indicator_def = "Graduation rates among systems-impacted youth are defined as the percentage of foster youth and youth enrolled in Dashboard Alternative School Status (DASS) schools who graduate within four-years.",
+  caption_indicator_def = "Graduation rates among systems-impacted youth are defined as the percentage of foster youth and youth enrolled in Dashboard Alternative School Status (DASS) schools who graduate high school within four-years.",
   #define the unit of the data and remember to use quotations (i.e. "%" or "per 1k") 
   data_unit = "%"
 )
