@@ -1,4 +1,4 @@
-# Follow this template to use the bold vision function 
+# Lack of green space by youth subgroup 
 
 #### Step 1: Pull function from github script ####
 source("bv_barchart_function.R")
@@ -40,7 +40,7 @@ fx_barchart_subgroup(
   domain = "Healthy Built Environment",
   indicator = "Impervious Land",
   # insert a findings based systems led title
-  title = "Black and Latine youth live in neighborhoods with the most impervious land",
+  title = "Latine and Black youth live in neighborhoods with the least access to green space",
   # explanation of what the we are looking at // use sentence case 
   subtitle = "Percent of impervious land cover in Los Angeles County",
   # please follow the format of the datasource below
