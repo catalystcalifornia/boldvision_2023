@@ -1,6 +1,6 @@
 # boldvision_2023
 
-<img src="" alt="Project Logo if applicable">
+<img src="https://www.boldvisionla.org/wp-content/uploads/2022/09/Bold-Vision-Light-Logo.png" alt="Bold Vision Logo">
 
 
 <li><a href="">GitHub Pages Static Website Link</a></li>
@@ -39,8 +39,7 @@
 
 ## About The Project
 
-In this section, include the summary and project purpose.
-
+[Bold Vision](https://www.boldvisionla.org/) is a multi-sector effort to build a 10-year-plus initiative that aims to fundamentally improve the lives of a generation of BIPOC children and youth, creating lasting change in our communities by establishing new paths towards success for young people across L.A. County. [Catalyst California](https://www.catalystcalifornia.org/) has served as the lead community engagement, policy development, and research consultant for the initiative alongisde a Community Council of 13 people from color-led youth serving organizations. Member organizations of the Community Council include: SJLI (Social Justice Learning Institute), Pacoima Beautiful, Legacy La, Khmer Girls in Action, ICS (Innercity Struggle), EPIC (Empowering Pacific Islander Communities), East Yard Communities for Environmental Justice, CoCo (Community Coalition), CHIRLA (Coalition for Humane Immigrant Rights), CNVP (California Native Vote Project), Brotherhood Crusade, Advancing Communities Together, Active SGV.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
