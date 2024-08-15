@@ -1,4 +1,4 @@
-# boldvision_2023
+# Bold Vision
 
 <img src="https://www.boldvisionla.org/wp-content/uploads/2022/09/Bold-Vision-Light-Logo.png" alt="Bold Vision Logo">
 
