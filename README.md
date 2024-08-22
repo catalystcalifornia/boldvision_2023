@@ -27,32 +27,33 @@
 # About the Data 
 
 The Bold Vision report measures 19 indicators from five different domains to wholistically gather the state of youth in Los Angeles County. The selection of Bold Vision’s indicators was guided by an intentional and iterative process with research experts, community-based organizations, and youth prior to the launch report. We analyze these indicators and their respective domains to track how all youth are supported in reaching their fullest potential and the degree of disparity between groups in L.A. County. Each indicator is processed by race group and regional group. Additionaly, an index of disparity calculation allows us to see how youth in varying groups compare against one another, this highlights the disparities amidst youth. See below each domain and the indicator associated: 
-__Systems Impact__
-* Graduation Rates of Systems-Impacted Youth
-* Youth Arrests
-* Youth Diverted from Arrests
-* Youth affected by Immigration Systems (Undocumented)
-* Youth in Foster Care or Probation
-__Healthy Built Environment__
-* Lack of Green Space
-* Pollution Exposure around Sensitive Land Uses
-* Traffic Fatalities/Injuries
-* Rent Burden
-* Access to Fresh Fruits and Vegetables
-__Positive Youth Development__
-* Asthma Rates
-* Good/Excellent Health Status
-* Access to Needed Medical Care
-* Connected Youth
-* Early Childhood Education Access
-__Youth Power__
-* Youth Receiving a Living Wage
-* Access to Grassroots/Base-Building Organizations
-* Political Engagement and Advocacy
-* Youth Voter Turnout
-__Community Organizing and Power Building__
-* Average Budget of Grassroots/Base-Building Organizations
-* Tenure of Grassroots/Base-Building Organizations
+
+* __Systems Impact__
+  * Graduation Rates of Systems-Impacted Youth
+  * Youth Arrests
+  * Youth Diverted from Arrests
+  * Youth affected by Immigration Systems (Undocumented)
+  * Youth in Foster Care or Probation
+* __Healthy Built Environment__
+  * Lack of Green Space
+  * Pollution Exposure around Sensitive Land Uses
+  * Traffic Fatalities/Injuries
+  * Rent Burden
+  * Access to Fresh Fruits and Vegetables
+* __Positive Youth Development__
+  * Asthma Rates
+  * Good/Excellent Health Status
+  * Access to Needed Medical Care
+  * Connected Youth
+  * Early Childhood Education Access
+* __Youth Power__
+  * Youth Receiving a Living Wage
+  * Access to Grassroots/Base-Building Organizations
+  * Political Engagement and Advocacy
+  * Youth Voter Turnout
+* __Community Organizing and Power Building__
+  * Average Budget of Grassroots/Base-Building Organizations
+  * Tenure of Grassroots/Base-Building Organizations
 
 To learn more about the detailed methodology of our Bold Vision indicators, see the methodology section in the report. 
 
