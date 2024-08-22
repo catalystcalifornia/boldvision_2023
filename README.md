@@ -2,42 +2,23 @@
 
 <img src="https://www.boldvisionla.org/wp-content/uploads/2022/09/Bold-Vision-Light-Logo.png" alt="Bold Vision Logo">
 
-
-<li><a href="">GitHub Pages Static Website Link</a></li>
-
 <br>
 
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a></li>
-    <li><a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#data-methodology">Data Methodology</a>
-      <ul>
-        <li><a href="#data-dictionary">Data Dictionary</a></li>
-      </ul>
-    </li>
-    <li><a href="#contributors">Contributors</a></li>
-    <li><a href="#contact-us">Contact Us</a></li>
-    <li><a href="#about-catalyst-california">About Catalyst California</a>
-      <ul>
-        <li><a href="#our-vision">Our Vision</a></li>
-        <li><a href="#our-mission">Our Mission</a></li>
-      </ul>
-    </li>
-    <li><a href="#citation">Citation</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#partners">Partners</a></li>
+    <li> <a href="#about-the-project">About the Project</a></li>
+    <li> <a href="#about-the-data">About the Data</a>
+    <li> <a href="#contributors">Contributors</a>
+    <li> <a href="#contact-us">Contact Us</a>
+    <li> <a href="#citation">Citation </a> 
+    <li> <a href="#about-catalyst-california">About Catalyst California</a> 
+    <li> <a href="#license">License </a> 
+  
   </ol>
 </details>
 
-# About The Project
+# About the Project
 
 [Bold Vision](https://www.boldvisionla.org/) is a multi-sector effort to build a 10-year-plus initiative that aims to fundamentally improve the lives of a generation of BIPOC children and youth, creating lasting change in our communities by establishing new paths towards success for young people across L.A. County. [Catalyst California](https://www.catalystcalifornia.org/) has served as the lead community engagement, policy development, and research consultant for the initiative alongisde a Community Council of 13 people from color-led youth serving organizations. Member organizations of the Community Council include: SJLI (Social Justice Learning Institute), Pacoima Beautiful, Legacy La, Khmer Girls in Action, ICS (Innercity Struggle), EPIC (Empowering Pacific Islander Communities), East Yard Communities for Environmental Justice, CoCo (Community Coalition), CHIRLA (Coalition for Humane Immigrant Rights), CNVP (California Native Vote Project), Brotherhood Crusade, Advancing Communities Together, Active SGV.
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -109,8 +90,9 @@ A world where systems are designed for justice and support equitable access to r
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## License
+# License
 
+[License](License.md)
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
