@@ -1,5 +1,5 @@
 # Script that creates a crosswalk of PUMAs to Service Planning Areas based on spatial intersect or aerial apportionment
-# Original method use for matching ACS public use microdata to SPAs
+# Original method used for matching ACS public use microdata to SPAs
 
 #loading libraries
 library(dplyr)  
