@@ -11,7 +11,7 @@ df_subgroup <- st_read(con, query = "select * from bv_2023.hbe_frtsveg_subgroup"
 
 #pull race labels
 race_label_df <- st_read(con, query = "select * from bv_2023.metadata_race_labels")
-#test line
+#test line AV
 dbDisconnect(conn = con)
 
 ####Step 2: join your table to the metadata table to get the correct labels ####
