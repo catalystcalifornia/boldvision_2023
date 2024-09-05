@@ -1,4 +1,3 @@
-# alicia was here
 ####Step 1: Pull function from github script ####
 source("bv_barchart_function.R")
 
