@@ -1,4 +1,4 @@
-# Bold Vision 2024
+# Bold Vision Mid-Term Report 2024
 
 <img src="https://www.boldvisionla.org/wp-content/uploads/2022/09/Bold-Vision-Light-Logo.png" alt="Bold Vision Logo">
 
@@ -33,7 +33,7 @@ Data is a vital tool to measure how youth of color are thriving in Los Angeles o
 * [Pacoima Beautiful](https://www.pacoimabeautiful.org/)
 * [Legacy La](https://www.legacyla.org/)
 * [Khmer Girls in Action](https://kgalb.org/)
-* [ICS (Innercity Struggle)](https://kgalb.org/)
+* [ICS (Innercity Struggle)](https://www.innercitystruggle.org)
 * [EPIC (Empowering Pacific Islander Communities)](https://www.empoweredpi.org/)
 * [East Yard Communities for Environmental Justice](https://eycej.org/)
 * [CoCo (Community Coalition)](https://cocosouthla.org/)
@@ -42,6 +42,8 @@ Data is a vital tool to measure how youth of color are thriving in Los Angeles o
 * [Brotherhood Crusade](https://www.brotherhoodcrusade.org/)
 * [Advancing Communities Together](https://act4avyouth.org/)
 * [Active SGV](https://www.activesgv.org/)
+
+In addition, we'd like to thank the [Youth Council](https://www.boldvisionla.org/youth-council/) made up of BIPOC youth across LA County that have played an instrumental role in developing, advising, and shaping the Bold Vision work. Youth council members include: Kristhell Guzmán (Kris), Violeta Acuña, Jeremiah Salazar, Honey Bizarro, Alex Malleis Sternberg, Makaela Brown, Suleika Leiva Gonzalez, Francisco Flores, Rachelle Cruz, Nat De La Cruz, Frank Godinez, Attum Phang, Daniel Candia, Amaris Gilbert, Alaysia Jointer, Angela Yang, Jorge Diaz, Lauren Lopez, Kahlila Williams, Matthew Quiñonez, Isaiah Williams, Sydney Pike
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
