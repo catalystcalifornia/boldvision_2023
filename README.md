@@ -10,6 +10,7 @@
     <li> <a href="#about-the-project">About the Project</a></li>
     <li> <a href="#acknowledgement-and-partners">Acknowledgement and Partners</a>
     <li> <a href="#about-the-data">About the Data</a>
+    <li> <a href="#about-the-data">About the Repository</a>  
     <li> <a href="#getting-started">Getting Started</a>
     <li> <a href="#contributors">Contributors</a>
     <li> <a href="#contact-us">Contact Us</a>
@@ -22,13 +23,13 @@
 
 # About the Project
 
-[Bold Vision](https://www.boldvisionla.org/) is a multi-sector effort to build a 10-year-plus initiative that aims to fundamentally improve the lives of a generation of BIPOC children and youth, creating lasting change in our communities by establishing new paths towards success for young people across L.A. County. Thanks to decades of power-building, Los Angeles is reaching a tipping point, with the time coming near when organized youth power can dictate that public systems transform themselves into ones of support, not suppression. This tipping point is an opportunity for youth of color and their adult allies to eliminate these inequities. The task before us is to follow the lead of youth of color, and commit to the investments, the advocacy, and the power building needed to finally uproot it from our public systems. 
+[Bold Vision](https://www.boldvisionla.org/) is a multi-secton, a 10-year-plus initiative that aims to fundamentally improve the lives of BIPOC children and youth, creating lasting change in our communities by establishing new paths towards success for young people across L.A. County. Thanks to decades of power-building, organized youth power aspire for public systems to transform themselves into foundations of support for youth, not suppression. This tipping point is an opportunity for youth of color and allies to eliminate existing inequities. The task before us is to follow the lead of youth of color, and commit to the investments, the advocacy, and the power building needed to finally uproot inequeties from our public systems. 
 
-Data is a vital tool to measure how youth of color are thriving in Los Angeles or lacking the resources and guidance in order to become thriving adults. Bold Vision released it's first data-driven report measuring youth thriving in Los Angeles in May of 2021 that can be viewed at the bottom of this webpage [here](https://www.boldvisionla.org/issue/). This year in 2024, the indicator report has been updated with the latest data available and a couple of new indicators across the five domains of interest: Positive Youth Development, Healthy Built Environment, Systems Impact, Youth Power and Community Organizing and Power Building. See the updated indicator report [here](INSERT LINK HERE). 
+Data is a vital tool to measure how youth of color are thriving, or lacking the resources and guidance to become thriving adults. Bold Vision released it's first data-driven report measuring how well youth are thriving across Los Angeles in May of 2021 that can be viewed at the bottom of this webpage [here](https://www.boldvisionla.org/issue/). This year in 2024, the indicator report has been updated with the latest data available and with new indicators across the five domains of interest: Positive Youth Development, Healthy Built Environment, Systems Impact, Youth Power and Community Organizing and Power Building. See the updated indicator report [here](INSERT LINK HERE). 
 
 # Acknowledgement and Partners
 
-[Catalyst California](https://www.catalystcalifornia.org/) has served as the lead community engagement, policy development, and research consultant for the initiative alongisde a Community Council of 13 people from color-led youth serving organizations. The collobration and insights frm this council is monumental in shaping and developing Bold Vision with intentionality and rigor. Member organizations of the Community Council include: 
+[Catalyst California](https://www.catalystcalifornia.org/) has served as the lead community engagement, policy development, and research consultant for the initiative alongisde a Community Council of 13 people from bipoc-led youth serving organizations. The collobration and insights from this council is monumental in shaping and developing Bold Vision with intentionality and rigor. Member organizations of the Community Council include: 
 * [SJLI (Social Justice Learning Institute)](https://sjli.org/)
 * [Pacoima Beautiful](https://www.pacoimabeautiful.org/)
 * [Legacy La](https://www.legacyla.org/)
@@ -50,19 +51,29 @@ In addition, we'd like to thank the [Youth Council](https://www.boldvisionla.org
 # About the Data 
 
 ## Indicators Overview
-The Bold Vision report measures 19 indicators from five different domains to wholistically gather the state of youth in Los Angeles County. The selection of Bold Vision’s indicators was guided by an intentional and iterative process with research experts, community-based organizations, and youth prior to the launch report. We analyze these indicators and their respective domains to track how all youth are supported in reaching their fullest potential and the degree of disparity between groups in L.A. County. Each indicator is processed by race group and regional group. Additionaly, an index of disparity calculation allows us to see how youth in varying groups compare against one another, this highlights the disparities amidst youth. See below each domain and the indicator associated: 
+The Bold Vision report measures nineteen indicators from five different domains to wholistically gather the state of youth in Los Angeles County. The selection of Bold Vision’s indicators was guided by an intentional and iterative process with research experts, community-based organizations, and youth prior to the launch report. We analyze these indicators and their respective domains to track how all youth are supported in reaching their fullest potential and the degree of disparity between groups in L.A. County. Each indicator is processed by race group and regional group (region is mostly defined by LA County Service Planning Areas, SPAs). Additionaly, an index of disparity calculation allows us to see how youth in varying groups compare and it reveals the disparities amidst youth. See below each domain and the indicators associated: 
 
 | Domain                         | Description    | Indicators                                                                                                                                                                                      |
 | ----------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Systems Impact | In any youth’s life, there are events that can throw them off track. But the systems that respond to crisis points for youth of color must center their well-being. | Systems Impact Index of Disparity by Subgroup and SPA, Graduation Rates of Systems-Impacted Youth, Youth Arrests, Youth Diverted from Arrests, Youth affected by Immigration Systems (Undocumented), Youth in Foster Care or Probation |
 | Healthy Built Environment | For youth of color to thrive, they need to live, learn, and play in thriving resource rich environments. | Healthy Built Environment Index of Disparity by Subgroup and SPA, Lack of Green Space, Pollution Exposure around Sensitive Land Uses, Traffic Fatalities/Injuries, Rent Burden, Access to Fresh Fruits and Vegetables |           
 | Positive Youth Development | Positive youth development encompasses several distinct spheres: education, leadership development, employment in a career, and the physical and mental health supports youth of color need to develop into thriving adults. | Positive Youth Development Index of Disparity by Subgroup and SPA, Asthma Rates, Good/Excellent Health Status, Access to Needed Medical Care, Connected Youth, Early Childhood Education Access | 
-| Youth Power | Youth of color are the ones most familiar with the challenges, hopes, and opportunities that confront them – and so the greater the voice they have in public decision-making, the closer we will be to solutions. | Youth Power Index of Disparity by Subgroup and SPA, Youth Receiving a Living Wage, Access to Grassroots/Base-Building Organizations, Political Engagement and Advocacy, Youth Voter Turnout |
-| Community Organizing and Power Building | Over the past decades Los Angeles’s youth of color and adult allies have built a strong ecosystem of community organizations in recognition that the right research and the right policy by themselves are not sufficient to achieve change: indeed, the only true pre-requisite for transformation is organized community power. | Average Budget of Grassroots/Base-Building Organizations, Tenure of Grassroots/Base-Building Organizations |
+| Youth Power | Youth of color are the ones most familiar with the challenges, hopes, and opportunities that confront them – and so, the more they can have a presence in public decision-making, the closer we will be to solutions for youth. | Youth Power Index of Disparity by Subgroup and SPA, Youth Receiving a Living Wage, Access to Grassroots/Base-Building Organizations, Political Engagement and Advocacy, Youth Voter Turnout |
+| Community Organizing and Power Building | Over the past decade, Los Angeles’s youth of color and adult allies have built a strong ecosystem of community organizations in recognition that the right research and the right policy by themselves are not sufficient to achieve change: indeed, the only true pre-requisite for transformation is organized community power. | Average Budget of Grassroots/Base-Building Organizations, Tenure of Grassroots/Base-Building Organizations |
 
 ## Methodolody 
-To learn more about the detailed methodology of our Bold Vision indicators, the data limitations of this report and how the index of disparity is calculated- please see the methodology documentation here: 
+To learn more about the detailed methodology of our Bold Vision indicators, the data limitations of this report and how the index of disparity is calculated- please see the methodology documentation here: [insert later]
 
+# About the Repository 
+
+In this repository, you will find four folders corresponding to different components for the Bold Vision Indicator Report. 
+* Analysis | Any scripts related to analysis and data prep for the data you will find in this folder. Within the folder, subfolders are organized by domain. Any files outside of the folders are central scripts needed for analysis such as crosswalks.
+* Visuals | All scripts that produce visuals for the Bold Vision Indicator Report are in this folder. Subfolders are organized by domain.
+* demographics | The team aimed to understand the diverstiy of the youth in LA County and this folder comprises of all the scripts that break down the demographics of LA County youth by various facets.
+* powerbuilding | This folder comprises of the script and html developed to map out all the community based organizations serving LA County youth in various capacities.
+* _Any files not in a folder are central to the overall project. The bv_barchart_function scripts are sourced in numerous other scripts to produce harmonious, stylized charts for the report._
+
+  
 # Getting Started
 
 ## Prerequisites
@@ -82,9 +93,10 @@ We used several R packages to analyze data and perform different functions, incl
 * stringr
 * rpostgis
 * ggplot
+* arcgis
 
 ```
-list.of.packages <- c("usethis","dplyr","data.table", "sf", tidyr","RPostgreSQL","readxl","stringr","sf", "ggplot2", "flextable", "ggchicklet")
+list.of.packages <- c("usethis","dplyr","data.table", "sf", tidyr","RPostgreSQL","readxl","stringr","sf", "ggplot2", "flextable", "ggchicklet", "arcgis")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -101,6 +113,7 @@ library(sf)
 library(ggplot2)
 library(flextable)
 library(ggchicklet)
+library(arcgis)
 
 ```
 
@@ -128,7 +141,7 @@ library(ggchicklet)
 # Citation
 To cite Bold Vision, please use the following:
 
-Catalyst California; BOLD VISION, boldivisionla.org, [current year].
+Catalyst California; BOLD VISION, boldvisionla.org, 2024.
 
 # About Catalyst California
 
