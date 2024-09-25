@@ -10,7 +10,7 @@
     <li> <a href="#about-the-project">About the Project</a></li>
     <li> <a href="#acknowledgement-and-partners">Acknowledgement and Partners</a>
     <li> <a href="#about-the-data">About the Data</a>
-    <li> <a href="#about-the-data">About the Repository</a>  
+    <li> <a href="#about-the-repository">About the Repository</a>  
     <li> <a href="#getting-started">Getting Started</a>
     <li> <a href="#contributors">Contributors</a>
     <li> <a href="#contact-us">Contact Us</a>
@@ -23,7 +23,7 @@
 
 # About the Project
 
-[Bold Vision](https://www.boldvisionla.org/) is a multi-secton, a 10-year-plus initiative that aims to fundamentally improve the lives of BIPOC children and youth, creating lasting change in our communities by establishing new paths towards success for young people across L.A. County. Thanks to decades of power-building, organized youth power aspire for public systems to transform themselves into foundations of support for youth, not suppression. This tipping point is an opportunity for youth of color and allies to eliminate existing inequities. The task before us is to follow the lead of youth of color, and commit to the investments, the advocacy, and the power building needed to finally uproot inequeties from our public systems. 
+[Bold Vision](https://www.boldvisionla.org/) is a multi-sector, 10-year-plus initiative that aims to fundamentally improve the lives of BIPOC children and youth, creating lasting change in our communities by establishing new paths towards success for young people across Los Angeles County. Thanks to decades of power-building, organized youth power aspire for public systems to transform into foundations of support for youth, not suppression. This tipping point is an opportunity for youth of color and allies to eliminate existing inequities. The task before us is to follow the lead of youth of color, and commit to the investments, the advocacy, and the power building needed to finally uproot inequities from our public systems. 
 
 Data is a vital tool to measure how youth of color are thriving, or lacking the resources and guidance to become thriving adults. Bold Vision released it's first data-driven report measuring how well youth are thriving across Los Angeles in May of 2021 that can be viewed at the bottom of this webpage [here](https://www.boldvisionla.org/issue/). This year in 2024, the indicator report has been updated with the latest data available and with new indicators across the five domains of interest: Positive Youth Development, Healthy Built Environment, Systems Impact, Youth Power and Community Organizing and Power Building. See the updated indicator report [here](INSERT LINK HERE). 
 
@@ -81,6 +81,7 @@ In this repository, you will find four folders corresponding to different compon
 We completed the data cleaning, analysis, and visualization using the following software. 
 * [R](https://cran.rstudio.com/)
 * [RStudio](https://posit.co/download/rstudio-desktop)
+* [ArcGIS](https://www.arcgis.com/index.html)
 
 We used several R packages to analyze data and perform different functions, including the following.
 * dplyr
@@ -93,10 +94,10 @@ We used several R packages to analyze data and perform different functions, incl
 * stringr
 * rpostgis
 * ggplot
-* arcgis
+
 
 ```
-list.of.packages <- c("usethis","dplyr","data.table", "sf", tidyr","RPostgreSQL","readxl","stringr","sf", "ggplot2", "flextable", "ggchicklet", "arcgis")
+list.of.packages <- c("usethis","dplyr","data.table", "sf", tidyr","RPostgreSQL","readxl","stringr","sf", "ggplot2", "flextable", "ggchicklet")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -113,7 +114,6 @@ library(sf)
 library(ggplot2)
 library(flextable)
 library(ggchicklet)
-library(arcgis)
 
 ```
 
@@ -125,14 +125,15 @@ library(arcgis)
 * [Alexandra Baker](https://github.com/bakeralexan)
 * [Hillary Khan](https://github.com/hillaryk-ap)
 * [Maria T. Khan](https://github.com/mariatkhan)
-* [Elycia Mulholland-Graves](https://github.com/elyciamg)
+* [Elycia Mulholland Graves](https://github.com/elyciamg)
 * [Chris Ringewald](https://github.com/cringewald)
+* [David Segovia](https://github.com/davidseg1997)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Contact Us
 
-[Elycia Mulholland-Graves](https://www.linkedin.com/in/elycia-mulholland-graves-54578258/) - egraves[at]catalystcalifornia.org  <br>
+[Elycia Mulholland Graves](https://www.linkedin.com/in/elycia-mulholland-graves-54578258/) - egraves[at]catalystcalifornia.org  <br>
 
 [Maria T. Khan](https://www.linkedin.com/in/mariatkhan/) - mkhan[at]catalystcalifornia.org 
 
