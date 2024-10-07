@@ -112,9 +112,9 @@ fx_barchart_subgroup <- function(
     labs(
       title = paste(str_wrap(title, whitespace_only = TRUE, width = 57), collapse = "\n"),
       subtitle = paste(str_wrap(subtitle,whitespace_only = TRUE, width = 85), collapse = "\n"),
-      caption =  str_wrap(paste0("Indicator: ",caption_indicator_def, 
+      caption =  paste(str_wrap(paste0("Indicator: ",caption_indicator_def, 
                                  " Race Note: ", caption_racenote, ".",
-                                 " Data Source: ", caption_datasource), 155)) +
+                                 " Data Source: ", caption_datasource), whitespace_only = TRUE, width = 150), collapse = "\n")) +
     #theme/aesthetics
     theme_minimal() +
     theme(legend.title = element_blank(), # no legend--modify if necessary
