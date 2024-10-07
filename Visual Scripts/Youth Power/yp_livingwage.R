@@ -2,6 +2,7 @@
 
 ####Step 1: Pull function from github script ####
 source("bv_barchart_function.R")
+# source("W:/Project/OSI/Bold Vision/BV 2023/GitHub/EMG/boldvision_2023/bv_barchart_function.R")
 
 ####Step 2: Pull your by subgroup data and race labels metadata from the pgadmin BV database ####
 
