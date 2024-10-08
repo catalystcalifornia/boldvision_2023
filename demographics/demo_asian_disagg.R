@@ -123,7 +123,7 @@ table_name <- "demo_disaggregated_asian"
 schema <- 'bv_2023'
 
 indicator <- "Disaggregated Asian Youth"
-source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\Healthy Built Environment\\QA_Housing_Burden.docx"
+source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\QA_Demo_Asian.docx"
 
 dbWriteTable(con3, c(schema, table_name), asian_alone_subgroups_table_re,
              overwrite = TRUE, row.names = FALSE)
@@ -133,7 +133,7 @@ comment <- paste0("COMMENT ON TABLE ", schema, ".", table_name,  " IS '", indica
                   COMMENT ON COLUMN ", schema, ".", table_name, ".geoid IS 'County fips';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".rate IS 'indicator rate';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".pop IS 'total population';
-                  COMMENT ON COLUMN ", schema, ".", table_name, ".num IS 'number of people at or below the federal poverty line';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".num IS 'number of people by disaggregated non-Hispanic Asian Identity';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".rate_cv IS 'cv of indicator rate';")
 print(comment)
 dbSendQuery(con3, comment)

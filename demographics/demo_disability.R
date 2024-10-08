@@ -1,5 +1,4 @@
-# Youth (Under 25) with a disability in LA County
-# as percentage of all LA County households with a disability
+# Youth (Under 25) with a disability in LA County as percentage of all LA County youth with a disability
 
 # Data Dictionary: https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMS_Data_Dictionary_2022.pdf
 
@@ -34,7 +33,7 @@ people <- fread(paste0(root, "CA_2021/psam_p06.csv"), header = TRUE, data.table 
 
 #create function
 pums_run <- function(x){
-  weight <- 'PWGTP' # using WGTP b/c calculating percentage of rent-burdened households
+  weight <- 'PWGTP' # using PWGTP b/c calculating people not households
   repwlist = rep(paste0("PWGTP", 1:80))
   
   # create survey design
@@ -109,7 +108,7 @@ table_name <- "demo_disability"
 schema <- 'bv_2023'
 
 indicator <- "Youth with a disability"
-source <- "American Community Survey 2017-2021 5-year PUMS estimates. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\Healthy Built Environment\\QA_Housing_Burden.docx"
+source <- "American Community Survey 2017-2021 5-year PUMS estimates. Rates for all disability types are calculated with youth population with a disability in LA County as the denominator except for general disability which is calculated with all youth in LA County as the denominator. Self-care difficulty and ambulatory difficulty do not include ages less than 5 years old. Independent living difficulty does not include youth ages less than 15 years old. Other than thone ones, all disability types were filtered to include youth ages 0-24. See QA doc for details: W:\\Project\\OSI\\Bold Vision\\BV 2023\\Documentation\\QA_Demo_Disability.docx"
 
 dbWriteTable(con3, c(schema, table_name), df_final,
              overwrite = TRUE, row.names = FALSE)
@@ -119,7 +118,7 @@ comment <- paste0("COMMENT ON TABLE ", schema, ".", table_name,  " IS '", indica
                   COMMENT ON COLUMN ", schema, ".", table_name, ".geoid IS 'County fips';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".rate IS 'indicator rate';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".pop IS 'total population';
-                  COMMENT ON COLUMN ", schema, ".", table_name, ".num IS 'number of people at or below the federal poverty line';
+                  COMMENT ON COLUMN ", schema, ".", table_name, ".num IS 'number of youth ages 0-24 with a disability';
                   COMMENT ON COLUMN ", schema, ".", table_name, ".rate_cv IS 'cv of indicator rate';")
 print(comment)
 dbSendQuery(con3, comment)
