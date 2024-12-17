@@ -84,7 +84,7 @@ hbe_domain <-  dbGetQuery(conBV, "SELECT * FROM bv_2023.hbe_subgroup_domain")
 dbDisconnect(conBV)
 
 #source in function that rounds the corners of the heatmap squares
-source("W:/Project/OSI/Bold Vision/BV 2023/R/rounded_corner_function.R")
+source("https://github.com/catalystcalifornia/boldvision_2023/blob/main/Visual%20Scripts/rounded_corner_function.R")
 
 # heatmap ----
 
